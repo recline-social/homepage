@@ -816,9 +816,8 @@
     </a>
     <div class="nav-center" aria-hidden="true">
       <a href="/#features" class="nav-link">Features</a>
-      <a href="/#compare" class="nav-link">Compare</a>
-      <a href="/#selfhost" class="nav-link">Self-host</a>
-      <a href="/#download" class="nav-link">Download</a>
+      <a href="/#security" class="nav-link">Security</a>
+      <a href="https://github.com/recline-social/recline-client" class="nav-link">GitHub</a>
       <a href="privacy.html" class="nav-link active">Privacy</a>
     </div>
     <div class="nav-right">
@@ -1088,47 +1087,43 @@
 
 <div class="divider" role="separator"></div>
 
-<!-- Section 4: Self-hosting -->
-<section id="selfhost-privacy" aria-label="Self-hosting and control">
+<!-- Section 4: Transparency -->
+<section id="selfhost-privacy" aria-label="Transparency and open source">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow reveal">Full control</p>
-      <h2 class="section-h2 reveal d1">If you self-host,<br/>you own everything.</h2>
-      <p class="section-body reveal d2">Running your own Recline instance eliminates all trust assumptions about our infrastructure. You become the server operator.</p>
+      <p class="eyebrow reveal">Transparency</p>
+      <h2 class="section-h2 reveal d1">You can verify everything.</h2>
+      <p class="section-body reveal d2">The client code is published on GitHub. Every line of the encryption implementation is public — you can audit exactly what happens to your message before it's sent.</p>
     </div>
     <div class="selfhost-callout reveal d3">
       <div class="selfhost-callout-layout">
         <div>
-          <h3>Your server.<br/>Your data.<br/>Your rules.</h3>
-          <p>When you self-host, messages still arrive as ciphertext (your users' keys never leave their devices), but you control the database, the backups, the log retention policy, and the network configuration. You can verify every line of code in the AGPL-3.0 repository before deploying.</p>
-        </div>
-        <div>
           <ul class="selfhost-perks">
             <li>
               <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              No metadata goes to Recline infrastructure — we never see your server's traffic
+              Client code published on GitHub
             </li>
             <li>
               <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              You set your own IP logging policy — default deployment does not log IPs
+              Encryption implementation fully readable
             </li>
             <li>
               <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              You control database retention — delete message records on any schedule you choose
-            </li>
-            <li>
-              <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              AGPL-3.0 guarantees you can audit and modify every line of server code
-            </li>
-            <li>
-              <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Three Docker commands to deploy — see the self-hosting guide for details
-            </li>
-            <li>
-              <svg class="sh-check" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M2.5 7.5l3.5 3.5 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              If Recline the company disappears, your self-hosted instance keeps running forever
+              No trust required — the math is open
             </li>
           </ul>
+        </div>
+        <div style="background:var(--bg-3);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;font-family:var(--mono);">
+          <div style="font-size:0.7rem;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1rem;">crypto.ts — key functions</div>
+          <div style="font-size:0.78rem;color:var(--accent);line-height:2;">
+            <div>deriveServerKey(passphrase, salt)</div>
+            <div>encryptText(plaintext, key)</div>
+            <div>deriveDmKey(privateKey, publicKey)</div>
+          </div>
+          <a href="https://github.com/recline-social/recline-client/blob/main/src/lib/crypto.ts" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.4rem;margin-top:1.25rem;font-size:0.78rem;font-weight:600;color:var(--accent);text-decoration:none;background:var(--accent-dim);border:1px solid rgba(126,196,212,0.2);padding:0.4rem 0.9rem;border-radius:6px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+            Read the source
+            <svg width="10" height="10" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -1168,17 +1163,17 @@
         </div>
       </li>
       <li class="alpha-item">
-        <div class="alpha-icon">!</div>
+        <div class="alpha-icon" style="background:rgba(95,184,138,0.1);border-color:rgba(95,184,138,0.2);color:var(--green);">&#10003;</div>
         <div>
-          <div class="alpha-title">Key rotation is not yet implemented</div>
-          <div class="alpha-body">If a server's passphrase is compromised, there is no current mechanism to rotate keys and re-encrypt history. Adding key rotation is planned for a future release.</div>
+          <div class="alpha-title">Key rotation implemented</div>
+          <div class="alpha-body">DM key rotation is now available in Profile &rarr; Security. Old messages remain readable via archived key history. Channel key rotation (re-encrypting history with a new passphrase) is still on the roadmap.</div>
         </div>
       </li>
       <li class="alpha-item">
         <div class="alpha-icon">!</div>
         <div>
           <div class="alpha-title">WebRTC uses STUN for peer discovery</div>
-          <div class="alpha-body">Voice and video calls use WebRTC P2P, which requires STUN to negotiate the connection. STUN exposes your IP address to call participants. No TURN relay is used — traffic is P2P after negotiation, but STUN server operators can observe that a connection was requested.</div>
+          <div class="alpha-body">Voice and video calls use WebRTC P2P with both STUN and a self-hosted TURN relay server. The TURN relay is used for cross-network calls where P2P is not possible. STUN still exposes your IP to call participants during connection negotiation.</div>
         </div>
       </li>
       <li class="alpha-item">
@@ -1221,7 +1216,7 @@
         <li><span class="nope-x" aria-hidden="true">&#10005;</span> No tracking pixels</li>
         <li><span class="nope-x" aria-hidden="true">&#10005;</span> No VC pressure to monetize users</li>
       </ul>
-      <p style="margin-top:2rem;font-size:0.81rem;color:var(--text-3);line-height:1.65;">The AGPL-3.0 license means if we ever tried to add any of these things, anyone could fork the last clean version and keep running it. The code is the contract.</p>
+      <p style="margin-top:2rem;font-size:0.81rem;color:var(--text-3);line-height:1.65;">The client code is published at github.com/recline-social/recline-client. Anyone can verify these aren't just promises — the encryption architecture makes them technically impossible to violate without the client code changing visibly.</p>
     </div>
   </div>
 </section>
@@ -1248,41 +1243,36 @@
         <div class="footer-col-label">Product</div>
         <ul class="footer-col-links">
           <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web App</a></li>
-          <li><a href="/#download">Desktop Download</a></li>
           <li><a href="/#features">Features</a></li>
-          <li><a href="/#selfhost">Self-host</a></li>
+          <li><a href="privacy.html" class="active-page">Privacy &amp; Security</a></li>
         </ul>
       </div>
 
       <div>
         <div class="footer-col-label">Developers</div>
         <ul class="footer-col-links">
-          <li><a href="/#selfhost">Self-hosting guide</a></li>
-          <li><a href="/#download">Desktop clients</a></li>
-          <li><a href="/#oss">AGPL-3.0 License</a></li>
-          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Live app</a></li>
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">Client source code</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security policy</a></li>
         </ul>
       </div>
 
       <div>
         <div class="footer-col-label">About</div>
         <ul class="footer-col-links">
-          <li><a href="/#compare">vs Discord</a></li>
-          <li><a href="/#privacy">Privacy Commitment</a></li>
-          <li><a href="/#oss">Open Source</a></li>
-          <li><a href="/#features">Features</a></li>
           <li><a href="privacy.html" class="active-page">Privacy &amp; Security</a></li>
+          <li><a href="/#features">Features</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span class="footer-copy">&#169; 2025 Recline. Made with paranoia.</span>
-      <a href="/#oss" class="footer-license" aria-label="AGPL 3.0 License">
+      <span class="footer-copy">&#169; 2026 Recline. Made with paranoia.</span>
+      <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" aria-label="AGPL 3.0 License" target="_blank" rel="noopener noreferrer">
         <svg width="10" height="10" viewBox="0 0 11 11" fill="currentColor" aria-hidden="true"><path d="M5.5.917 6.968 3.9l3.282.478-2.375 2.313.561 3.267L5.5 8.317l-2.936 1.641.561-3.267L.75 4.378l3.282-.478L5.5.917Z"/></svg>
         AGPL-3.0
       </a>
-      <span class="footer-paranoia">server-blind &#183; p2p voice &#183; zero tracking</span>
+      <span class="footer-paranoia">server-blind &#183; e2e encrypted &#183; zero tracking</span>
     </div>
   </div>
 </footer>
