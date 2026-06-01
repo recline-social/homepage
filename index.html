@@ -5,37 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ── Primary SEO ─────────────────────────────────────────────────── -->
-  <title>Recline — Self-Hosted Discord Alternative with E2E Encryption</title>
-  <meta name="description" content="Open-source Discord alternative with end-to-end encrypted channels and DMs. Self-host in one Docker command. WebRTC voice and video. No email required. AGPL-3.0." />
-  <meta name="keywords" content="discord alternative, self-hosted chat, end-to-end encrypted chat, open source discord, private group chat, self-host discord, encrypted voice chat, webrtc chat, privacy chat app" />
+  <title>Recline — Encrypted Group Chat. No Tracking, No Ads.</title>
+  <meta name="description" content="Recline is a private encrypted community chat with end-to-end encrypted messages, WebRTC voice and video, and no email required. Your messages are encrypted before they leave your device." />
+  <meta name="keywords" content="discord alternative, encrypted chat, private group chat, end-to-end encrypted messaging, encrypted voice chat, secure chat app, privacy chat, no email chat, webrtc voice video, encrypted community chat, signal alternative, slack alternative, private discord" />
+  <meta name="author" content="Recline" />
+  <meta name="application-name" content="Recline" />
+  <meta name="rating" content="general" />
   <link rel="canonical" href="https://recline.social" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <link rel="alternate" hreflang="en" href="https://recline.social" />
 
-  <!-- ── Open Graph (Facebook, LinkedIn, Discord link previews) ─────── -->
-  <meta property="og:title" content="Recline — Self-Hosted Discord Alternative with E2E Encryption" />
-  <meta property="og:description" content="Open-source Discord alternative with end-to-end encrypted channels and DMs. Self-host in one Docker command. No email. No ads. Server stores only ciphertext." />
+  <!-- ── Open Graph ────────────────────────────────────────────────── -->
+  <meta property="og:title" content="Recline — Encrypted Group Chat. No Tracking, No Ads." />
+  <meta property="og:description" content="Private community chat with end-to-end encryption. Messages are encrypted before they leave your device. No email, no ads, no data selling. WebRTC voice and video." />
   <meta property="og:url" content="https://recline.social" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Recline" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:image" content="https://recline.social/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Recline — encrypted group chat you can self-host" />
+  <meta property="og:image:alt" content="Recline — encrypted group chat with WebRTC voice and video" />
 
-  <!-- ── Twitter / X card ───────────────────────────────────────────── -->
+  <!-- ── Twitter / X ───────────────────────────────────────────────── -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Recline — Self-Hosted Discord Alternative" />
-  <meta name="twitter:description" content="E2E encrypted chat, voice, and video. Self-host in one Docker command. No email required. AGPL-3.0 open source." />
+  <meta name="twitter:site" content="@reclinechat" />
+  <meta name="twitter:title" content="Recline — Encrypted Group Chat" />
+  <meta name="twitter:description" content="Private community chat. Messages encrypted before they leave your device. No email, no ads, no tracking. WebRTC voice and video." />
   <meta name="twitter:image" content="https://recline.social/og-image.png" />
 
-  <!-- ── Misc ───────────────────────────────────────────────────────── -->
+  <!-- ── Misc ──────────────────────────────────────────────────────── -->
   <meta name="theme-color" content="#0D0D10" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
   <link rel="apple-touch-icon" href="/recline_favicon.svg" />
 
-  <!-- ── JSON-LD structured data (SoftwareApplication) ─────────────── -->
-  <!-- Tells Google exactly what this is — can appear as a rich result   -->
+  <!-- ── JSON-LD: Organisation ────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "logo": "https://recline.social/recline_favicon.svg",
+    "sameAs": [
+      "https://github.com/recline-social/recline-client",
+      "https://app.recline.social"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "contact@recline.social",
+      "contactType": "customer support"
+    }
+  }
+  </script>
+
+  <!-- ── JSON-LD: WebSite (enables Google sitelinks search) ────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://app.recline.social/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ── JSON-LD: SoftwareApplication ──────────────────────────────── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,23 +83,23 @@
     "name": "Recline",
     "url": "https://recline.social",
     "applicationCategory": "CommunicationApplication",
-    "operatingSystem": "Web, Windows, macOS, Linux",
-    "description": "Open-source Discord alternative with end-to-end encrypted channels and DMs. Self-host in one Docker command. No email required.",
+    "operatingSystem": "Web, Windows, macOS, Linux, Android, iOS",
+    "description": "Private encrypted community chat. Messages are encrypted in your browser before they're sent — the server stores ciphertext it can never read. No email required.",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
     },
-    "license": "https://github.com/recline-social/recline-client/blob/main/LICENSE",
     "codeRepository": "https://github.com/recline-social/recline-client",
     "featureList": [
       "End-to-end encrypted channels (AES-GCM-256)",
-      "Encrypted direct messages (ECDH P-256)",
-      "WebRTC voice and video calls",
-      "Screen sharing",
-      "Server roles and permissions",
-      "Self-hostable with Docker",
-      "No email required to sign up"
+      "Encrypted direct messages (ECDH P-256 + HKDF)",
+      "WebRTC peer-to-peer voice and video calls",
+      "Screen sharing up to 1440p",
+      "Custom server roles and permissions",
+      "No email address required",
+      "No ads, no tracking, no data selling",
+      "Client code public for security auditing"
     ],
     "author": {
       "@type": "Organization",
@@ -84,7 +124,7 @@
         "name": "Is Recline free to use?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Recline is free and open source under AGPL-3.0. You can use the hosted version at app.recline.social for free, or self-host your own instance at no cost."
+          "text": "Yes. Recline is free to use at app.recline.social. No subscription required to sign up. The client code is open source under AGPL-3.0."
         }
       },
       {
@@ -97,10 +137,10 @@
       },
       {
         "@type": "Question",
-        "name": "Can I self-host Recline?",
+        "name": "Is Recline's code open source?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Recline ships as a single Docker Compose file. Clone the repo, set a database password, run docker compose up -d --build, and your instance is running at localhost:4321."
+          "text": "The client code is published on GitHub at github.com/recline-social/recline-client. You can read and audit the full encryption implementation. Recline runs the servers so you don't have to set anything up."
         }
       },
       {
@@ -858,7 +898,6 @@
     <div class="nav-links" role="list" aria-label="Site sections">
       <a href="#features" class="nav-link">Features</a>
       <a href="#security" class="nav-link">Security</a>
-      <a href="#selfhost" class="nav-link">Self-host</a>
       <a href="https://github.com/recline-social/recline-client" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
     <div class="nav-right">
@@ -881,9 +920,9 @@
         <span class="hero-label-dot"></span>
         Open source · AGPL-3.0
       </div>
-      <h1>Encrypted group chat.<br/>Your server or ours.</h1>
+      <h1>Encrypted group chat.<br/>Your messages stay yours.</h1>
       <p class="hero-sub">
-        Recline is a self-hostable chat app with end-to-end encryption, WebRTC voice and video, and zero tracking. Messages are encrypted before they leave your device. The server stores ciphertext it can never read.
+        Recline is a private community chat with end-to-end encryption. Messages are encrypted before they leave your device — we run the servers, but we can never read your messages. The client code is public so you can verify exactly how the encryption works.
       </p>
       <div class="hero-actions">
         <a href="https://app.recline.social" class="btn-primary">
@@ -891,9 +930,6 @@
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
             <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
-        <a href="https://github.com/recline-social/recline-client/blob/main/README.md" class="btn-secondary" target="_blank" rel="noopener noreferrer">
-          Self-host
         </a>
       </div>
       <div class="hero-stats">
@@ -957,14 +993,13 @@
       <div class="f-card reveal d3">
         <div class="f-icon" aria-hidden="true">
           <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1.5 4.5h14v8a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2v-8Z"/>
-            <path d="M5 4.5V3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1.5"/>
-            <path d="M5 9l2 2 4-4"/>
+            <path d="M2 2h13v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2Z"/>
+            <path d="M5 6h7M5 9h5"/>
           </svg>
         </div>
-        <div class="f-title">Self-hostable, one Docker command</div>
-        <div class="f-body">Docker Compose bundles the Fastify API, PostgreSQL, and the React frontend. Clone the repo, run <code style="font-family:var(--mono);font-size:0.78em;color:var(--accent);">docker compose up -d --build</code>, and you have a fully private instance on your own infrastructure.</div>
-        <span class="f-tag">Docker · PostgreSQL · Fastify</span>
+        <div class="f-title">Auditable encryption</div>
+        <div class="f-body">The client code is published on GitHub so anyone can verify exactly how your messages are encrypted. No trust required — the math is public.</div>
+        <span class="f-tag">github.com/recline-social/recline-client</span>
       </div>
 
       <div class="f-card reveal d4">
@@ -1090,44 +1125,44 @@
 
 <div class="divider" role="separator"></div>
 
-<!-- Self-host -->
-<section id="selfhost" aria-label="Self-hosting">
+<!-- Transparency -->
+<section id="selfhost" aria-label="Transparency">
   <div class="wrap">
     <div class="selfhost-layout">
 
       <div>
-        <p class="section-label reveal">Self-hosting</p>
-        <h2 class="section-h2 reveal d1">Run your own instance.</h2>
-        <p class="section-body reveal d2">Don't want to depend on our infrastructure? You don't have to. The entire stack runs on a single Docker Compose file.</p>
+        <p class="section-label reveal">Transparency</p>
+        <h2 class="section-h2 reveal d1">Trust through transparency.</h2>
+        <p class="section-body reveal d2">We run Recline so you don't have to. The client code is published on GitHub — you can read every line of the encryption implementation before you sign up.</p>
         <ul class="selfhost-points">
           <li class="reveal d3">
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Fastify API, React client, and PostgreSQL — all bundled, no manual wiring
+            Messages encrypted in your browser before they're sent
           </li>
           <li class="reveal d3">
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Works on any Linux VPS, Raspberry Pi, home server, or cloud instance with Docker
+            Server stores ciphertext — we never see plaintext
           </li>
           <li class="reveal d3">
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Cloudflare Tunnel optional — HTTPS without opening firewall ports
+            Client code public for independent security audit
           </li>
           <li class="reveal d3">
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            AGPL-3.0 — modify the source for your deployment, keep it open
+            No email, no phone, no personal data required
           </li>
         </ul>
         <div class="reveal d4" style="margin-top: 2rem;">
-          <a href="https://github.com/recline-social/recline-client/blob/main/README.md" class="btn-secondary" target="_blank" rel="noopener noreferrer">
-            Setup guide on GitHub
+          <a href="https://github.com/recline-social/recline-client" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+            Read the client code
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M1.5 10.5L10.5 1.5M10.5 1.5H4.5M10.5 1.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -1136,32 +1171,14 @@
       </div>
 
       <div class="reveal d2">
-        <div class="code-block">
-          <div class="code-header">
-            <div class="code-dots">
-              <span class="code-dot code-dot-r"></span>
-              <span class="code-dot code-dot-y"></span>
-              <span class="code-dot code-dot-g"></span>
-            </div>
-            <span class="code-lang">bash</span>
+        <div style="border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;">
+          <div style="padding: 1rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s);">
+            <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em;">WHY OPEN SOURCE CLIENT</span>
           </div>
-          <div class="code-body">
-<span class="c-cmt"># Clone the repository</span>
-<span class="c-cmd">git</span> <span class="c-arg">clone https://github.com/recline-social/recline-client.git</span>
-<span class="c-cmd">cd</span> <span class="c-arg">recline</span>
-
-<span class="c-cmt"># Copy and configure environment</span>
-<span class="c-cmd">cp</span> <span class="c-arg">.env.example .env</span>
-
-<span class="c-cmt"># Start all services</span>
-<span class="c-cmd">docker compose up</span> <span class="c-arg">-d --build</span>
-
-<span class="c-dim">Building api...       </span><span class="c-ok">done</span>
-<span class="c-dim">Building web...       </span><span class="c-ok">done</span>
-<span class="c-dim">Starting postgres...  </span><span class="c-ok">done</span>
-<span class="c-dim">Running migrations... </span><span class="c-ok">done</span>
-
-<span class="c-ok">Running at </span><span class="c-url">http://localhost:4321</span><span class="t-cursor"></span>
+          <div style="padding: 1.25rem 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <p style="font-size: 0.845rem; color: var(--text-2); line-height: 1.65;">Publishing the client code means you never have to take our word for it. The encryption logic is readable — you can confirm the ciphertext never contains anything identifiable before it leaves your device.</p>
+            <p style="font-size: 0.845rem; color: var(--text-2); line-height: 1.65;">Independent researchers and security engineers can audit the full implementation at any time. Found something? Open an issue or email <a href="mailto:security@recline.social" style="color: var(--accent); text-decoration: none;">security@recline.social</a>.</p>
+            <a href="https://github.com/recline-social/recline-client/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" style="font-family: var(--mono); font-size: 0.75rem; color: var(--accent); text-decoration: none;">Security policy &rarr;</a>
           </div>
         </div>
       </div>
@@ -1215,7 +1232,7 @@
           </div>
           <span class="footer-wordmark">Recline</span>
         </a>
-        <p class="footer-tagline">Encrypted group chat. Self-hostable. No tracking.</p>
+        <p class="footer-tagline">Encrypted group chat. We run the servers. No tracking.</p>
       </div>
 
       <div>
@@ -1224,7 +1241,7 @@
           <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#security">Security model</a></li>
-          <li><a href="#selfhost">Self-host</a></li>
+          <li><a href="#selfhost">Transparency</a></li>
         </ul>
       </div>
 
@@ -1232,7 +1249,8 @@
         <div class="footer-col-label">Developers</div>
         <ul class="footer-links">
           <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://github.com/recline-social/recline-client/blob/main/README.md" target="_blank" rel="noopener noreferrer">Self-host guide</a></li>
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">Client source code</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security policy</a></li>
           <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">AGPL-3.0 license</a></li>
         </ul>
       </div>
