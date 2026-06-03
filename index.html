@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ── Primary SEO ─────────────────────────────────────────────────── -->
-  <title>Recline — Private Encrypted Chat, Calls &amp; Communities</title>
+  <title>Recline — Encrypted Discord Alternative | Private Chat, No Email Required</title>
   <meta name="description" content="End-to-end encrypted chat with voice, video, and a Spark economy. No ads, no tracking, open-source client. Sign up free." />
   <meta name="keywords" content="discord alternative, end-to-end encrypted chat, open source chat, private group chat, encrypted voice chat, webrtc chat, privacy chat app, spark economy, private community chat" />
   <link rel="canonical" href="https://recline.social" />
@@ -34,8 +34,8 @@
   <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
   <link rel="apple-touch-icon" href="/recline_favicon.svg" />
 
-  <!-- ── JSON-LD structured data (SoftwareApplication) ─────────────── -->
-  <!-- Tells Google exactly what this is — can appear as a rich result   -->
+  <!-- ── JSON-LD: SoftwareApplication ──────────────────────────────── -->
+  <!-- Rich result in Google — app category, price, features, repo       -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,8 +43,8 @@
     "name": "Recline",
     "url": "https://recline.social",
     "applicationCategory": "CommunicationApplication",
-    "operatingSystem": "Web, Windows, macOS, Linux",
-    "description": "End-to-end encrypted chat with voice, video, and a Spark economy. No ads, no tracking, open-source client.",
+    "operatingSystem": "Web, Windows, macOS, Linux, Android",
+    "description": "Recline is an encrypted Discord alternative with AES-GCM-256 channel encryption, ECDH P-256 direct messages, WebRTC voice and video, and a Spark economy. No email, no government ID, no ads, no tracking. Open-source client.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -54,13 +54,19 @@
     "codeRepository": "https://github.com/recline-social/recline-client",
     "featureList": [
       "End-to-end encrypted channels (AES-GCM-256)",
-      "Encrypted direct messages (ECDH P-256)",
-      "WebRTC voice and video calls",
-      "Screen sharing",
-      "Server roles and permissions",
-      "Spark economy — earn Sparks daily",
+      "Encrypted direct messages (ECDH P-256 + HKDF-SHA256)",
+      "WebRTC peer-to-peer voice and video calls",
+      "Screen sharing up to 1440p",
+      "Server roles and granular permissions",
+      "Spark economy — earn Sparks daily, tip creators",
       "Server broadcasts and animated messages",
-      "No email required to sign up"
+      "No email required to sign up",
+      "No phone number required",
+      "No government ID required",
+      "Open-source client (AGPL-3.0)",
+      "Vanity invite links with access controls",
+      "File attachments",
+      "Friend system with presence"
     ],
     "author": {
       "@type": "Organization",
@@ -74,7 +80,44 @@
   }
   </script>
 
-  <!-- ── FAQ structured data (helps with People Also Ask boxes) ─────── -->
+  <!-- ── JSON-LD: Organization ───────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "logo": "https://recline.social/recline_favicon.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hello@recline.social",
+      "contactType": "customer support"
+    },
+    "sameAs": [
+      "https://github.com/recline-social/recline-client"
+    ]
+  }
+  </script>
+
+  <!-- ── JSON-LD: WebSite (enables sitelinks search box) ────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://app.recline.social?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ── JSON-LD: FAQPage (People Also Ask boxes) ───────────────────── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -82,26 +125,10 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Is Recline free to use?",
+        "name": "Is Recline a good Discord alternative?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Recline is free. You earn Sparks just by logging in daily. Use them for animated messages, server broadcasts, and creator tips. Buying extra packs is completely optional."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How does Recline encrypt messages?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Channel messages are encrypted in your browser using AES-GCM-256, with the key derived from your passphrase via PBKDF2. Direct messages use ECDH P-256 key exchange — the server never has access to the encryption key or plaintext."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is the code open source?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The client is fully open source on GitHub — every line that handles your data is readable. The server infrastructure is run and maintained by Recline."
+          "text": "Recline is a full community chat platform — servers, channels, roles, voice and video calls, screen sharing, and direct messages — with end-to-end encryption that Discord does not offer. Unlike Discord, Recline cannot read your messages: AES-GCM-256 encryption happens in your browser before messages leave it, and the server only ever stores ciphertext. Signup requires no email, no phone number, and no government ID."
         }
       },
       {
@@ -109,7 +136,55 @@
         "name": "Does Recline require an email address?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Signup only requires a username and password. No email address, phone number, or any other personal information is collected."
+          "text": "No. Signup requires only a username and password. No email address, phone number, real name, or government ID is collected at any point."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline require a government ID?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Recline has never required a government ID, facial scan, or any form of identity verification. A username and a password is the complete signup form — nothing else is asked, at signup or at any point after."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Recline read my messages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Channel messages are encrypted with AES-GCM-256 in your browser before leaving it, using a key derived from your server passphrase via PBKDF2. The server never holds the decryption key and only stores ciphertext. Direct messages use ECDH P-256 key exchange — your private key never leaves your device. This is an architectural constraint, not a policy claim."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Recline free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All core features are free — chat, voice and video calls, screen sharing, servers, channels, roles, direct messages, and file attachments. Recline also has a Spark economy: a small number of Sparks deposit to your account every day you log in. Sparks can be spent on animated messages, server broadcasts, and creator tips. Buying additional Sparks is optional."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Recline encrypt messages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Channel messages are encrypted in your browser using AES-GCM-256, with a 256-bit key derived from your channel passphrase via PBKDF2-SHA256. A fresh random IV is generated for every message. Direct messages use ECDH P-256 key exchange combined with HKDF-SHA256 key derivation — the server acts as a blind relay and holds no decryption keys for either message type."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Recline client open source?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The Recline client is fully open source on GitHub under the AGPL-3.0 license. Every function that handles encryption, key derivation, and message sending is publicly readable. The server infrastructure is run by Recline; the client code — including all cryptographic logic — is publicly auditable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline have servers, channels, and community features like Discord?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Recline has servers, text channels, voice channels with live video and screen sharing, custom server roles with granular bitmask permissions, channel-level permission overrides, invite links with access controls, direct messages, file attachments, and a friend system. The community structure is similar to Discord's, with end-to-end encryption applied to all message content."
         }
       }
     ]
@@ -802,7 +877,7 @@
     }
     .footer-inner {
       display: grid;
-      grid-template-columns: 1.4fr repeat(3, 1fr);
+      grid-template-columns: 1.2fr repeat(4, 1fr);
       gap: 2.5rem;
       margin-bottom: 2.5rem;
       padding-bottom: 2.5rem;
@@ -1375,6 +1450,15 @@
         </ul>
       </div>
 
+      <div>
+        <div class="footer-col-label">Resources</div>
+        <ul class="footer-links">
+          <li><a href="/discord-alternative">Discord alternative</a></li>
+          <li><a href="/blog/discord-government-id">Discord ID policy</a></li>
+          <li><a href="/blog/best-discord-alternatives-2026">Alternatives list</a></li>
+          <li><a href="/blog/how-recline-encrypts">How encryption works</a></li>
+        </ul>
+      </div>
       <div>
         <div class="footer-col-label">Open source</div>
         <ul class="footer-links">
