@@ -6,7 +6,7 @@
     <loc>https://recline.social/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-06-04</lastmod>
   </url>
   <url>
     <loc>https://recline.social/privacy.html</loc>
@@ -23,7 +23,15 @@
     <lastmod>2026-06-03</lastmod>
   </url>
 
-  <!-- Blog -->
+  <!-- Blog index -->
+  <url>
+    <loc>https://recline.social/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-04</lastmod>
+  </url>
+
+  <!-- Blog posts -->
   <url>
     <loc>https://recline.social/blog/discord-government-id</loc>
     <changefreq>monthly</changefreq>
