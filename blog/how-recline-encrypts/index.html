@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>How Recline Encrypts Your Messages — and Why It Matters — Recline Blog</title>
-  <meta name="description" content="A plain-language walkthrough of AES-GCM-256 channel encryption, ECDH P-256 DM key exchange, and what it means that the Recline server only ever stores ciphertext." />
+  <title>How Recline Encrypts Messages — AES-GCM-256 Explained | Recline</title>
+  <meta name="description" content="A plain-language walkthrough of AES-GCM-256 channel encryption, ECDH P-256 DM key exchange, and why the Recline server only ever stores ciphertext." />
   <meta name="keywords" content="how recline encrypts messages, AES-GCM-256 chat encryption, end-to-end encrypted chat explained, ECDH P-256 messaging, encrypted group chat how it works" />
   <link rel="canonical" href="https://recline.social/blog/how-recline-encrypts" />
 
@@ -15,8 +15,14 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Recline" />
   <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="How Recline encrypts messages — AES-GCM-256 explained" />
+  <meta property="article:published_time" content="2026-06-03" />
+  <meta property="article:modified_time" content="2026-06-03" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="How Recline Encrypts Your Messages — and Why It Matters" />
+  <meta name="twitter:title" content="How Recline Encrypts Messages — AES-GCM-256 Explained" />
+  <meta name="twitter:description" content="AES-GCM-256 channels, ECDH P-256 DMs, PBKDF2 key derivation — how Recline's encryption works and why the server can never read your messages." />
   <meta name="twitter:image" content="https://recline.social/og-image.png" />
   <meta name="theme-color" content="#0D0D10" />
   <meta name="robots" content="index, follow" />
@@ -26,17 +32,31 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
 
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "How Recline Encrypts Your Messages — and Why It Matters",
+    "headline": "How Recline Encrypts Messages — AES-GCM-256 Explained",
     "description": "A plain-language walkthrough of AES-GCM-256 channel encryption and ECDH P-256 DM key exchange in Recline.",
+    "image": "https://recline.social/og-image.png",
     "url": "https://recline.social/blog/how-recline-encrypts",
     "datePublished": "2026-06-03",
     "dateModified": "2026-06-03",
     "author": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" },
-    "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/recline_favicon.svg" } }
+    "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/android-chrome-512x512.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-recline-encrypts" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How Recline Encrypts Messages", "item": "https://recline.social/blog/how-recline-encrypts" }
+    ]
   }
   </script>
 
@@ -230,35 +250,35 @@
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-content">
-            <div class="step-title">Passphrase → key derivation</div>
+            <h3 class="step-title">Passphrase → key derivation</h3>
             <div class="step-body">Your channel passphrase is run through <code>PBKDF2-SHA256</code> with a channel-specific salt. The output is a 256-bit AES key. This derivation happens in your browser using the Web Crypto API — the passphrase never touches the network.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-content">
-            <div class="step-title">Random IV generation</div>
+            <h3 class="step-title">Random IV generation</h3>
             <div class="step-body">A fresh 96-bit Initialization Vector (IV) is generated using <code>crypto.getRandomValues()</code> for every single message. Reusing an IV with AES-GCM would be catastrophic — this guarantees it never happens.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-content">
-            <div class="step-title">AES-GCM-256 encryption</div>
+            <h3 class="step-title">AES-GCM-256 encryption</h3>
             <div class="step-body">The message text is encrypted using <code>AES-GCM-256</code> with the derived key and the random IV. GCM (Galois/Counter Mode) provides both confidentiality and integrity — the ciphertext includes an authentication tag that detects any tampering.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-content">
-            <div class="step-title">Ciphertext + IV sent to server</div>
+            <h3 class="step-title">Ciphertext + IV sent to server</h3>
             <div class="step-body">Only the ciphertext and IV are transmitted. The server receives these values, stores them in PostgreSQL, and relays them to other channel members. The plaintext message never exists on the server.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">5</div>
           <div class="step-content">
-            <div class="step-title">Decryption on the recipient's device</div>
+            <h3 class="step-title">Decryption on the recipient's device</h3>
             <div class="step-body">Recipients who know the channel passphrase derive the same key locally and decrypt the ciphertext in their own browsers. Anyone without the passphrase — including Recline's server — receives bytes they cannot interpret.</div>
           </div>
         </div>
@@ -280,35 +300,35 @@
         <div class="step">
           <div class="step-num">1</div>
           <div class="step-content">
-            <div class="step-title">Each user generates a key pair</div>
+            <h3 class="step-title">Each user generates a key pair</h3>
             <div class="step-body">When you set up your Recline account, your browser generates an ECDH P-256 keypair — a public key and a private key. Your <strong>public key</strong> is uploaded to the server. Your <strong>private key never leaves your browser</strong> and is cleared when you log out.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-content">
-            <div class="step-title">Public key exchange via server</div>
+            <h3 class="step-title">Public key exchange via server</h3>
             <div class="step-body">When you start a DM conversation, your browser fetches the recipient's public key from the server. They fetch yours. The server acts as a directory — it stores and delivers public keys, but cannot derive the shared secret from them alone.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-content">
-            <div class="step-title">Shared secret via ECDH</div>
+            <h3 class="step-title">Shared secret via ECDH</h3>
             <div class="step-body">Each party independently computes the same shared secret using their own private key and the other person's public key. This is the mathematical property of Diffie-Hellman: Alice's private key + Bob's public key yields the same value as Bob's private key + Alice's public key. The server, which only has both public keys, cannot compute this secret.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-content">
-            <div class="step-title">Key derivation via HKDF-SHA256</div>
+            <h3 class="step-title">Key derivation via HKDF-SHA256</h3>
             <div class="step-body">The raw ECDH shared secret is run through <code>HKDF-SHA256</code> (HMAC-based Key Derivation Function) to produce a well-formatted AES-256 key. This step ensures the key has appropriate entropy distribution regardless of the raw ECDH output.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">5</div>
           <div class="step-content">
-            <div class="step-title">AES-GCM-256 encryption, as above</div>
+            <h3 class="step-title">AES-GCM-256 encryption, as above</h3>
             <div class="step-body">DMs are then encrypted with <code>AES-GCM-256</code> using the derived key, with a fresh random IV per message. The server stores and relays ciphertext. It is a blind relay for DM content — no keys, no plaintext, no visibility into what was said.</div>
           </div>
         </div>
