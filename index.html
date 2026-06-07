@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Primary SEO ─────────────────────────────────────────────────── -->
+  <title>Recline — Creator-Owned Private Communities</title>
+  <meta name="description" content="Recline is a creator-owned community platform with encrypted spaces, a Sparks economy that rewards member contribution, and no email or phone number required. Built for creators and the communities they build." />
+  <meta name="keywords" content="creator community platform, private community, encrypted community, spark economy, creator tools, community platform, private group chat, encrypted voice chat, no email chat" />
+  <link rel="canonical" href="https://recline.social/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- ── Open Graph ─────────────────────────────────────────────────── -->
+  <meta property="og:title" content="Recline — Communities where members earn their place" />
+  <meta property="og:description" content="A creator-owned community platform with encrypted spaces, a Sparks economy, and no email or phone required. Private communities built to last." />
+  <meta property="og:url" content="https://recline.social" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Recline — creator-owned private community platform" />
+
+  <!-- ── Twitter / X card ───────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Recline — Communities where members earn their place" />
+  <meta name="twitter:description" content="A creator-owned community platform with encrypted spaces and a Sparks economy. No email or phone required." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+
+  <!-- ── Misc ───────────────────────────────────────────────────────── -->
+  <meta name="theme-color" content="#0D0D10" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- ── JSON-LD: SoftwareApplication ──────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "applicationCategory": "CommunicationApplication",
+    "operatingSystem": "Web, Windows, macOS, Linux, Android",
+    "description": "Recline is a creator-owned community platform with end-to-end encrypted channels, ECDH P-256 direct messages, WebRTC voice and video, and a Sparks economy that rewards member contribution. No email or phone number required.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "license": "https://github.com/recline-social/recline-client/blob/main/LICENSE",
+    "codeRepository": "https://github.com/recline-social/recline-client",
+    "featureList": [
+      "Creator-owned community servers",
+      "Sparks economy with daily member rewards",
+      "End-to-end encrypted channels (AES-GCM-256)",
+      "Encrypted direct messages (ECDH P-256 + HKDF-SHA256)",
+      "WebRTC peer-to-peer voice and video calls",
+      "Screen sharing up to 1440p",
+      "Server roles and granular permissions",
+      "Creator tips and server broadcasts via Sparks",
+      "No email required to sign up",
+      "No phone number required",
+      "Open-source client (AGPL-3.0)"
+    ],
+    "author": {
+      "@type": "Organization",
+      "name": "Recline",
+      "url": "https://recline.social"
+    },
+    "sameAs": [
+      "https://github.com/recline-social/recline-client",
+      "https://app.recline.social"
+    ]
+  }
+  </script>
+
+  <!-- ── JSON-LD: Organization ───────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social",
+    "logo": "https://recline.social/recline_favicon.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hello@recline.social",
+      "contactType": "customer support"
+    },
+    "sameAs": [
+      "https://github.com/recline-social/recline-client"
+    ]
+  }
+  </script>
+
+  <!-- ── JSON-LD: WebSite ────────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Recline",
+    "url": "https://recline.social"
+  }
+  </script>
+
+  <!-- ── JSON-LD: FAQPage ───────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Recline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Recline is a creator-owned community platform — private encrypted spaces for creators and the communities they build. Creators own their server, set their rules, and earn revenue when members engage. Members earn Sparks daily and can contribute, tip, and earn recognition. No email or phone number is required to join."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are Sparks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sparks are the community economy built into Recline. Members earn Sparks automatically every day they log in. They can spend Sparks to tip creators directly, send animated messages that stand out in channels, or broadcast server-wide announcements. Creators receive Sparks from member tips and can cash them out to real money via Stripe Connect. Core chat, voice, and video are always free."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline require an email address?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Signup requires only a username and password. No email address, phone number, real name, or government ID is collected at any point."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Recline different from Discord?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Discord is a communications tool where creators have no economic stake in their community's activity. Recline adds an economic layer: creators own their server and earn when members engage. Members earn Sparks by showing up daily — contribution is visible and rewarded, not just logged into a chat history. All channel messages are end-to-end encrypted, which Discord does not offer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Recline read my messages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Channel messages are encrypted with AES-GCM-256 in your browser before leaving it, using a key derived from your server passphrase via PBKDF2. The server never holds the decryption key and only stores ciphertext. Direct messages use ECDH P-256 key exchange — your private key never leaves your device. This is an architectural constraint, not a policy claim."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Recline client open source?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The Recline client is fully open source on GitHub under the AGPL-3.0 license. Every function that handles encryption, key derivation, and message sending is publicly readable and auditable."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D0D10;
+      --bg-2:      #111115;
+      --bg-3:      #16161B;
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(255,255,255,0.16);
+      --border-s:  rgba(255,255,255,0.045);
+      --card:      rgba(255,255,255,0.03);
+      --card-h:    rgba(255,255,255,0.055);
+      --accent:    #5B9CF6;
+      --accent-d:  rgba(91,156,246,0.12);
+      --accent-g:  rgba(91,156,246,0.20);
+      --green:     #4ADE80;
+      --green-d:   rgba(74,222,128,0.10);
+      --red:       #F87171;
+      --warm:      #FBBF24;
+      --warm-d:    rgba(251,191,36,0.10);
+      --amber:     #FB923C;
+      --amber-d:   rgba(251,146,60,0.10);
+      --text:      #F4F4F6;
+      --text-2:    rgba(244,244,246,0.55);
+      --text-3:    rgba(244,244,246,0.30);
+      --text-4:    rgba(244,244,246,0.14);
+      --mono:      'IBM Plex Mono', monospace;
+      --sans:      'DM Sans', sans-serif;
+      --r:         10px;
+      --r-sm:      7px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ─────────────────────────────────────── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border-s);
+      position: relative;
+    }
+
+    /* ── Scroll reveal ──────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s cubic-bezier(.16,1,.3,1),
+                  transform 0.55s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.06s; }
+    .d2 { transition-delay: 0.12s; }
+    .d3 { transition-delay: 0.18s; }
+    .d4 { transition-delay: 0.24s; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── Nav ────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(13,13,16,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--border-s);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.22);
+      border-radius: 7px;
+    }
+    .nav-logo-icon svg { color: var(--accent); }
+    .nav-wordmark {
+      font-size: 0.975rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .nav-link {
+      font-size: 0.845rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      font-size: 0.845rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--accent);
+      color: #08080D;
+      font-size: 0.845rem;
+      font-weight: 600;
+      padding: 0.42rem 1rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-nav:hover { opacity: 0.85; }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .btn-ghost  { display: none; }
+    }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: #08080D;
+      font-size: 0.935rem;
+      font-weight: 600;
+      padding: 0.72rem 1.6rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 0.935rem;
+      font-weight: 500;
+      padding: 0.72rem 1.6rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--border-h); color: var(--text); }
+
+    /* ── Hero ───────────────────────────────────────── */
+    .hero {
+      padding: 9rem 0 6.5rem;
+      position: relative;
+    }
+    .hero-inner {
+      max-width: 760px;
+    }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+      animation: fade-up 0.5s 0.05s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero-label-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fade-up 0.55s 0.12s cubic-bezier(.16,1,.3,1) both;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: clamp(0.975rem, 1.8vw, 1.065rem);
+      color: var(--text-2);
+      line-height: 1.75;
+      font-weight: 400;
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      animation: fade-up 0.55s 0.2s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      animation: fade-up 0.55s 0.28s cubic-bezier(.16,1,.3,1) both;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border-s);
+      animation: fade-up 0.55s 0.36s cubic-bezier(.16,1,.3,1) both;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-3);
+    }
+
+    /* ── Section headings ────────────────────────────── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-h2 {
+      font-size: clamp(1.65rem, 3.5vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+    .section-body {
+      font-size: 0.975rem;
+      color: var(--text-2);
+      line-height: 1.72;
+      max-width: 520px;
+    }
+    .section-head { margin-bottom: 3.5rem; }
+
+    /* ── Problem section ─────────────────────────────── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    @media (max-width: 720px) { .problem-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .problem-card {
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      padding: 2rem;
+      background: var(--card);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .problem-card:hover { background: var(--card-h); border-color: var(--border); }
+    .problem-icon {
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(248,113,113,0.08);
+      border-radius: 9px;
+      margin-bottom: 1.25rem;
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+    .problem-icon svg { width: 18px; height: 18px; }
+    .problem-title {
+      font-size: 0.935rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .problem-body {
+      font-size: 0.835rem;
+      color: var(--text-2);
+      line-height: 1.68;
+    }
+
+    /* ── Platform feature grid ───────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border-s);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    @media (max-width: 640px) { .features-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 900px) { .features-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .f-card {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+    .f-card:hover { background: var(--bg-2); }
+    .f-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-d);
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      color: var(--accent);
+    }
+    .f-icon svg { width: 17px; height: 17px; }
+    .f-icon.warm { background: var(--warm-d); color: var(--warm); }
+    .f-icon.green { background: var(--green-d); color: var(--green); }
+    .f-icon.amber { background: var(--amber-d); color: var(--amber); }
+    .f-title {
+      font-size: 0.915rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .f-body {
+      font-size: 0.825rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .f-tag {
+      display: inline-block;
+      margin-top: 0.9rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--text-3);
+      background: var(--card);
+      border: 1px solid var(--border-s);
+      padding: 0.17rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Sparks section ──────────────────────────────── */
+    .spark-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .spark-layout { grid-template-columns: 1fr; gap: 3rem; }
+    }
+    .spark-points {
+      list-style: none;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .spark-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.855rem;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+    .sp-check {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--green);
+    }
+    .spark-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-s);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .spark-tile {
+      background: var(--bg);
+      padding: 1.5rem;
+      transition: background 0.2s;
+    }
+    .spark-tile:hover { background: var(--bg-2); }
+    .spark-tile-icon {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      color: var(--warm);
+    }
+    .spark-tile-title {
+      font-size: 0.845rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+    .spark-tile-body {
+      font-size: 0.775rem;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+
+    /* ── Trust section (formerly Security) ──────────── */
+    .trust-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .trust-layout { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      border-bottom: 1px solid var(--border-s);
+      padding: 0.8rem 0;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--text-3);
+      padding-right: 1rem;
+      display: flex;
+      align-items: flex-start;
+      padding-top: 0.05rem;
+    }
+    .spec-val {
+      font-size: 0.845rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .spec-val small {
+      display: block;
+      font-size: 0.77rem;
+      color: var(--text-3);
+      margin-top: 0.15rem;
+      line-height: 1.45;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 640px) { .trust-grid { grid-template-columns: 1fr; } }
+    .trust-block {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .trust-head {
+      padding: 0.65rem 1rem;
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .trust-head.bad  { background: rgba(248,113,113,0.06); color: var(--red); border-bottom: 1px solid rgba(248,113,113,0.14); }
+    .trust-head.good { background: rgba(74,222,128,0.06); color: var(--green); border-bottom: 1px solid rgba(74,222,128,0.14); }
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid var(--border-s);
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .trust-item:last-child { border-bottom: none; }
+    .trust-dot-bad  { width: 4px; height: 4px; border-radius: 50%; background: var(--red); opacity: 0.6; flex-shrink: 0; margin-top: 5px; }
+    .trust-dot-good { width: 4px; height: 4px; border-radius: 50%; background: var(--green); opacity: 0.6; flex-shrink: 0; margin-top: 5px; }
+    .trust-note {
+      margin-top: 1.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r-sm);
+      font-size: 0.79rem;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+    .trust-note a { color: var(--accent); text-decoration: none; }
+    .trust-note a:hover { text-decoration: underline; }
+
+    /* ── Trust strip ─────────────────────────────────── */
+    .trust-strip {
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+    .trust-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem 2rem;
+      flex-wrap: wrap;
+    }
+    .trust-pill {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.04em;
+    }
+    .trust-sep {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--border-h);
+      flex-shrink: 0;
+    }
+    @media (max-width: 500px) { .trust-sep { display: none; } }
+
+    /* ── Founding Supporter ──────────────────────────── */
+    .supporter-block {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 3.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .supporter-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(251,191,36,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    @media (max-width: 760px) {
+      .supporter-block {
+        grid-template-columns: 1fr;
+        padding: 2.5rem 2rem;
+        gap: 2rem;
+      }
+    }
+    .supporter-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--warm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+    .supporter-h {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .supporter-body {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+    .supporter-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 1.25rem;
+    }
+    .supporter-perks li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      font-size: 0.82rem;
+      color: var(--text-2);
+    }
+    .perk-check {
+      color: var(--warm);
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .supporter-cta-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.85rem;
+      flex-shrink: 0;
+    }
+    .btn-supporter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--warm);
+      color: #08080D;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.72rem 1.5rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-supporter:hover { opacity: 0.85; }
+    .supporter-price {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-3);
+    }
+
+    /* ── Comparison row ──────────────────────────────── */
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border-s);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-top: 3.5rem;
+    }
+    @media (max-width: 640px) { .compare-row { grid-template-columns: 1fr 1fr; } }
+    .compare-col {
+      background: var(--bg);
+      padding: 1.75rem;
+    }
+    .compare-col.recline-col {
+      background: var(--bg-2);
+    }
+    .compare-platform {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .compare-platform.recline { color: var(--accent); }
+    .compare-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .compare-items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+    .cmp-yes { color: var(--green); flex-shrink: 0; margin-top: 1px; font-size: 0.7rem; }
+    .cmp-no  { color: var(--text-4); flex-shrink: 0; margin-top: 1px; font-size: 0.7rem; }
+
+    /* ── Final CTA ───────────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: 6rem 0;
+    }
+    .final-cta .section-h2 { margin-bottom: 0.75rem; }
+    .final-cta .section-body { max-width: 460px; margin: 0 auto 2.5rem; }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border-s);
+      padding: 3rem 0 2.5rem;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(4, 1fr);
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-s);
+    }
+    @media (max-width: 720px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 440px) {
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      text-decoration: none;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .footer-logo-icon {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.18);
+      border-radius: 6px;
+    }
+    .footer-wordmark {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      line-height: 1.6;
+      max-width: 220px;
+    }
+    .footer-col-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .footer-links a {
+      font-size: 0.825rem;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-4);
+      letter-spacing: 0.04em;
+    }
+    .footer-license {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      color: var(--warm);
+      background: var(--warm-d);
+      border: 1px solid rgba(251,191,36,0.16);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: border-color 0.15s;
+    }
+    .footer-license:hover { border-color: rgba(251,191,36,0.35); }
+
+    /* ── Misc ─────────────────────────────────────────── */
+    @media (max-width: 500px) {
+      section { padding: 4.5rem 0; }
+      .wrap { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-links" role="list" aria-label="Site sections">
+      <a href="#platform" class="nav-link">Platform</a>
+      <a href="#sparks" class="nav-link">Sparks</a>
+      <a href="#trust" class="nav-link">Privacy</a>
+      <a href="https://github.com/recline-social/recline-client" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://github.com/recline-social/recline-client" class="btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" aria-label="Introduction">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-label">
+        <span class="hero-label-dot"></span>
+        Open alpha · Creator-owned communities
+      </div>
+      <h1>Communities where<br/>members earn their place.</h1>
+      <p class="hero-sub">
+        Recline is a creator-owned community platform with private encrypted spaces, a Sparks economy that turns daily presence into real status, and no email or phone number required to join.
+      </p>
+      <div class="hero-actions">
+        <a href="https://app.recline.social" class="btn-primary">
+          Open Recline
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="https://github.com/recline-social/recline-client" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+          Read the code
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">Creator-owned</span>
+          <span class="stat-label">Community servers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">Sparks economy</span>
+          <span class="stat-label">Member contribution rewarded</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">E2E encrypted</span>
+          <span class="stat-label">Private by design</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">No email</span>
+          <span class="stat-label">Required to join</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Why / Problem -->
+<section id="why" aria-label="The problem with existing platforms">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">The problem</p>
+      <h2 class="section-h2 reveal d1">Audiences aren't communities.</h2>
+      <p class="section-body reveal d2">Existing platforms were built to monetize attention, not to build belonging. Creators don't own their communities. Members have no reason to show up beyond the content itself.</p>
+    </div>
+    <div class="problem-grid">
+
+      <div class="problem-card reveal d1">
+        <div class="problem-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.5 2L10.5 7H15L11.5 10L12.5 15L8.5 12L4.5 15L5.5 10L2 7H6.5Z"/>
+          </svg>
+        </div>
+        <div class="problem-title">Creators don't own their community</div>
+        <div class="problem-body">Your community lives on someone else's platform, under their rules, generating their revenue. Discord monetizes your members' attention. Patreon takes a cut of subscriptions. You get neither the data nor the relationship — just access, revocable at any time.</div>
+      </div>
+
+      <div class="problem-card reveal d2">
+        <div class="problem-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="8.5" r="6"/>
+            <path d="M8.5 5v4l2 2"/>
+          </svg>
+        </div>
+        <div class="problem-title">Lurking is the default</div>
+        <div class="problem-body">On Discord, 90% of members never send a message. There's no incentive to participate. No recognition for showing up. No difference between a member who's been there since day one and someone who joined yesterday. Passive is indistinguishable from active.</div>
+      </div>
+
+      <div class="problem-card reveal d3">
+        <div class="problem-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9.5L6 14.5V11.5H4a2 2 0 0 1-2-2v-5Z"/>
+          </svg>
+        </div>
+        <div class="problem-title">Private conversations aren't private</div>
+        <div class="problem-body">Community spaces that feel intimate aren't actually private. Every message is readable by the platform, accessible to its moderation team, and stored indefinitely. "Private" is a UX label — not a technical reality. Real community trust requires real privacy guarantees.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Platform -->
+<section id="platform" aria-label="What Recline is building">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">The platform</p>
+      <h2 class="section-h2 reveal d1">A real community stack.<br/>For real communities.</h2>
+      <p class="section-body reveal d2">Community isn't just a chat room. Recline is built for the full loop — private spaces, member contribution, creator support, and recognition that means something.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="f-card reveal d1">
+        <div class="f-icon amber" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="8.5,2 10.5,6.5 15.5,7 12,10.5 12.5,15.5 8.5,13 4.5,15.5 5,10.5 1.5,7 6.5,6.5"/>
+          </svg>
+        </div>
+        <div class="f-title">Creator-owned spaces</div>
+        <div class="f-body">You create the server, you set the rules. Custom roles with granular permissions, invite controls, and a community structure you actually control. The server belongs to you — not to the platform.</div>
+        <span class="f-tag">roles · permissions · invite links</span>
+      </div>
+
+      <div class="f-card reveal d2">
+        <div class="f-icon warm" aria-hidden="true">
+          ✦
+        </div>
+        <div class="f-title">Sparks economy</div>
+        <div class="f-body">Members earn Sparks automatically every day they log in. Spend them to tip creators, send animated messages, or broadcast announcements. Status is earned by showing up — and creators earn revenue from the engagement they generate.</div>
+        <span class="f-tag">daily rewards · creator tips · cashout</span>
+      </div>
+
+      <div class="f-card reveal d3">
+        <div class="f-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7.5" width="11" height="7.5" rx="1.5"/>
+            <path d="M5.5 7.5V5a3 3 0 0 1 6 0v2.5"/>
+          </svg>
+        </div>
+        <div class="f-title">Encrypted channels</div>
+        <div class="f-body">Messages are encrypted in your browser before they leave your device. The server stores only ciphertext — architecturally unable to read channel conversations. No policy, no moderator, no database breach changes this.</div>
+        <span class="f-tag">AES-GCM-256 · PBKDF2-SHA256</span>
+      </div>
+
+      <div class="f-card reveal d4">
+        <div class="f-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9.5L6 14.5V11.5H4a2 2 0 0 1-2-2v-5Z"/>
+          </svg>
+        </div>
+        <div class="f-title">Encrypted direct messages</div>
+        <div class="f-body">DMs use ECDH P-256 key exchange — your private key never leaves your device. The server is a blind relay: it delivers ciphertext it cannot read, and stores nothing in plain text.</div>
+        <span class="f-tag">ECDH P-256 · HKDF-SHA256</span>
+      </div>
+
+      <div class="f-card reveal d1">
+        <div class="f-icon green" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Z"/>
+            <path d="M13 9l3.5-2v5L13 10"/>
+          </svg>
+        </div>
+        <div class="f-title">Voice &amp; video calls</div>
+        <div class="f-body">Peer-to-peer WebRTC calls — Recline is never in the audio or video path. DTLS-SRTP handles media encryption. Screen sharing up to 1440p, deafening, per-peer volume, and spatial call layouts included.</div>
+        <span class="f-tag">WebRTC · DTLS-SRTP · P2P</span>
+      </div>
+
+      <div class="f-card reveal d2">
+        <div class="f-icon" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="6" r="3"/>
+            <path d="M2 15c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/>
+          </svg>
+        </div>
+        <div class="f-title">No email or phone required</div>
+        <div class="f-body">Sign up with a username and a password. Nothing else is asked — at signup, or at any point after. No identity linked. No contact information stored. No way to connect your account to your real-world identity unless you choose to.</div>
+        <span class="f-tag">anonymous signup · Argon2id passwords</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Sparks -->
+<section id="sparks" aria-label="Spark economy">
+  <div class="wrap">
+    <div class="spark-layout">
+
+      <div>
+        <p class="section-label reveal">Spark economy</p>
+        <h2 class="section-h2 reveal d1">Contribution made visible.</h2>
+        <p class="section-body reveal d2">Sparks are the community economy — built into the platform, not bolted on. Members earn them by showing up daily. Creators earn them when their community engages. The result is a community where active participation actually means something.</p>
+        <ul class="spark-points">
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Daily login rewards Sparks automatically — no grinding required
+          </li>
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Tip creators and members directly — 70% goes to the creator
+          </li>
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Send animated messages that stand out in busy channels
+          </li>
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Broadcast server-wide announcements to every member
+          </li>
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Creators can cash Spark earnings out to real money via Stripe
+          </li>
+          <li class="reveal d3">
+            <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Core chat, voice, and video are always completely free
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal d2">
+        <div class="spark-tiles">
+          <div class="spark-tile">
+            <div class="spark-tile-icon">✦</div>
+            <div class="spark-tile-title">Daily reward</div>
+            <div class="spark-tile-body">Sparks land in your wallet every day you log in. Stack streaks for bonus multipliers.</div>
+          </div>
+          <div class="spark-tile">
+            <div class="spark-tile-icon" style="color: var(--accent);">
+              <svg width="18" height="18" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 4.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9.5L6 14.5V11.5H4a2 2 0 0 1-2-2v-5Z"/>
+              </svg>
+            </div>
+            <div class="spark-tile-title">Animated messages</div>
+            <div class="spark-tile-body">Make your message glow, pulse, or light up the channel. Sixteen free styles, twelve paid.</div>
+          </div>
+          <div class="spark-tile">
+            <div class="spark-tile-icon" style="color: var(--green);">
+              <svg width="18" height="18" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 2v13M2 8.5h13"/>
+              </svg>
+            </div>
+            <div class="spark-tile-title">Server broadcasts</div>
+            <div class="spark-tile-body">Reach every member with a highlighted announcement. Launches, events, big news.</div>
+          </div>
+          <div class="spark-tile">
+            <div class="spark-tile-icon" style="color: var(--amber);">
+              <svg width="18" height="18" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 1.5l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-4-3-4 3 1.5-4.5L2 6h4.5z"/>
+              </svg>
+            </div>
+            <div class="spark-tile-title">Creator cashout</div>
+            <div class="spark-tile-body">Connect Stripe and convert Spark earnings to real money. Contribution has real value.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- How it's different -->
+<section id="compare" aria-label="How Recline differs from existing platforms">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Why Recline</p>
+      <h2 class="section-h2 reveal d1">Different platforms solve different problems.</h2>
+      <p class="section-body reveal d2">Discord is great for casual community chat. Patreon is great for subscriptions. Neither was built to be a place where members belong and creators own the relationship. Recline is.</p>
+    </div>
+    <div class="compare-row">
+      <div class="compare-col recline-col">
+        <div class="compare-platform recline">Recline</div>
+        <ul class="compare-items">
+          <li><span class="cmp-yes">✓</span> Creator-owned community</li>
+          <li><span class="cmp-yes">✓</span> Member contribution rewarded</li>
+          <li><span class="cmp-yes">✓</span> End-to-end encrypted</li>
+          <li><span class="cmp-yes">✓</span> Sparks economy built in</li>
+          <li><span class="cmp-yes">✓</span> Creator revenue from engagement</li>
+          <li><span class="cmp-yes">✓</span> No email required</li>
+          <li><span class="cmp-yes">✓</span> Open-source client</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="compare-platform">Discord</div>
+        <ul class="compare-items">
+          <li><span class="cmp-no">—</span> Platform owns the relationship</li>
+          <li><span class="cmp-no">—</span> Lurking equals participation</li>
+          <li><span class="cmp-no">—</span> No message encryption</li>
+          <li><span class="cmp-no">—</span> No native creator economy</li>
+          <li><span class="cmp-no">—</span> Discord monetizes your members</li>
+          <li><span class="cmp-yes">✓</span> No email required</li>
+          <li><span class="cmp-no">—</span> Closed source</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="compare-platform">Patreon</div>
+        <ul class="compare-items">
+          <li><span class="cmp-no">—</span> Patreon owns the billing</li>
+          <li><span class="cmp-no">—</span> No community layer</li>
+          <li><span class="cmp-no">—</span> No encrypted spaces</li>
+          <li><span class="cmp-no">—</span> Subscriptions, not engagement</li>
+          <li><span class="cmp-yes">✓</span> Creator revenue model</li>
+          <li><span class="cmp-no">—</span> Email required</li>
+          <li><span class="cmp-no">—</span> Closed source</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="compare-platform">Reddit / YouTube</div>
+        <ul class="compare-items">
+          <li><span class="cmp-no">—</span> Platform owns the audience</li>
+          <li><span class="cmp-no">—</span> Algorithm determines reach</li>
+          <li><span class="cmp-no">—</span> No private spaces</li>
+          <li><span class="cmp-no">—</span> No community economy</li>
+          <li><span class="cmp-no">—</span> Platform takes ad revenue</li>
+          <li><span class="cmp-no">—</span> Account tied to identity</li>
+          <li><span class="cmp-no">—</span> Closed source</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Trust / Privacy -->
+<section id="trust" aria-label="Privacy and trust">
+  <div class="wrap">
+    <div class="trust-layout">
+
+      <div>
+        <p class="section-label reveal">Trust layer</p>
+        <h2 class="section-h2 reveal d1">Privacy makes the community real.</h2>
+        <p class="section-body reveal d2" style="margin-bottom: 2.5rem;">Private communities only work if they're actually private. Encryption is the architectural guarantee — not a setting, not a promise, not something a policy update can remove.</p>
+
+        <div class="trust-grid reveal d3">
+          <div class="trust-block">
+            <div class="trust-head bad">Server can see</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Your username (stored in plain text)</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Message timestamps</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Which channels you belong to</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>That a message was sent (not content)</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Your IP (not logged by default)</div>
+          </div>
+          <div class="trust-block">
+            <div class="trust-head good">Server cannot see</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Message content — encrypted before sending</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>DM content — ECDH, server is a blind relay</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Your channel passphrase</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Email or phone — never asked</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Call audio or video — WebRTC is P2P</div>
+          </div>
+        </div>
+
+        <p class="trust-note reveal d4">
+          This is alpha software. Metadata minimization is ongoing.
+          <a href="/privacy.html">Full privacy details, honest limitations, and our data commitments &rarr;</a>
+        </p>
+      </div>
+
+      <div class="reveal d2">
+        <div style="border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;">
+          <div style="padding: 1rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s);">
+            <span style="font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em;">SECURITY SPEC</span>
+          </div>
+          <div style="padding: 0.25rem 1.25rem 0.5rem;">
+            <div class="spec-row">
+              <span class="spec-key">channel_enc</span>
+              <span class="spec-val">AES-GCM-256<small>Per-message random IV. PBKDF2-SHA256 key derivation from channel passphrase.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">dm_enc</span>
+              <span class="spec-val">ECDH P-256 + HKDF-SHA256<small>Private key lives in localStorage, cleared on logout. Server is a blind relay for DMs.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">passwords</span>
+              <span class="spec-val">Argon2id<small>Winner of the Password Hashing Competition. Resistant to GPU and ASIC brute-force.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">2fa</span>
+              <span class="spec-val">TOTP RFC 6238<small>Standard time-based OTP, compatible with any authenticator app.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">sessions</span>
+              <span class="spec-val">256-bit random hex tokens<small>Stored in the sessions table. No JWT, no cookie-based state.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">voice_video</span>
+              <span class="spec-val">WebRTC mesh P2P<small>DTLS-SRTP handles media encryption. Recline servers handle signaling only.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">database</span>
+              <span class="spec-val">Ciphertext only<small>AES-GCM ciphertext stored in PostgreSQL. Database dump reveals no message content.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">source_code</span>
+              <span class="spec-val">Open-source client<small>Every line is public on GitHub under AGPL-3.0. Audit the encryption implementation yourself.</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Trust strip -->
+<div class="trust-strip" aria-label="Trust signals">
+  <div class="wrap">
+    <div class="trust-strip-inner reveal">
+      <span class="trust-pill">No email required</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">No ads</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">No data selling</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">Open-source client</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">E2E encrypted</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">Creator revenue built in</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider" role="separator"></div>
+
+<!-- Founding Supporter -->
+<section id="support" aria-label="Support Recline">
+  <div class="wrap">
+    <div class="supporter-block reveal">
+      <div>
+        <p class="supporter-eyebrow">Founding Supporter</p>
+        <h2 class="supporter-h">Help build what comes next.</h2>
+        <p class="supporter-body">
+          Recline is free. There are no ads, no investors, no data sales. The Founding Supporter program lets you back the platform early — your contribution covers infrastructure and keeps development moving.
+        </p>
+        <ul class="supporter-perks">
+          <li><span class="perk-check">&#10003;</span> Founding Supporter badge on your profile</li>
+          <li><span class="perk-check">&#10003;</span> Access to the private development roadmap</li>
+          <li><span class="perk-check">&#10003;</span> Direct line on feature requests and issues</li>
+        </ul>
+      </div>
+      <div class="supporter-cta-col">
+        <a href="https://app.recline.social/api/payment/checkout" class="btn-supporter">
+          Become a supporter
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <span class="supporter-price">£5 / month</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Final CTA -->
+<section class="final-cta" aria-label="Get started">
+  <div class="wrap">
+    <p class="section-label reveal">Join the alpha</p>
+    <h2 class="section-h2 reveal d1">Start your community free.</h2>
+    <p class="section-body reveal d2">No email. No credit card. Encrypted by default from your first message. The community platform is early — the direction is clear.</p>
+    <div class="reveal d3">
+      <a href="https://app.recline.social" class="btn-primary">
+        Open Recline
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="Recline home">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Creator-owned communities. Member-earned status. Private by design.</p>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="#platform">Platform</a></li>
+          <li><a href="#sparks">Sparks economy</a></li>
+          <li><a href="#trust">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Resources</div>
+        <ul class="footer-links">
+          <li><a href="/discord-alternative">vs Discord</a></li>
+          <li><a href="/blog/discord-government-id">Discord ID policy</a></li>
+          <li><a href="/blog/best-discord-alternatives-2026">Alternatives list</a></li>
+          <li><a href="/blog/how-recline-encrypts">How encryption works</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">AGPL-3.0 License</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">creator-owned &middot; member-earned &middot; encrypted by default</span>
+      <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect — rAF-batched to avoid forced reflow on every scroll tick
+  const nav = document.getElementById('nav');
+  let rafPending = false;
+  window.addEventListener('scroll', () => {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      rafPending = false;
+    });
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.07, rootMargin: '0px 0px -24px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>

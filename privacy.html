@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy &amp; Trust — Recline</title>
+  <meta name="description" content="What Recline collects, what it doesn't, and how encryption works. An honest breakdown of our data practices, current limitations, and trust commitments." />
+  <meta property="og:title" content="Privacy &amp; Trust — Recline" />
+  <meta property="og:description" content="What the server stores. What it can never read. Full transparency on Recline's privacy model, encryption implementation, and Sparks data practices." />
+  <meta property="og:url" content="https://recline.social/privacy.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0D0D10" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="canonical" href="https://recline.social/privacy.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D0D10;
+      --bg-2:      #111115;
+      --bg-3:      #16161B;
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(255,255,255,0.16);
+      --border-s:  rgba(255,255,255,0.045);
+      --card:      rgba(255,255,255,0.03);
+      --card-h:    rgba(255,255,255,0.055);
+      --accent:    #5B9CF6;
+      --accent-d:  rgba(91,156,246,0.12);
+      --green:     #4ADE80;
+      --green-d:   rgba(74,222,128,0.10);
+      --red:       #F87171;
+      --red-d:     rgba(248,113,113,0.10);
+      --warm:      #FBBF24;
+      --warm-d:    rgba(251,191,36,0.10);
+      --text:      #F4F4F6;
+      --text-2:    rgba(244,244,246,0.55);
+      --text-3:    rgba(244,244,246,0.30);
+      --text-4:    rgba(244,244,246,0.14);
+      --mono:      'IBM Plex Mono', monospace;
+      --sans:      'DM Sans', sans-serif;
+      --r:         10px;
+      --r-sm:      7px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+    .wrap-narrow {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    /* ── Divider ─────────────────────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border-s);
+    }
+
+    /* ── Section ─────────────────────────────────────────────────────────── */
+    section { padding: 6rem 0; position: relative; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-h2 {
+      font-size: clamp(1.65rem, 3.5vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+    .section-body {
+      font-size: 0.975rem;
+      color: var(--text-2);
+      line-height: 1.72;
+      max-width: 560px;
+    }
+    .section-head { margin-bottom: 3.5rem; }
+
+    /* ── Scroll reveal ───────────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.55s cubic-bezier(.16,1,.3,1),
+                  transform 0.55s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.06s; }
+    .d2 { transition-delay: 0.12s; }
+    .d3 { transition-delay: 0.18s; }
+    .d4 { transition-delay: 0.24s; }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(13,13,16,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: var(--border-s);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+    .nav-logo-icon {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.22);
+      border-radius: 7px;
+    }
+    .nav-logo-icon svg { color: var(--accent); }
+    .nav-wordmark {
+      font-size: 0.975rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .nav-link {
+      font-size: 0.845rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      font-size: 0.845rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--accent);
+      color: #08080D;
+      font-size: 0.845rem;
+      font-weight: 600;
+      padding: 0.42rem 1rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-nav:hover { opacity: 0.85; }
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .btn-ghost  { display: none; }
+    }
+
+    /* ── Page hero ───────────────────────────────────────────────────────── */
+    .page-hero {
+      padding: 9rem 0 5.5rem;
+    }
+    .page-hero-inner { max-width: 760px; }
+    .page-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.22);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.88rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fade-up 0.5s 0.05s cubic-bezier(.16,1,.3,1) both;
+    }
+    .page-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      animation: fade-up 0.55s 0.12s cubic-bezier(.16,1,.3,1) both;
+    }
+    .page-hero-sub {
+      font-size: clamp(0.975rem, 1.8vw, 1.065rem);
+      color: var(--text-2);
+      line-height: 1.75;
+      max-width: 560px;
+      animation: fade-up 0.55s 0.2s cubic-bezier(.16,1,.3,1) both;
+    }
+    .page-hero-note {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: 0.775rem;
+      color: var(--warm);
+      background: var(--warm-d);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 7px;
+      padding: 0.5rem 0.9rem;
+      line-height: 1.55;
+      animation: fade-up 0.55s 0.28s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    /* ── Summary card ────────────────────────────────────────────────────── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border-s);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    @media (max-width: 720px) { .summary-grid { grid-template-columns: 1fr; } }
+    .summary-col {
+      background: var(--bg);
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .summary-col:hover { background: var(--bg-2); }
+    .summary-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .summary-icon.green { background: var(--green-d); color: var(--green); }
+    .summary-icon.accent { background: var(--accent-d); color: var(--accent); }
+    .summary-icon.warm { background: var(--warm-d); color: var(--warm); }
+    .summary-icon svg { width: 17px; height: 17px; }
+    .summary-col-title {
+      font-size: 0.915rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .summary-col-body {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ── Storage grid ────────────────────────────────────────────────────── */
+    .storage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 680px) { .storage-grid { grid-template-columns: 1fr; } }
+
+    .storage-col {
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .storage-col-head {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .storage-col-head.yes {
+      background: rgba(248,113,113,0.06);
+      color: var(--red);
+      border-bottom: 1px solid rgba(248,113,113,0.14);
+    }
+    .storage-col-head.no {
+      background: rgba(74,222,128,0.06);
+      color: var(--green);
+      border-bottom: 1px solid rgba(74,222,128,0.14);
+    }
+    .storage-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.7rem 1.25rem;
+      border-bottom: 1px solid var(--border-s);
+      font-size: 0.83rem;
+      color: var(--text-2);
+      line-height: 1.5;
+      transition: background 0.15s;
+    }
+    .storage-item:last-child { border-bottom: none; }
+    .storage-item:hover { background: var(--card); }
+    .storage-dot-yes {
+      flex-shrink: 0; margin-top: 5px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--red); opacity: 0.65;
+    }
+    .storage-dot-no {
+      flex-shrink: 0; margin-top: 5px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green); opacity: 0.65;
+    }
+    .storage-note {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      margin-top: 0.2rem;
+      line-height: 1.45;
+    }
+
+    /* ── Enc steps ───────────────────────────────────────────────────────── */
+    .enc-steps {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .enc-step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1.25rem;
+      padding: 1.4rem 1.5rem;
+      border-bottom: 1px solid var(--border-s);
+      transition: background 0.2s;
+    }
+    .enc-step:last-child { border-bottom: none; }
+    .enc-step:hover { background: var(--card); }
+    .enc-step-num {
+      width: 2.1rem; height: 2.1rem;
+      border-radius: 50%;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.2);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .enc-step-title {
+      font-size: 0.915rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+    }
+    .enc-step-body {
+      font-size: 0.83rem;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+    .enc-step-tag {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.67rem;
+      color: var(--accent);
+      background: var(--accent-d);
+      padding: 0.16rem 0.55rem;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Metadata table ──────────────────────────────────────────────────── */
+    .meta-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--border); }
+    .metadata-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .metadata-table thead tr {
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--border);
+    }
+    .metadata-table th {
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--text-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .metadata-table tbody tr {
+      border-bottom: 1px solid var(--border-s);
+      transition: background 0.18s;
+    }
+    .metadata-table tbody tr:last-child { border-bottom: none; }
+    .metadata-table tbody tr:hover { background: var(--card); }
+    .metadata-table td {
+      padding: 0.9rem 1.5rem;
+      color: var(--text-2);
+      line-height: 1.45;
+      vertical-align: top;
+    }
+    .metadata-table td:first-child {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+    .metadata-table td:nth-child(2) {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+    }
+    .meta-stored { color: var(--red); }
+    .meta-plain  { color: var(--text-3); }
+    .meta-enc    { color: var(--green); }
+
+    /* ── Sparks / payments ───────────────────────────────────────────────── */
+    .payment-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 720px) { .payment-layout { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .payment-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .payment-item {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border-s);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.83rem;
+      color: var(--text-2);
+      line-height: 1.5;
+      transition: background 0.15s;
+    }
+    .payment-item:last-child { border-bottom: none; }
+    .payment-item:hover { background: var(--card); }
+    .payment-dot-yes { flex-shrink: 0; margin-top: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--green); opacity: 0.65; }
+    .payment-dot-no  { flex-shrink: 0; margin-top: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--red); opacity: 0.65; }
+    .payment-note { font-size: 0.72rem; color: var(--text-3); margin-top: 0.2rem; line-height: 1.45; }
+
+    /* ── Limitations list ────────────────────────────────────────────────── */
+    .alpha-list {
+      list-style: none;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .alpha-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      padding: 1.1rem 1.35rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-s);
+      transition: background 0.18s;
+    }
+    .alpha-item:last-child { border-bottom: none; }
+    .alpha-item:hover { background: var(--bg-2); }
+    .alpha-icon {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--warm-d);
+      border: 1px solid rgba(251,191,36,0.15);
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      color: var(--warm);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-family: var(--mono);
+      font-weight: 500;
+    }
+    .alpha-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+    .alpha-body {
+      font-size: 0.815rem;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* ── Commitment block ────────────────────────────────────────────────── */
+    .commitment-block {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 3.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .commitment-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(91,156,246,0.35), transparent);
+    }
+    @media (max-width: 600px) { .commitment-block { padding: 2.5rem 1.75rem; } }
+    .commitment-block blockquote {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 400;
+      line-height: 1.65;
+      font-style: italic;
+      color: var(--text-2);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+    .commitment-block blockquote strong {
+      font-style: normal;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .commitment-nopes {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.65rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .commitment-nopes li {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text-2);
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      padding: 0.38rem 0.85rem;
+      border-radius: 100px;
+    }
+    .nope-x {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--red);
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    /* ── Contact block ───────────────────────────────────────────────────── */
+    .contact-block {
+      background: var(--card);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .contact-block p {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 480px;
+    }
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--r-sm);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-contact:hover { border-color: var(--border-h); color: var(--text); }
+
+    /* ── Note block ──────────────────────────────────────────────────────── */
+    .note {
+      margin-top: 1.25rem;
+      padding: 0.85rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border-s);
+      border-radius: var(--r-sm);
+      font-size: 0.79rem;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+    .note a { color: var(--accent); text-decoration: none; }
+    .note a:hover { text-decoration: underline; }
+    .note strong { color: var(--warm); font-weight: 600; }
+
+    /* ── TOC sidebar ─────────────────────────────────────────────────────── */
+    .doc-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .doc-layout { grid-template-columns: 1fr; gap: 0; } }
+    .doc-toc {
+      position: sticky;
+      top: 6rem;
+    }
+    @media (max-width: 900px) { .doc-toc { display: none; } }
+    .toc-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .toc-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .toc-links a {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.15s;
+      line-height: 1.4;
+    }
+    .toc-links a:hover { color: var(--text); }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border-s);
+      padding: 3rem 0 2.5rem;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-s);
+    }
+    @media (max-width: 720px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 440px) { .footer-inner { grid-template-columns: 1fr; } }
+    .footer-logo {
+      display: flex; align-items: center; gap: 0.55rem;
+      text-decoration: none; color: var(--text); margin-bottom: 0.75rem;
+    }
+    .footer-logo-icon {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-d);
+      border: 1px solid rgba(91,156,246,0.18);
+      border-radius: 6px;
+    }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-links a.active { color: var(--accent); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    .footer-license {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-family: var(--mono); font-size: 0.69rem; color: var(--warm);
+      background: var(--warm-d); border: 1px solid rgba(251,191,36,0.16);
+      padding: 0.2rem 0.6rem; border-radius: 4px; text-decoration: none;
+      font-weight: 500; transition: border-color 0.15s;
+    }
+    .footer-license:hover { border-color: rgba(251,191,36,0.35); }
+
+    /* ── Mobile ──────────────────────────────────────────────────────────── */
+    @media (max-width: 500px) {
+      section { padding: 4.5rem 0; }
+      .wrap, .wrap-narrow { padding: 0 1.25rem; }
+      .page-hero { padding: 8rem 0 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#platform" class="nav-link">Platform</a>
+      <a href="/#sparks" class="nav-link">Sparks</a>
+      <a href="/privacy.html" class="nav-link active">Privacy</a>
+      <a href="https://github.com/recline-social/recline-client" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://github.com/recline-social/recline-client" class="btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Page hero -->
+<div class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <div class="page-hero-badge">
+        <svg width="10" height="10" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="8" height="7" rx="1.5"/><path d="M4 6V4a2 2 0 0 1 4 0v2"/></svg>
+        Privacy &amp; Trust
+      </div>
+      <h1>What Recline knows.<br/>What it <span style="color:var(--accent)">doesn't.</span></h1>
+      <p class="page-hero-sub">Privacy isn't the whole story — it's the trust layer that makes private communities actually private. This page is the unvarnished version: what we store, how encryption works, where the current gaps are, and what we're doing about them.</p>
+      <span class="page-hero-note">Alpha software — we're honest about current limitations. This page is updated as the model improves.</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider" role="separator"></div>
+
+<!-- Summary -->
+<section id="summary" aria-label="Privacy summary">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">TL;DR</p>
+      <h2 class="section-h2 reveal d1">The short version.</h2>
+      <p class="section-body reveal d2">Three things Recline is built around. The rest of this page is the detail.</p>
+    </div>
+    <div class="summary-grid reveal d3">
+      <div class="summary-col">
+        <div class="summary-icon green" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7.5" width="11" height="7.5" rx="1.5"/>
+            <path d="M5.5 7.5V5a3 3 0 0 1 6 0v2.5"/>
+          </svg>
+        </div>
+        <div class="summary-col-title">Encrypted by architecture</div>
+        <div class="summary-col-body">Channel messages are encrypted in your browser before they leave your device. The server stores ciphertext it cannot read. Direct messages use ECDH key exchange — Recline is a blind relay. This is a technical constraint, not a policy claim.</div>
+      </div>
+      <div class="summary-col">
+        <div class="summary-icon accent" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="6" r="3"/>
+            <path d="M2 15c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/>
+          </svg>
+        </div>
+        <div class="summary-col-title">No email. No phone. No ID.</div>
+        <div class="summary-col-body">Signup requires a username and a password. Nothing else is asked, at signup or at any point after. There is no email field in the database. No phone number field. No way to tie your account to your real-world identity unless you choose to share it yourself.</div>
+      </div>
+      <div class="summary-col">
+        <div class="summary-icon warm" aria-hidden="true">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3,12 6,7 9,10 12,5 15,8"/>
+          </svg>
+        </div>
+        <div class="summary-col-title">Open-source client</div>
+        <div class="summary-col-body">Every line of client code is public on GitHub under AGPL-3.0. Every function that handles encryption, key derivation, and message sending is readable and auditable. The code is the contract — not the policy page.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- What the server stores -->
+<section id="data" aria-label="What Recline collects">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Data model</p>
+      <h2 class="section-h2 reveal d1">What the server stores.</h2>
+      <p class="section-body reveal d2">Every piece of data that touches Recline's servers — and what form it's in when it arrives.</p>
+    </div>
+    <div class="storage-grid reveal d3">
+      <div class="storage-col">
+        <div class="storage-col-head yes">&#9888; Stored in plain text</div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Your username</div>
+            <div class="storage-note">Stored as-is. Used for login and display. Choose it accordingly — there is no account recovery tied to an email.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Message timestamps</div>
+            <div class="storage-note">When messages were sent. Not encrypted — message timing is visible to the server as metadata.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Community and channel membership</div>
+            <div class="storage-note">Which communities and channels your account belongs to.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Online presence and activity status</div>
+            <div class="storage-note">Whether you're online, and when you were last active.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Message send events (not content)</div>
+            <div class="storage-note">The server knows you sent a message to a given channel — just not what it said.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Argon2id password hash</div>
+            <div class="storage-note">Your password is never stored. Only the irreversible Argon2id hash is kept. Even a full database leak would not expose your password.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Sparks balance and transaction history</div>
+            <div class="storage-note">How many Sparks you have and a log of how you earned or spent them. Required to operate the economy. See the Sparks &amp; Payments section below.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-yes"></span>
+          <div>
+            <div>Uploaded file metadata</div>
+            <div class="storage-note">File size and upload time. Files use 128-bit random filenames — unguessable, but not encrypted at rest. See the limitations section.</div>
+          </div>
+        </div>
+      </div>
+      <div class="storage-col">
+        <div class="storage-col-head no">&#10003; Not stored, or inaccessible</div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Message content (channels)</div>
+            <div class="storage-note">AES-GCM-256 encrypted before leaving your device. Server receives and stores only ciphertext.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Direct message content</div>
+            <div class="storage-note">E2E encrypted. Server is a blind relay — it cannot read or meaningfully store DM content.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Your encryption passphrase</div>
+            <div class="storage-note">The channel passphrase used to derive your encryption key never leaves your device. It is never transmitted.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Email address</div>
+            <div class="storage-note">We never ask for it. There is no email field in the database schema. It cannot be stored.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Phone number</div>
+            <div class="storage-note">Same as email — no such field exists anywhere in the system.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Voice and video streams</div>
+            <div class="storage-note">WebRTC calls are peer-to-peer. Recline's servers are never in the media path — only signaling passes through.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Your private encryption key</div>
+            <div class="storage-note">ECDH private keys are generated on your device and stored locally. They are cleared on logout.</div>
+          </div>
+        </div>
+        <div class="storage-item">
+          <span class="storage-dot-no"></span>
+          <div>
+            <div>Payment card details</div>
+            <div class="storage-note">Stripe handles all payment processing. Recline never sees, touches, or stores card numbers, CVV codes, or banking details.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- How encryption works -->
+<section id="encryption" aria-label="How encryption works">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <p class="section-label reveal">Under the hood</p>
+      <h2 class="section-h2 reveal d1">How encryption works.</h2>
+      <p class="section-body reveal d2">Plain language. No marketing. Here is exactly what happens to a message between your keyboard and the database.</p>
+    </div>
+    <div class="enc-steps reveal d3">
+      <div class="enc-step">
+        <div class="enc-step-num">1</div>
+        <div>
+          <div class="enc-step-title">You type a message</div>
+          <div class="enc-step-body">Your plaintext lives only in your browser. It has not been transmitted anywhere yet.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">2</div>
+        <div>
+          <div class="enc-step-title">Key derivation from your passphrase</div>
+          <div class="enc-step-body">When you joined the community, you entered a passphrase. That passphrase was fed through PBKDF2 with a per-server salt — 200,000 iterations — to produce a 256-bit AES key. The key is held in memory on your device only. It never leaves your browser and is never sent to the server.</div>
+          <span class="enc-step-tag">PBKDF2-HMAC-SHA256 · 200,000 iterations</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">3</div>
+        <div>
+          <div class="enc-step-title">Message encrypted in the browser</div>
+          <div class="enc-step-body">Before the message leaves your device, it is encrypted using AES-GCM with a randomly generated 96-bit IV. A unique IV is generated for every single message. The result is ciphertext that is mathematically unreadable without the key. Even a complete server compromise would expose only random bytes.</div>
+          <span class="enc-step-tag">AES-GCM-256 · random 96-bit IV per message</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">4</div>
+        <div>
+          <div class="enc-step-title">Ciphertext sent to the server</div>
+          <div class="enc-step-body">The encrypted blob, the IV, and a channel identifier travel to the server over TLS. The server stores this in PostgreSQL. It has no way to decrypt it — the key was never sent and is not derivable from anything the server holds.</div>
+          <span class="enc-step-tag">TLS in transit · ciphertext-only at rest</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">5</div>
+        <div>
+          <div class="enc-step-title">Recipients decrypt locally</div>
+          <div class="enc-step-body">When another community member loads the message, their client fetches the ciphertext and IV. Using the same key — derived independently from the same passphrase — AES-GCM decrypts the message entirely in their browser. The decrypted content is never returned to the server.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">6</div>
+        <div>
+          <div class="enc-step-title">Direct messages use per-recipient key exchange</div>
+          <div class="enc-step-body">DMs use ECDH P-256 key exchange so only the two participants can decrypt. Each user generates an EC keypair on their device. The shared secret is derived via HKDF-SHA256. The server routes the encrypted payload but cannot read it — it sees only the ciphertext envelope and delivery metadata.</div>
+          <span class="enc-step-tag">ECDH P-256 · HKDF-SHA256 · server-blind relay</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Metadata -->
+<section id="metadata" aria-label="Metadata transparency">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Honest accounting</p>
+      <h2 class="section-h2 reveal d1">Metadata.</h2>
+      <p class="section-body reveal d2">Encryption protects content. Metadata is a separate and harder problem. Here is what exists and what it can reveal.</p>
+    </div>
+    <div class="meta-wrap reveal d3">
+      <table class="metadata-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Status</th>
+            <th>What it reveals</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Message timestamp</td>
+            <td><span class="meta-stored">Stored plain</span></td>
+            <td>When you were active, conversation rhythm, response patterns</td>
+          </tr>
+          <tr>
+            <td>Sender identity (username)</td>
+            <td><span class="meta-stored">Stored plain</span></td>
+            <td>That you sent a message to a given channel at a given time</td>
+          </tr>
+          <tr>
+            <td>Channel membership</td>
+            <td><span class="meta-stored">Stored plain</span></td>
+            <td>Which communities and channels your account belongs to</td>
+          </tr>
+          <tr>
+            <td>Online presence</td>
+            <td><span class="meta-stored">Stored plain</span></td>
+            <td>Whether you're currently online and last-seen time</td>
+          </tr>
+          <tr>
+            <td>IP address</td>
+            <td><span class="meta-plain">Standard HTTP — not persisted by default</span></td>
+            <td>Approximate location if logged; not logged in the current deployment</td>
+          </tr>
+          <tr>
+            <td>Message content</td>
+            <td><span class="meta-enc">AES-GCM ciphertext only</span></td>
+            <td>Nothing readable — unrecoverable without the passphrase key</td>
+          </tr>
+          <tr>
+            <td>DM content</td>
+            <td><span class="meta-enc">E2E encrypted — server never sees plaintext</span></td>
+            <td>Nothing — server receives and routes only ciphertext</td>
+          </tr>
+          <tr>
+            <td>Voice and video</td>
+            <td><span class="meta-enc">WebRTC P2P — server not in path</span></td>
+            <td>Nothing — media never touches Recline infrastructure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note reveal d4">
+      <strong>Metadata minimization is on the roadmap.</strong> Future versions will reduce timestamp precision, add optional presence masking, and reduce what membership graphs reveal. This is an active area of work, not a solved problem.
+    </p>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Sparks & Payments -->
+<section id="payments" aria-label="Sparks and payment data">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Sparks &amp; payments</p>
+      <h2 class="section-h2 reveal d1">What Recline knows when you buy Sparks.</h2>
+      <p class="section-body reveal d2">Sparks are the community economy — members earn them daily, creators earn them through tips and broadcasts. When you choose to buy a Spark pack or cash out earnings, here is exactly how that data flows.</p>
+    </div>
+    <div class="payment-layout reveal d3">
+      <div>
+        <p style="font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.85rem;">Recline stores</p>
+        <ul class="payment-list">
+          <li class="payment-item">
+            <span class="payment-dot-yes"></span>
+            <div>
+              <div>Your Sparks balance</div>
+              <div class="payment-note">Required to operate the economy. Stored in the sparks_balances table.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-yes"></span>
+            <div>
+              <div>Spark transaction history</div>
+              <div class="payment-note">Tips sent and received, daily rewards claimed, broadcasts purchased. Used to calculate payouts and display your history in the app.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-yes"></span>
+            <div>
+              <div>Stripe customer ID (if you purchase)</div>
+              <div class="payment-note">A Stripe-assigned identifier that links a completed purchase to your account. Not a payment method — Stripe holds all billing details on their infrastructure.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-yes"></span>
+            <div>
+              <div>Stripe Connect account ID (if you cash out)</div>
+              <div class="payment-note">Required to route cashout payments to your connected bank or debit account. Banking details are stored by Stripe, not Recline.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-yes"></span>
+            <div>
+              <div>Stripe webhook event IDs</div>
+              <div class="payment-note">Stored to prevent duplicate credit on replayed webhooks. No payment content is retained beyond this idempotency key.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.85rem;">Recline does not store</p>
+        <ul class="payment-list">
+          <li class="payment-item">
+            <span class="payment-dot-no"></span>
+            <div>
+              <div>Card numbers, expiry dates, or CVV codes</div>
+              <div class="payment-note">Stripe Checkout handles all card input. This information never touches Recline's servers.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-no"></span>
+            <div>
+              <div>Bank account numbers or sort codes</div>
+              <div class="payment-note">Stripe Connect handles all cashout onboarding. Banking details go to Stripe, not to Recline.</div>
+            </div>
+          </li>
+          <li class="payment-item">
+            <span class="payment-dot-no"></span>
+            <div>
+              <div>Billing addresses</div>
+              <div class="payment-note">Stripe may collect this for fraud prevention. Recline does not receive or store it.</div>
+            </div>
+          </li>
+        </ul>
+        <p class="note" style="margin-top: 1rem;">Recline uses Stripe for all payment processing. Stripe's privacy policy governs how Stripe handles your payment data: <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">stripe.com/privacy</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Analytics & Cookies -->
+<section id="analytics" aria-label="Analytics and cookies">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <p class="section-label reveal">Observability</p>
+      <h2 class="section-h2 reveal d1">Analytics, cookies, and logs.</h2>
+      <p class="section-body reveal d2">What Recline uses to understand how the product works — and what it doesn't use to understand you.</p>
+    </div>
+    <div class="enc-steps reveal d3">
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Datadog RUM (optional)</div>
+          <div class="enc-step-body">Recline optionally uses Datadog Real User Monitoring to capture performance metrics — page load times, error rates, rendering latency. If enabled: session replay sampling is set to zero, all user input is masked, and no personally identifiable information is collected. RUM is disabled if no App ID and Client Token are configured in the build.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Sentry error tracking (optional)</div>
+          <div class="enc-step-body">Server errors are optionally reported to Sentry for debugging. The Sentry integration is configured with <code>sendDefaultPii: false</code> and a <code>beforeSend</code> hook that strips user objects, cookies, request bodies, and IP addresses from all events before transmission. Error reports contain stack traces and error messages — not user content or identity.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="enc-step-title">No third-party tracking or advertising pixels</div>
+          <div class="enc-step-body">Recline has no Google Analytics, Facebook Pixel, ad network integrations, behavioral tracking, or third-party data brokers. The observability tools above are strictly for product health monitoring — not user profiling.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Session tokens (not cookies)</div>
+          <div class="enc-step-body">Authentication uses 256-bit random hex session tokens stored in the server's sessions table. These are passed as HTTP Authorization headers — not stored as browser cookies. There are no tracking cookies, no analytics cookies, and no persistent identifiers set by Recline in your browser beyond what the app itself manages in localStorage and sessionStorage.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Alpha limitations -->
+<section id="limitations" aria-label="Current limitations">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Honest limitations</p>
+      <h2 class="section-h2 reveal d1">Where we're still improving.</h2>
+      <p class="section-body reveal d2">Recline is in alpha. The core encryption is solid. But there are real gaps — and we'd rather tell you exactly where they are than let you assume everything is finished.</p>
+    </div>
+    <ul class="alpha-list reveal d3" aria-label="Current limitations">
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">Metadata is not minimized</div>
+          <div class="alpha-body">Message timestamps, sender identity, and channel membership are stored in plain text. An observer with database access can construct a meaningful activity graph even without reading any message content. Future versions will address timestamp precision, optional presence masking, and membership privacy. This is not solved yet.</div>
+        </div>
+      </li>
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">No independent security audit</div>
+          <div class="alpha-body">The encryption implementation has not been reviewed by an independent cryptography firm. The client code is publicly auditable by anyone on GitHub, but no formal third-party audit has been commissioned. We plan to pursue an independent audit before a stable release.</div>
+        </div>
+      </li>
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">No forward secrecy on channel messages</div>
+          <div class="alpha-body">Channel encryption currently uses a static key derived from the server passphrase. All past messages could be decrypted if the passphrase is exposed — there is no per-session key ratcheting. Forward secrecy is a planned future improvement. DM messages use a separate per-keypair scheme that is more resistant to this, but also lacks a formal ratchet protocol.</div>
+        </div>
+      </li>
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">File uploads are not encrypted at rest</div>
+          <div class="alpha-body">Uploaded images and files use unguessable 128-bit random filenames — a URL that cannot be brute-forced — but the files themselves are stored as-is, not encrypted. A direct database or storage compromise would expose file content. Encrypted file storage is planned. If you need to share sensitive documents, use a channel message (encrypted) rather than a file upload.</div>
+        </div>
+      </li>
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">WebRTC call setup exposes IP addresses to call participants</div>
+          <div class="alpha-body">Voice and video calls use WebRTC P2P, which requires STUN negotiation. During STUN, your IP address becomes visible to the other participants in the call. Our TURN relay at 104.248.169.55 can proxy media to avoid this, but it is not the default mode — STUN is attempted first for quality. If IP privacy in voice calls is important to you, this is a current limitation to be aware of.</div>
+        </div>
+      </li>
+      <li class="alpha-item">
+        <div class="alpha-icon">!</div>
+        <div>
+          <div class="alpha-title">Encryption keys are tied to device storage</div>
+          <div class="alpha-body">ECDH private keys for DMs are stored in localStorage and cleared on logout. If you clear your browser data or move to a new device without going through the key rotation flow, your private key changes. Recline includes a key rotation mechanism with sender key snapshots for historical message recovery, but there is no automated cross-device sync or cloud backup of private keys. Treat your encryption keys like a password: don't clear your device data without first using the key rotation flow.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Commitment -->
+<section id="commitment" aria-label="Our commitment">
+  <div class="wrap">
+    <div class="commitment-block reveal">
+      <p class="section-label" style="margin-bottom: 1.5rem;">Our commitment</p>
+      <blockquote>
+        "Recline is designed to minimize what it knows about you. The goal is not to <strong>promise</strong> privacy — it's to make surveillance <strong>architecturally difficult</strong>, and to be transparent when it isn't."
+      </blockquote>
+      <ul class="commitment-nopes" aria-label="What Recline will never do">
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No ads, ever</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No data sales</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No email required</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No phone required</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No behavioural profiling</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No third-party tracking</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No tracking pixels</li>
+        <li><span class="nope-x" aria-hidden="true">&#10005;</span> No VC pressure to monetize users</li>
+      </ul>
+      <p style="margin-top: 2rem; font-size: 0.81rem; color: var(--text-3); line-height: 1.65; max-width: 620px; margin-left: auto; margin-right: auto;">
+        The AGPL-3.0 license means if we ever tried to violate these commitments, anyone could fork the last clean version and keep running it. The code is the contract.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- UK GDPR rights -->
+<section id="rights" aria-label="Your rights under UK GDPR">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">UK GDPR</p>
+      <h2 class="section-h2 reveal d1">Your rights.</h2>
+      <p class="section-body reveal d2">Under UK GDPR and the Data Protection Act 2018, you have specific rights over personal data Recline holds. Here is what they are and how to exercise them.</p>
+    </div>
+    <div class="enc-steps reveal d3">
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M6.5 4v2.5l2 2"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right of access</div>
+          <div class="enc-step-body">You can request a copy of all personal data Recline holds on you. Use the data export feature in app settings, or email <a href="mailto:hello@recline.social" style="color:var(--accent)">hello@recline.social</a>. The export includes your account details, community memberships, message ciphertext (we cannot decrypt it), Sparks history, uploads, and more — delivered as a structured JSON file within 30 days.</div>
+          <span class="enc-step-tag">In-app: Settings → Export Data · API: GET /api/auth/me/export</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 11L11 2M2 2l9 9"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right to erasure</div>
+          <div class="enc-step-body">You can delete your account at any time from Settings. Deletion is soft for 90 days (to allow completion of in-flight financial transactions and any active abuse investigations), then your account and all associated data — messages, memberships, Sparks history, uploads — is permanently and irreversibly removed via database cascade. No manual request needed.</div>
+          <span class="enc-step-tag">In-app: Settings → Delete Account · API: DELETE /api/auth/me</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 6.5h9M7.5 2.5l4 4-4 4"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right to rectification</div>
+          <div class="enc-step-body">You can update your display name, avatar, and password at any time from Settings. Username changes are not currently supported in alpha — contact us if you need a correction. Message content is stored as encrypted ciphertext; the server holds no plaintext and cannot modify message content on your behalf.</div>
+          <span class="enc-step-tag">In-app: Settings → Edit Profile</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M2 6.5h9"/><circle cx="9" cy="6.5" r="2.5"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right to data portability</div>
+          <div class="enc-step-body">Your data export is machine-readable JSON — documented, structured, and yours to keep. Message content is included as AES-GCM ciphertext with its nonce. If you hold the channel passphrase, you can decrypt messages locally using the same key derivation documented in the open-source client.</div>
+          <span class="enc-step-tag">API: GET /api/auth/me/export</span>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="1.5" y="3" width="10" height="8" rx="1.5"/><path d="M4 3V2a2 2 0 0 1 5 0v1"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right to restrict processing</div>
+          <div class="enc-step-body">If you believe Recline is processing your data unlawfully, or if you dispute its accuracy, you can request restriction of processing while the dispute is resolved. Email <a href="mailto:hello@recline.social" style="color:var(--accent)">hello@recline.social</a> with the subject "Restrict processing." We respond within 30 days.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6.5 1.5C3.74 1.5 1.5 3.74 1.5 6.5S3.74 11.5 6.5 11.5"/><path d="M9 6.5l3 3-3 3"/><path d="M12 9.5H7"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">Right to lodge a complaint with the ICO</div>
+          <div class="enc-step-body">If you believe Recline has violated your rights under UK GDPR, you have the right to complain to the Information Commissioner's Office — the UK's independent data protection regulator.</div>
+          <span class="enc-step-tag">ico.org.uk · 0303 123 1113</span>
+        </div>
+      </div>
+    </div>
+    <p class="note reveal d4">
+      <strong>Legal basis for processing:</strong> Account data is processed on the basis of contract performance. Platform security and abuse prevention are processed on the basis of legitimate interest. Sparks and payment transaction records follow contractual and legal obligation (UK accounting requirements). No processing is based on consent alone, and no personal data is sold or shared with third parties for commercial purposes.
+    </p>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Data retention -->
+<section id="retention" aria-label="Data retention schedule">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Retention schedule</p>
+      <h2 class="section-h2 reveal d1">How long we keep data.</h2>
+      <p class="section-body reveal d2">Recline retains data only as long as it is needed. These are the documented retention periods for each data category.</p>
+    </div>
+    <div class="meta-wrap reveal d3">
+      <table class="metadata-table">
+        <thead>
+          <tr>
+            <th>Data category</th>
+            <th>Retention</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Active account data</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">While account is active</span></td>
+            <td>Required to operate the account. Cascade-deleted on account removal.</td>
+          </tr>
+          <tr>
+            <td>Deleted accounts</td>
+            <td><span style="color:var(--warm);font-family:var(--mono);font-size:0.76rem">90-day grace, then permanent erasure</span></td>
+            <td>Grace period allows transaction completion and abuse investigations. After 90 days: irreversible hard-delete cascades to all associated data.</td>
+          </tr>
+          <tr>
+            <td>Channel and DM messages</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">While account exists</span></td>
+            <td>Stored as ciphertext. Cascade-deleted on account removal. Per-message expiry is planned for a future release.</td>
+          </tr>
+          <tr>
+            <td>Session tokens</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">30 days from creation</span></td>
+            <td>Automatically expired on login. Hard cap of 20 sessions per account.</td>
+          </tr>
+          <tr>
+            <td>Stripe webhook events</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">90 days</span></td>
+            <td>Needed for Stripe retry dedup (72h window). Swept automatically after 90 days.</td>
+          </tr>
+          <tr>
+            <td>Payment and Sparks records</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">7 years minimum</span></td>
+            <td>UK accounting obligation under the Companies Act 2006 and HMRC requirements.</td>
+          </tr>
+          <tr>
+            <td>Moderation reports (all levels)</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">3 years</span></td>
+            <td>Legal guideline for abuse investigation records. User references may be anonymised (SET NULL) if the referenced account is deleted.</td>
+          </tr>
+          <tr>
+            <td>Audit logs</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">3 years</span></td>
+            <td>Admin and moderation actions. Required for accountability and potential regulatory review.</td>
+          </tr>
+          <tr>
+            <td>Uploaded files</td>
+            <td><span style="color:var(--text-2);font-family:var(--mono);font-size:0.76rem">Until sent as attachment or account removed</span></td>
+            <td>Orphaned uploads (uploaded but never attached to a message) are swept every 10 minutes. All files permanently removed on account deletion.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Moderation approach -->
+<section id="moderation" aria-label="Moderation approach">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <p class="section-label reveal">Online Safety Act</p>
+      <h2 class="section-h2 reveal d1">How moderation works.</h2>
+      <p class="section-body reveal d2">End-to-end encryption means Recline cannot proactively scan message content. This is the correct trade-off — and here is exactly what moderation looks like as a result.</p>
+    </div>
+    <div class="enc-steps reveal d3">
+      <div class="enc-step">
+        <div class="enc-step-num" style="font-family:var(--mono);font-size:0.76rem;color:var(--green)">L1</div>
+        <div>
+          <div class="enc-step-title">User-initiated reporting</div>
+          <div class="enc-step-body">The primary moderation mechanism. Any member can report a message or user — in their community or at the platform level. When you report a message, the client voluntarily submits the content to moderators. This is the user choosing to reveal something, not Recline breaking encryption. Platform-level reports (for users you don't share a server with) go directly to the Recline safety team.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num" style="font-family:var(--mono);font-size:0.76rem;color:var(--accent)">L2</div>
+        <div>
+          <div class="enc-step-title">Community moderation</div>
+          <div class="enc-step-body">Community owners and moderators control their own spaces — membership, roles, kicks, bans, and server-level report review. Recline does not moderate individual conversations. Community leaders do. Recline intervenes only for platform-wide ToS violations that community mods cannot address.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num" style="font-family:var(--mono);font-size:0.76rem;color:var(--warm)">L3</div>
+        <div>
+          <div class="enc-step-title">Platform safety team</div>
+          <div class="enc-step-body">Handles serious escalations: CSAM, terrorism content, credible threats, large-scale fraud, and coordinated platform abuse. CSAM reports trigger immediate access restriction, evidence preservation, and full cooperation with the Internet Watch Foundation, law enforcement, and relevant reporting obligations under UK law. Recline does not investigate CSAM content itself.</div>
+        </div>
+      </div>
+      <div class="enc-step">
+        <div class="enc-step-num">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6.5 1.5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM6.5 4.5v3l2 2"/></svg>
+        </div>
+        <div>
+          <div class="enc-step-title">What Recline cannot moderate proactively</div>
+          <div class="enc-step-body">With true E2EE, Recline cannot scan DM content, private channel messages, or voice calls. This is a meaningful privacy protection with a meaningful trade-off. We rely on user reporting, metadata and account-behaviour signals, account-level enforcement, and full cooperation with law enforcement when legally compelled. This is not perfect. We build incrementally and state the limits honestly.</div>
+        </div>
+      </div>
+    </div>
+    <p class="note reveal d4">
+      <strong>Online Safety Act 2023:</strong> Recline acknowledges its obligations under the UK Online Safety Act. End-to-end encryption does not remove our duty to conduct risk assessments, maintain accessible reporting mechanisms, take action on reported content, and cooperate with Ofcom on regulated duties. This section documents our current moderation architecture in alignment with those obligations.
+    </p>
+  </div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Questions -->
+<section id="contact" aria-label="Questions and contact">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom: 2rem;">
+      <p class="section-label reveal">Questions</p>
+      <h2 class="section-h2 reveal d1">Something unclear?</h2>
+      <p class="section-body reveal d2">If something on this page is inaccurate, incomplete, or you have a specific question about data handling, reach out directly.</p>
+    </div>
+    <div class="contact-block reveal d3">
+      <p>Privacy questions, data requests, and trust concerns can be sent to <strong style="color: var(--text);">hello@recline.social</strong>. We'll respond directly — no ticket system, no automated responses. The client code for every encryption claim on this page is readable at the GitHub link below.</p>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0;">
+        <a href="mailto:hello@recline.social" class="btn-contact">
+          Email us
+        </a>
+        <a href="https://github.com/recline-social/recline-client" class="btn-contact" target="_blank" rel="noopener noreferrer">
+          Read the code
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+            <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="Recline home">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Creator-owned communities. Member-earned status. Private by design.</p>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#platform">Platform</a></li>
+          <li><a href="/#sparks">Sparks economy</a></li>
+          <li><a href="/#trust">Trust &amp; encryption</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">AGPL-3.0 License</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html" class="active">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+      <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  let rafPending = false;
+  window.addEventListener('scroll', () => {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+      rafPending = false;
+    });
+  }, { passive: true });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.07, rootMargin: '0px 0px -24px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
