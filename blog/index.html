@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Recline Blog — Privacy, Encryption &amp; Chat</title>
+  <meta name="description" content="Articles on encrypted chat, privacy tools, and alternatives to mainstream messaging platforms. Written by the Recline team." />
+  <link rel="canonical" href="https://recline.social/blog" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <meta property="og:title" content="Recline Blog — Privacy, Encryption &amp; Chat" />
+  <meta property="og:description" content="Articles on encrypted chat, privacy tools, and alternatives to mainstream messaging platforms." />
+  <meta property="og:url" content="https://recline.social/blog" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Recline Blog — Privacy, Encryption &amp; Chat" />
+  <meta name="twitter:description" content="Articles on encrypted chat, privacy tools, and alternatives to mainstream messaging platforms." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Recline Blog",
+    "url": "https://recline.social/blog",
+    "description": "Articles on encrypted chat, privacy, and alternatives to mainstream messaging platforms.",
+    "publisher": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115;
+      --border: rgba(255,255,255,0.08); --border-s: rgba(255,255,255,0.045);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30);
+      --sans: 'DM Sans', sans-serif; --r: 10px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: 7px; text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .blog-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.75rem; }
+    .blog-sub { color: var(--text-2); font-size: 1.05rem; margin-bottom: 3rem; }
+    .post-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .post-card { background: var(--bg-2); border: 1px solid var(--border-s); border-radius: var(--r); padding: 1.5rem; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s, background 0.15s; }
+    .post-card:hover { border-color: var(--border); background: rgba(255,255,255,0.025); }
+    .post-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+    .post-title { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 0.5rem; }
+    .post-desc { font-size: 0.9rem; color: var(--text-2); line-height: 1.6; }
+    .post-meta { font-size: 0.75rem; color: var(--text-3); margin-top: 0.9rem; }
+
+    footer { border-top: 1px solid var(--border-s); padding: 2.5rem 0; margin-top: 4rem; }
+    footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .footer-copy { font-size: 0.8rem; color: var(--text-3); }
+    .footer-links { display: flex; gap: 1.25rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text-2); }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <div class="wrap">
+      <a href="/" class="nav-logo" aria-label="Recline home">
+        <div class="nav-logo-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <span class="nav-wordmark">Recline</span>
+      </a>
+      <div class="nav-right">
+        <a href="/" class="btn-ghost">Home</a>
+        <a href="https://app.recline.social" class="btn-nav">Open App</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="blog-wrap">
+    <h1>Recline Blog</h1>
+    <p class="blog-sub">Privacy, encryption, and alternatives to mainstream chat platforms.</p>
+
+    <div class="post-list">
+      <a href="/blog/discord-government-id" class="post-card">
+        <div class="post-tag">Privacy</div>
+        <div class="post-title">Discord Government ID Requirement: Where to Go Instead</div>
+        <div class="post-desc">Discord's 2026 ID verification requires government IDs and facial scans. What it means for privacy — and which alternatives actually protect your identity.</div>
+        <div class="post-meta">June 3, 2026 · 6 min read</div>
+      </a>
+
+      <a href="/blog/best-discord-alternatives-2026" class="post-card">
+        <div class="post-tag">Roundup</div>
+        <div class="post-title">Best Discord Alternatives 2026: No Email, No ID Required</div>
+        <div class="post-desc">Five Discord alternatives ranked honestly by encryption, privacy, and community features — with no email address required.</div>
+        <div class="post-meta">June 3, 2026 · 9 min read</div>
+      </a>
+
+      <a href="/blog/how-recline-encrypts" class="post-card">
+        <div class="post-tag">Technical</div>
+        <div class="post-title">How Recline Encrypts Messages — AES-GCM-256 Explained</div>
+        <div class="post-desc">A plain-language walkthrough of AES-GCM-256 channel encryption, ECDH P-256 DM key exchange, and why the Recline server only stores ciphertext.</div>
+        <div class="post-meta">June 3, 2026 · 7 min read</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/discord-alternative">Discord Alternative</a>
+        <a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener">GitHub</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          nav.classList.toggle('scrolled', window.scrollY > 10);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  </script>
+</body>
+</html>

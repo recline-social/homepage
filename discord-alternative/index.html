@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Primary SEO ─────────────────────────────────────────────────── -->
+  <title>Recline — Encrypted Discord Alternative | No Email, No ID</title>
+  <meta name="description" content="Recline is the encrypted Discord alternative. No email, no phone, no government ID. AES-GCM-256 channels, ECDH P-256 DMs, WebRTC voice and video — free." />
+  <meta name="keywords" content="discord alternative, encrypted discord alternative, discord alternative no email, discord alternative no id, private discord, encrypted group chat, discord replacement 2026" />
+  <link rel="canonical" href="https://recline.social/discord-alternative" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- ── Open Graph ─────────────────────────────────────────────────── -->
+  <meta property="og:title" content="Recline — Encrypted Discord Alternative | No Email, No ID" />
+  <meta property="og:description" content="The Discord alternative that can't read your messages. No email. No government ID. AES-GCM-256 encryption, open-source client." />
+  <meta property="og:url" content="https://recline.social/discord-alternative" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Recline — encrypted Discord alternative, no email required" />
+
+  <!-- ── Twitter card ───────────────────────────────────────────────── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Recline — Encrypted Discord Alternative" />
+  <meta name="twitter:description" content="No email. No ID. No way for us to read your messages. AES-GCM-256 + ECDH P-256 encryption." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+
+  <!-- ── Misc ───────────────────────────────────────────────────────── -->
+  <meta name="theme-color" content="#0D0D10" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <!-- ── JSON-LD: WebPage ───────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Recline — Encrypted Discord Alternative",
+    "url": "https://recline.social/discord-alternative",
+    "description": "Recline is the encrypted Discord alternative with AES-GCM-256 channel encryption, ECDH P-256 DMs, WebRTC voice and video, and no email or government ID required.",
+    "isPartOf": { "@type": "WebSite", "url": "https://recline.social" }
+  }
+  </script>
+  <!-- ── JSON-LD: BreadcrumbList ───────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
+      { "@type": "ListItem", "position": 2, "name": "Discord Alternative", "item": "https://recline.social/discord-alternative" }
+    ]
+  }
+  </script>
+
+  <!-- ── JSON-LD: FAQPage ───────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Recline a good Discord alternative?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Recline is a full community chat platform — servers, channels, roles, voice and video calls, screen sharing, and direct messages — with end-to-end encryption that Discord doesn't offer. If you want a Discord-like experience where the operator cannot read your messages, Recline is currently one of the only options that ships that combination."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline require an email address or phone number?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Recline signup requires only a username and password. No email address, phone number, real name, or government ID is collected at any point."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Recline read my messages?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Channel messages are encrypted with AES-GCM-256 in your browser before transmission, using a key derived from your channel passphrase. The server only ever receives ciphertext. Direct messages use ECDH P-256 key exchange — the server is a blind relay that never holds the decryption key."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline require a government ID?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Recline never asks for a government ID, facial scan, or any form of identity verification. A username and password is everything required to create an account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Recline free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All core features — chat, voice, video, screen sharing, servers, channels, roles, and DMs — are free. Recline also has a Spark economy where you earn a small amount of Sparks daily just by logging in; these can be spent on animated messages and server broadcasts. Buying extra Spark packs is optional."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does Recline's encryption compare to Discord?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Discord does not use end-to-end encryption. Messages are stored in plaintext on Discord's servers and are readable by Discord employees, accessible by subpoena, and exposed in a breach. Recline uses AES-GCM-256 for channel messages and ECDH P-256 for direct messages — the server stores only ciphertext, and the decryption key never leaves your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Recline have servers, channels, and community features like Discord?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Recline has servers (communities), text channels, voice channels, server roles with granular permissions, member lists, invite links with access controls, direct messages, and friend lists. The structure is similar to Discord's, with the addition of end-to-end encryption on all message content."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Non-blocking font load — avoids render-blocking penalty -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0D0D10;
+      --bg-2:      #111115;
+      --bg-3:      #16161B;
+      --border:    rgba(255,255,255,0.08);
+      --border-h:  rgba(255,255,255,0.16);
+      --border-s:  rgba(255,255,255,0.045);
+      --card:      rgba(255,255,255,0.03);
+      --card-h:    rgba(255,255,255,0.055);
+      --accent:    #5B9CF6;
+      --accent-d:  rgba(91,156,246,0.12);
+      --accent-g:  rgba(91,156,246,0.20);
+      --green:     #4ADE80;
+      --green-d:   rgba(74,222,128,0.10);
+      --red:       #F87171;
+      --warm:      #FBBF24;
+      --warm-d:    rgba(251,191,36,0.10);
+      --text:      #F4F4F6;
+      --text-2:    rgba(244,244,246,0.55);
+      --text-3:    rgba(244,244,246,0.30);
+      --text-4:    rgba(244,244,246,0.14);
+      --mono:      'IBM Plex Mono', monospace;
+      --sans:      'DM Sans', sans-serif;
+      --r:         10px;
+      --r-sm:      7px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; position: relative; }
+    section { padding: 6rem 0; position: relative; }
+    .divider { height: 1px; background: var(--border-s); }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s cubic-bezier(.16,1,.3,1), transform 0.55s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.06s; } .d2 { transition-delay: 0.12s; }
+    .d3 { transition-delay: 0.18s; } .d4 { transition-delay: 0.24s; }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); flex-shrink: 0; }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-logo-icon svg { color: var(--accent); }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-link { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .nav-link:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+    @media (max-width: 680px) { .nav-links { display: none; } .btn-ghost { display: none; } }
+
+    /* Buttons */
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 0.4rem; background: transparent; border: 1px solid var(--border); color: var(--text-2); font-size: 0.935rem; font-weight: 500; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: border-color 0.15s, color 0.15s; }
+    .btn-secondary:hover { border-color: var(--border-h); color: var(--text); }
+
+    /* Hero */
+    .hero { padding: 9rem 0 6.5rem; }
+    .hero-inner { max-width: 760px; }
+    .hero-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.06em; margin-bottom: 2rem; animation: fade-up 0.5s 0.05s cubic-bezier(.16,1,.3,1) both; }
+    .hero-label-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.75rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; animation: fade-up 0.55s 0.12s cubic-bezier(.16,1,.3,1) both; color: var(--text); }
+    .hero-sub { font-size: clamp(0.975rem, 1.8vw, 1.065rem); color: var(--text-2); line-height: 1.75; font-weight: 400; max-width: 580px; margin-bottom: 2.5rem; animation: fade-up 0.55s 0.2s cubic-bezier(.16,1,.3,1) both; }
+    .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; animation: fade-up 0.55s 0.28s cubic-bezier(.16,1,.3,1) both; }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 4rem; padding-top: 2.5rem; border-top: 1px solid var(--border-s); animation: fade-up 0.55s 0.36s cubic-bezier(.16,1,.3,1) both; flex-wrap: wrap; }
+    .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stat-value { font-family: var(--mono); font-size: 0.84rem; font-weight: 500; color: var(--accent); }
+    .stat-label { font-size: 0.78rem; color: var(--text-3); }
+
+    /* Section heads */
+    .section-label { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .section-h2 { font-size: clamp(1.65rem, 3.5vw, 2.25rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 0.85rem; }
+    .section-body { font-size: 0.975rem; color: var(--text-2); line-height: 1.72; max-width: 520px; }
+    .section-head { margin-bottom: 3.5rem; }
+
+    /* Why cards */
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; }
+    @media (max-width: 720px) { .why-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .why-card { border: 1px solid var(--border-s); border-radius: var(--r); padding: 2rem; background: var(--card); transition: background 0.2s, border-color 0.2s; }
+    .why-card:hover { background: var(--card-h); border-color: var(--border); }
+    .why-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border-radius: 9px; margin-bottom: 1.25rem; color: var(--accent); }
+    .why-icon svg { width: 18px; height: 18px; }
+    .why-title { font-size: 0.935rem; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 0.5rem; }
+    .why-body { font-size: 0.835rem; color: var(--text-2); line-height: 1.68; }
+
+    /* Comparison table */
+    .compare-wrap { overflow-x: auto; border: 1px solid var(--border-s); border-radius: var(--r); }
+    .compare-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    .compare-table thead tr { border-bottom: 1px solid var(--border-s); }
+    .compare-table th { padding: 0.9rem 1.5rem; font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); background: var(--bg-3); text-align: left; }
+    .compare-table th:first-child { border-right: 1px solid var(--border-s); }
+    .compare-table th.col-recline { color: var(--accent); }
+    .compare-table td { padding: 0.8rem 1.5rem; font-size: 0.845rem; border-bottom: 1px solid var(--border-s); line-height: 1.5; vertical-align: top; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child { color: var(--text-2); font-size: 0.82rem; border-right: 1px solid var(--border-s); background: var(--bg-2); }
+    .compare-table tr:hover td { background: var(--card-h); }
+    .compare-table tr:hover td:first-child { background: var(--bg-3); }
+    .c-good { color: var(--green); display: flex; align-items: baseline; gap: 0.4rem; }
+    .c-bad  { color: var(--red);   display: flex; align-items: baseline; gap: 0.4rem; }
+    .c-good-mark { font-size: 0.7rem; flex-shrink: 0; }
+    .c-bad-mark  { font-size: 0.7rem; flex-shrink: 0; }
+    .c-note { font-size: 0.75rem; color: var(--text-3); margin-top: 0.15rem; display: block; }
+
+    /* Trust blocks */
+    .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .trust-grid { grid-template-columns: 1fr; } }
+    .trust-block { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .trust-head { padding: 0.65rem 1rem; font-size: 0.73rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; }
+    .trust-head.bad  { background: rgba(248,113,113,0.06); color: var(--red); border-bottom: 1px solid rgba(248,113,113,0.14); }
+    .trust-head.good { background: rgba(74,222,128,0.06); color: var(--green); border-bottom: 1px solid rgba(74,222,128,0.14); }
+    .trust-item { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.55rem 1rem; border-bottom: 1px solid var(--border-s); font-size: 0.8rem; color: var(--text-2); line-height: 1.5; }
+    .trust-item:last-child { border-bottom: none; }
+    .trust-dot-bad  { width: 4px; height: 4px; border-radius: 50%; background: var(--red); opacity: 0.6; flex-shrink: 0; margin-top: 5px; }
+    .trust-dot-good { width: 4px; height: 4px; border-radius: 50%; background: var(--green); opacity: 0.6; flex-shrink: 0; margin-top: 5px; }
+    .trust-note { margin-top: 1.25rem; padding: 0.85rem 1rem; background: var(--card); border: 1px solid var(--border-s); border-radius: var(--r-sm); font-size: 0.79rem; color: var(--text-3); line-height: 1.6; }
+    .trust-note a { color: var(--accent); text-decoration: none; }
+
+    /* Spec table */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+    .spec-panel-head { padding: 1rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.4fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.74rem; color: var(--text-3); padding-right: 1rem; display: flex; align-items: flex-start; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.845rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.77rem; color: var(--text-3); margin-top: 0.15rem; line-height: 1.45; }
+
+    /* Trust strip */
+    .trust-strip { padding: 2.5rem 0; text-align: center; }
+    .trust-strip-inner { display: flex; align-items: center; justify-content: center; gap: 0.5rem 2rem; flex-wrap: wrap; }
+    .trust-pill { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.04em; }
+    .trust-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border-h); flex-shrink: 0; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .faq-item { border-bottom: 1px solid var(--border-s); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { width: 100%; background: none; border: none; text-align: left; cursor: pointer; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--text); font-family: var(--sans); font-size: 0.915rem; font-weight: 500; transition: background 0.15s; }
+    .faq-q:hover { background: var(--card); }
+    .faq-q[aria-expanded="true"] { background: var(--card); }
+    .faq-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--text-3); transition: transform 0.2s; }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 1.5rem 1.25rem; font-size: 0.855rem; color: var(--text-2); line-height: 1.72; }
+    .faq-a.open { display: block; }
+
+    /* Security layout */
+    .security-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    @media (max-width: 820px) { .security-layout { grid-template-columns: 1fr; gap: 3rem; } }
+
+    /* Final CTA */
+    .final-cta { text-align: center; padding: 6rem 0; }
+    .final-cta .section-h2 { margin-bottom: 0.75rem; }
+    .final-cta .section-body { max-width: 460px; margin: 0 auto 2.5rem; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 440px) { .footer-inner { grid-template-columns: 1fr; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    .footer-license { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--mono); font-size: 0.69rem; color: var(--warm); background: var(--warm-d); border: 1px solid rgba(251,191,36,0.16); padding: 0.2rem 0.6rem; border-radius: 4px; text-decoration: none; font-weight: 500; transition: border-color 0.15s; }
+    .footer-license:hover { border-color: rgba(251,191,36,0.35); }
+
+    @media (max-width: 500px) { section { padding: 4.5rem 0; } .wrap { padding: 0 1.25rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav" role="navigation" aria-label="Main navigation">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#features" class="nav-link">Features</a>
+      <a href="/#security" class="nav-link">Security</a>
+      <a href="/#sparks" class="nav-link">Sparks</a>
+      <a href="https://github.com/recline-social/recline-client" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://github.com/recline-social/recline-client" class="btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" aria-label="Introduction">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-label">
+        <span class="hero-label-dot"></span>
+        Discord alternative &middot; No email &middot; E2E encrypted
+      </div>
+      <h1>The Encrypted Discord Alternative That Doesn't Know Who You Are</h1>
+      <p class="hero-sub">
+        No email address. No phone number. No government ID. End-to-end encrypted channels, voice calls, and direct messages — with an open-source client so you can verify every claim. Recline physically cannot read your messages. That's an architecture decision, not a policy one.
+      </p>
+      <div class="hero-actions">
+        <a href="https://app.recline.social" class="btn-primary">
+          Try Recline free
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+            <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="https://github.com/recline-social/recline-client" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+          Read the source
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">AES-GCM-256</span>
+          <span class="stat-label">Channel encryption</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">ECDH P-256</span>
+          <span class="stat-label">DM key exchange</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">No email</span>
+          <span class="stat-label">Required to sign up</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">No govt. ID</span>
+          <span class="stat-label">Ever</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Why switch -->
+<section aria-label="Why switch to Recline">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Why people switch</p>
+      <h2 class="section-h2 reveal d1">Three things Discord can't offer.</h2>
+      <p class="section-body reveal d2">Not feature additions. Architectural differences that change what's possible — for you and for anyone who asks Discord for your data.</p>
+    </div>
+    <div class="why-grid">
+
+      <div class="why-card reveal d1">
+        <div class="why-icon">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7.5" width="11" height="7.5" rx="1.5"/>
+            <path d="M5.5 7.5V5a3 3 0 0 1 6 0v2.5"/>
+          </svg>
+        </div>
+        <div class="why-title">Messages encrypted before they leave your device</div>
+        <div class="why-body">Discord stores your messages in plaintext — readable by employees, accessible by subpoena, and exposed in any breach. Recline uses AES-GCM-256 for channel messages, keyed from a passphrase the server never sees. A database dump returns ciphertext. There's nothing else to hand over.</div>
+      </div>
+
+      <div class="why-card reveal d2">
+        <div class="why-icon" style="background: rgba(248,113,113,0.10); color: var(--red);">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="8.5" r="6"/>
+            <path d="M8.5 5.5v4M8.5 11.5v.5"/>
+          </svg>
+        </div>
+        <div class="why-title">No identity required — ever</div>
+        <div class="why-body">Discord added government ID verification in 2026 for certain features. Recline has never required email, phone number, real name, or any form of identity verification — and the architecture doesn't change to accommodate surveillance on a bad day. A username and a password is the complete signup form.</div>
+      </div>
+
+      <div class="why-card reveal d3">
+        <div class="why-icon">
+          <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3,12 6,7 9,10 12,5 15,8"/>
+          </svg>
+        </div>
+        <div class="why-title">Open-source client — audit it yourself</div>
+        <div class="why-body">Privacy claims are easy to write. The Recline client is AGPL-3.0 on GitHub — every function that handles encryption, key derivation, and message sending is readable. No auditor's reputation standing between you and the truth of what the code actually does.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Comparison table -->
+<section aria-label="Recline vs Discord comparison">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">Feature comparison</p>
+      <h2 class="section-h2 reveal d1">Recline vs Discord.</h2>
+      <p class="section-body reveal d2">Same surface area — servers, channels, voice, video. Very different answers to the question of who can read what.</p>
+    </div>
+    <div class="compare-wrap reveal d2">
+      <table class="compare-table" role="table" aria-label="Feature comparison between Recline and Discord">
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            <th scope="col" class="col-recline">Recline</th>
+            <th scope="col">Discord</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>End-to-end encryption</td>
+            <td>
+              <span class="c-good"><span class="c-good-mark">✓</span> AES-GCM-256 channels · ECDH P-256 DMs</span>
+            </td>
+            <td>
+              <span class="c-bad"><span class="c-bad-mark">✗</span> Not encrypted</span>
+              <span class="c-note">Messages stored in plaintext on Discord's servers</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Company can read messages</td>
+            <td>
+              <span class="c-good"><span class="c-good-mark">✓</span> Impossible</span>
+              <span class="c-note">Server only stores ciphertext, holds no keys</span>
+            </td>
+            <td>
+              <span class="c-bad"><span class="c-bad-mark">✗</span> Yes — fully visible</span>
+              <span class="c-note">Used for moderation, AI features, and ad targeting</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Email required</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Never asked</span></td>
+            <td><span class="c-bad"><span class="c-bad-mark">✗</span> Required at signup</span></td>
+          </tr>
+          <tr>
+            <td>Phone number</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Never asked</span></td>
+            <td><span class="c-bad"><span class="c-bad-mark">✗</span> Often required for verification</span></td>
+          </tr>
+          <tr>
+            <td>Government ID / facial scan</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Never, under any circumstance</span></td>
+            <td>
+              <span class="c-bad"><span class="c-bad-mark">✗</span> Required for some features (2026)</span>
+              <span class="c-note">Biometric data held by third-party verification provider</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Data sold or used for ads</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> No</span></td>
+            <td><span class="c-bad"><span class="c-bad-mark">✗</span> Yes</span></td>
+          </tr>
+          <tr>
+            <td>Open-source client</td>
+            <td>
+              <span class="c-good"><span class="c-good-mark">✓</span> AGPL-3.0 on GitHub</span>
+              <span class="c-note">Every encryption function is publicly auditable</span>
+            </td>
+            <td><span class="c-bad"><span class="c-bad-mark">✗</span> Proprietary, closed source</span></td>
+          </tr>
+          <tr>
+            <td>Voice &amp; video calls</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> WebRTC P2P</span></td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> WebRTC</span></td>
+          </tr>
+          <tr>
+            <td>Screen sharing</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Up to 1440p included</span></td>
+            <td>
+              <span class="c-bad"><span class="c-bad-mark">→</span> 720p on free tier</span>
+              <span class="c-note">1080p requires Nitro subscription</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Servers, channels, roles</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Full — granular permission bitmask</span></td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> Full</span></td>
+          </tr>
+          <tr>
+            <td>Free tier</td>
+            <td><span class="c-good"><span class="c-good-mark">✓</span> All core features free</span></td>
+            <td>
+              <span class="c-bad"><span class="c-bad-mark">→</span> Limited</span>
+              <span class="c-note">Nitro unlocks screen share quality, emoji, and more</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Trust model -->
+<section aria-label="What Recline can and cannot see">
+  <div class="wrap">
+    <div class="security-layout">
+      <div>
+        <p class="section-label reveal">Transparency model</p>
+        <h2 class="section-h2 reveal d1">What the server actually holds.</h2>
+        <p class="section-body reveal d2" style="margin-bottom: 2.5rem;">
+          Most privacy claims are made in prose. Here's the specific list — what Recline's infrastructure can see and what it can't, with the cryptographic reason for each.
+        </p>
+        <div class="trust-grid reveal d3">
+          <div class="trust-block">
+            <div class="trust-head bad">Server can see</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Your username (stored in plaintext)</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Message timestamps</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Which channels you belong to</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>That a message was sent (not its content)</div>
+            <div class="trust-item"><span class="trust-dot-bad"></span>Your IP address (not logged by default)</div>
+          </div>
+          <div class="trust-block">
+            <div class="trust-head good">Server cannot see</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Message content — encrypted before sending</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>DM content — ECDH, server is a blind relay</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Your channel passphrase</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Email or phone — never collected</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Call audio or video — WebRTC is P2P</div>
+          </div>
+        </div>
+        <p class="trust-note reveal d4">
+          Recline is alpha software. Metadata minimization and forward secrecy are active development areas.
+          <a href="/privacy.html">Full privacy and security details &rarr;</a>
+        </p>
+      </div>
+
+      <div class="reveal d2">
+        <div class="spec-panel">
+          <div class="spec-panel-head">CRYPTO SPEC</div>
+          <div>
+            <div class="spec-row">
+              <span class="spec-key">channels</span>
+              <span class="spec-val">AES-GCM-256<small>Key derived from channel passphrase via PBKDF2-SHA256. Per-message random IV. Encrypted in-browser before transmission.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">direct_msgs</span>
+              <span class="spec-val">ECDH P-256 + HKDF-SHA256<small>Private key stays in your browser, cleared on logout. Server stores and delivers ciphertext only.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">passwords</span>
+              <span class="spec-val">Argon2id<small>64 MiB memory, t=3, p=4. Resistant to GPU and ASIC brute-force attacks.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">2fa</span>
+              <span class="spec-val">TOTP RFC 6238<small>Standard time-based OTP, works with any authenticator app.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">sessions</span>
+              <span class="spec-val">256-bit random hex<small>Stored in sessions table. No JWT, no cookie-based auth state.</small></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">calls</span>
+              <span class="spec-val">WebRTC DTLS-SRTP<small>Peer-to-peer media. Recline handles signaling only — never in the audio or video path.</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Trust strip -->
+<div class="trust-strip" aria-label="Trust signals">
+  <div class="wrap">
+    <div class="trust-strip-inner reveal">
+      <span class="trust-pill">No email required</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">No government ID</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">No ads</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">No data selling</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">Open-source client</span>
+      <span class="trust-sep" aria-hidden="true"></span>
+      <span class="trust-pill">E2E encrypted</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section aria-label="Frequently asked questions">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="section-label reveal">FAQ</p>
+      <h2 class="section-h2 reveal d1">Common questions.</h2>
+    </div>
+    <div class="faq-list reveal d2">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-1">
+          Is Recline a good alternative to Discord?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-1" class="faq-a">
+          Recline covers the same surface area as Discord — servers with channels and roles, voice and video calls, screen sharing, direct messages, and friend lists. The fundamental difference is encryption: Discord stores messages in plaintext, fully readable to Discord staff and accessible to law enforcement. Recline encrypts messages client-side before transmission, meaning the server only ever holds ciphertext it cannot read. For groups where that distinction matters, Recline is currently one of the only platforms that combines the Discord UX model with genuine end-to-end encryption.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-2">
+          Does Recline require an email address or phone number?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-2" class="faq-a">
+          No. Recline signup requires only a username and password. No email address, phone number, real name, or any other personal information is collected at any point during signup or use. Account recovery uses backup codes generated at the time of 2FA setup — there is no email-based password reset, because there is no email on file.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-3">
+          Can Recline read my messages?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-3" class="faq-a">
+          No, and this is not a policy claim — it's a technical constraint. Channel messages are encrypted with AES-GCM-256 in your browser before leaving it, using a key derived from your server's passphrase via PBKDF2. The server never sees the passphrase and never holds the decryption key. Direct messages use ECDH P-256 key exchange, with your private key stored locally and cleared on logout. What reaches the server is ciphertext. The source code is public on GitHub if you want to verify this yourself.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-4">
+          Does Recline require a government ID?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-4" class="faq-a">
+          No. Recline has never required a government ID, facial scan, or any form of identity document. Discord introduced mandatory identity verification for some features in 2026. Recline requires a username and a password — that is the complete list of identifying information collected, and it doesn't change based on platform policy decisions.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-5">
+          Is Recline free?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-5" class="faq-a">
+          Yes. All core features are free with no time limit — encrypted chat, voice and video calls, screen sharing up to 1440p, server creation, custom roles and permissions, direct messages, file attachments, and friend lists. Recline also has a Spark economy: a small number of Sparks are deposited to your account automatically every day you log in. Sparks can be spent on animated messages, server-wide broadcasts, and creator tips. Buying additional Sparks is optional and never required for core communication.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-6">
+          How does Recline's encryption compare to Discord's?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-6" class="faq-a">
+          Discord uses TLS for data in transit, meaning messages are protected between your browser and Discord's servers — but once they arrive, Discord holds them in readable form. This is called transport encryption, and it protects against network interception, not against the platform itself. Recline uses end-to-end encryption: messages are encrypted in your browser with AES-GCM-256 before they leave, and decrypted in the recipient's browser after arrival. The server only ever handles ciphertext. No employee access, no subpoena compliance for content (only metadata), no breach exposure of message content.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq-7">
+          Does Recline have servers, channels, and community features?
+          <svg class="faq-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg>
+        </button>
+        <div id="faq-7" class="faq-a">
+          Yes. Recline has servers (communities), text channels, voice channels with live video and screen sharing, server roles with granular bitmask permissions, channel-level permission overrides, custom invite links with access controls, direct messages, and a friend system with presence indicators. The community structure is similar to Discord's, with encryption applied to all text content.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Final CTA -->
+<section class="final-cta" aria-label="Get started">
+  <div class="wrap">
+    <p class="section-label reveal">Get started</p>
+    <h2 class="section-h2 reveal d1">Chat that can't be read. Even by us.</h2>
+    <p class="section-body reveal d2">No email. No government ID. Encrypted from your first message. Free for everything that matters.</p>
+    <div class="reveal d3">
+      <a href="https://app.recline.social" class="btn-primary">
+        Open Recline
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo" aria-label="Recline home">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Encrypted group chat. No tracking. Open-source client.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#security">Security model</a></li>
+          <li><a href="/#sparks">Sparks</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+      <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); }
+    }),
+    { threshold: 0.07, rootMargin: '0px 0px -24px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach((b) => {
+        b.setAttribute('aria-expanded', 'false');
+        const id = b.getAttribute('aria-controls');
+        document.getElementById(id)?.classList.remove('open');
+      });
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        document.getElementById(btn.getAttribute('aria-controls'))?.classList.add('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

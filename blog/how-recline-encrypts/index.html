@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>How Recline Encrypts Messages — AES-GCM-256 Explained | Recline</title>
+  <meta name="description" content="A plain-language walkthrough of AES-GCM-256 channel encryption, ECDH P-256 DM key exchange, and why the Recline server only ever stores ciphertext." />
+  <meta name="keywords" content="how recline encrypts messages, AES-GCM-256 chat encryption, end-to-end encrypted chat explained, ECDH P-256 messaging, encrypted group chat how it works" />
+  <link rel="canonical" href="https://recline.social/blog/how-recline-encrypts" />
+
+  <meta property="og:title" content="How Recline Encrypts Your Messages — and Why It Matters" />
+  <meta property="og:description" content="AES-GCM-256 channels, ECDH P-256 DMs, and the difference between TLS and end-to-end encryption — explained clearly." />
+  <meta property="og:url" content="https://recline.social/blog/how-recline-encrypts" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="How Recline encrypts messages — AES-GCM-256 explained" />
+  <meta property="article:published_time" content="2026-06-03" />
+  <meta property="article:modified_time" content="2026-06-03" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How Recline Encrypts Messages — AES-GCM-256 Explained" />
+  <meta name="twitter:description" content="AES-GCM-256 channels, ECDH P-256 DMs, PBKDF2 key derivation — how Recline's encryption works and why the server can never read your messages." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How Recline Encrypts Messages — AES-GCM-256 Explained",
+    "description": "A plain-language walkthrough of AES-GCM-256 channel encryption and ECDH P-256 DM key exchange in Recline.",
+    "image": "https://recline.social/og-image.png",
+    "url": "https://recline.social/blog/how-recline-encrypts",
+    "datePublished": "2026-06-03",
+    "dateModified": "2026-06-03",
+    "author": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" },
+    "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/android-chrome-512x512.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-recline-encrypts" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How Recline Encrypts Messages", "item": "https://recline.social/blog/how-recline-encrypts" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Non-blocking font load — avoids render-blocking penalty -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115; --bg-3: #16161B;
+      --border: rgba(255,255,255,0.08); --border-h: rgba(255,255,255,0.16); --border-s: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.03);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --green: #4ADE80; --green-d: rgba(74,222,128,0.10);
+      --red: #F87171; --warm: #FBBF24;
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30); --text-4: rgba(244,244,246,0.14);
+      --mono: 'IBM Plex Mono', monospace; --sans: 'DM Sans', sans-serif;
+      --r: 10px; --r-sm: 7px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .meta-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .meta-tag.technical { background: rgba(91,156,246,0.1); color: var(--accent); border: 1px solid rgba(91,156,246,0.2); }
+    .meta-date { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    .meta-read { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    h1.article-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .article-lede { font-size: 1.065rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border-s); }
+
+    .article-body { font-size: 0.975rem; line-height: 1.8; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 3rem 0 1rem; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.75rem; }
+    .article-body p { margin-bottom: 1.4rem; color: var(--text-2); }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body a { color: var(--accent); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4rem 1.5rem; color: var(--text-2); }
+    .article-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .article-body code { font-family: var(--mono); font-size: 0.82em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.4em; border-radius: 4px; color: var(--accent); }
+
+    .callout { margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-2); line-height: 1.7; }
+    .callout strong { color: var(--accent); }
+    .callout-green { border-left-color: var(--green); }
+    .callout-green strong { color: var(--green); }
+
+    /* Step flow */
+    .step-flow { margin: 2rem 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .step { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-s); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--accent-d); border: 1px solid rgba(91,156,246,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body { font-size: 0.815rem; color: var(--text-2); line-height: 1.65; }
+    .step-body code { font-family: var(--mono); font-size: 0.78em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.35em; border-radius: 3px; color: var(--accent); }
+
+    /* Spec panel */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 2rem 0; }
+    .spec-panel-head { padding: 0.85rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.73rem; color: var(--text-3); padding-right: 1rem; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.84rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.76rem; color: var(--text-3); margin-top: 0.15rem; }
+
+    .article-cta { margin-top: 4rem; padding: 2.5rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); text-align: center; }
+    .article-cta h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .article-cta p { font-size: 0.895rem; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.65; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-right">
+      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="article-wrap">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/blog">Blog</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>How Recline encrypts</span>
+    </nav>
+
+    <div class="article-meta">
+      <span class="meta-tag technical">Technical</span>
+      <span class="meta-date">June 3, 2026</span>
+      <span class="meta-read">8 min read</span>
+    </div>
+
+    <h1 class="article-title">How Recline Encrypts Your Messages — and Why It Matters</h1>
+
+    <p class="article-lede">
+      "We take your privacy seriously" is the sentence that appears in virtually every chat platform's privacy policy. It means nothing in technical terms. What actually matters is whether the encryption happens before your message leaves your device, or after it arrives at a server someone else controls. This is the difference — explained clearly, with the actual cryptographic primitives Recline uses, so you can read the implementation yourself and decide whether to trust it.
+    </p>
+
+    <div class="article-body">
+
+      <h2>The distinction that matters: transport vs end-to-end</h2>
+
+      <p>
+        Almost every chat platform uses TLS (Transport Layer Security) to protect your messages while they travel between your browser and the server. This protects against a third party intercepting traffic on the network — your ISP, a coffee shop Wi-Fi owner, a government doing mass surveillance of internet traffic. That protection is real and important.
+      </p>
+
+      <p>
+        What TLS doesn't protect against is the platform itself. Once the message arrives at the server over an encrypted connection, TLS has done its job. The server receives the message in plaintext, stores it in a database, and decides what to do with it. For Discord, that means the message is permanently readable by Discord employees, available to law enforcement via subpoena, and present in any breach of Discord's database.
+      </p>
+
+      <div class="callout">
+        <p><strong>The key distinction:</strong> TLS protects your messages from the network. End-to-end encryption protects your messages from the server. Most platforms offer the first. Very few offer the second.</p>
+      </div>
+
+      <p>
+        End-to-end encryption means the message is encrypted <em>before</em> leaving your device, using a key the server doesn't hold. The server receives and stores ciphertext. When the recipient opens the message, their device decrypts it using their local key. At no point does the server see readable content.
+      </p>
+
+      <p>
+        Recline uses end-to-end encryption. Here's what that means in technical terms, separately for channel messages and direct messages.
+      </p>
+
+      <h2>Channel message encryption — AES-GCM-256</h2>
+
+      <p>
+        When you join a Recline server and set up a channel, you provide a passphrase. That passphrase is never sent to the server — it exists only in your browser session. From it, Recline derives an encryption key using PBKDF2-SHA256 (Password-Based Key Derivation Function 2, using SHA-256 as the hash). The key derivation function is intentionally slow, which makes it harder to brute-force the passphrase if an attacker ever obtains the ciphertext.
+      </p>
+
+      <p>Here's what happens each time you send a message:</p>
+
+      <div class="step-flow">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3 class="step-title">Passphrase → key derivation</h3>
+            <div class="step-body">Your channel passphrase is run through <code>PBKDF2-SHA256</code> with a channel-specific salt. The output is a 256-bit AES key. This derivation happens in your browser using the Web Crypto API — the passphrase never touches the network.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3 class="step-title">Random IV generation</h3>
+            <div class="step-body">A fresh 96-bit Initialization Vector (IV) is generated using <code>crypto.getRandomValues()</code> for every single message. Reusing an IV with AES-GCM would be catastrophic — this guarantees it never happens.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3 class="step-title">AES-GCM-256 encryption</h3>
+            <div class="step-body">The message text is encrypted using <code>AES-GCM-256</code> with the derived key and the random IV. GCM (Galois/Counter Mode) provides both confidentiality and integrity — the ciphertext includes an authentication tag that detects any tampering.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3 class="step-title">Ciphertext + IV sent to server</h3>
+            <div class="step-body">Only the ciphertext and IV are transmitted. The server receives these values, stores them in PostgreSQL, and relays them to other channel members. The plaintext message never exists on the server.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3 class="step-title">Decryption on the recipient's device</h3>
+            <div class="step-body">Recipients who know the channel passphrase derive the same key locally and decrypt the ciphertext in their own browsers. Anyone without the passphrase — including Recline's server — receives bytes they cannot interpret.</div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        AES-GCM-256 is the same cipher used by the U.S. government for classified information, by Signal, by WhatsApp, and by every serious implementation of end-to-end encryption. At 256-bit key size, it has no known practical attack — the key space (2²⁵⁶ possible keys) is larger than estimates of the number of atoms in the observable universe.
+      </p>
+
+      <h2>Direct message encryption — ECDH P-256</h2>
+
+      <p>
+        Direct messages require a different approach because there's no shared passphrase — you and the person you're messaging have never been in the same room to agree on one. Recline uses ECDH (Elliptic Curve Diffie-Hellman) key exchange to solve this.
+      </p>
+
+      <p>Here's how it works:</p>
+
+      <div class="step-flow">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3 class="step-title">Each user generates a key pair</h3>
+            <div class="step-body">When you set up your Recline account, your browser generates an ECDH P-256 keypair — a public key and a private key. Your <strong>public key</strong> is uploaded to the server. Your <strong>private key never leaves your browser</strong> and is cleared when you log out.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3 class="step-title">Public key exchange via server</h3>
+            <div class="step-body">When you start a DM conversation, your browser fetches the recipient's public key from the server. They fetch yours. The server acts as a directory — it stores and delivers public keys, but cannot derive the shared secret from them alone.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3 class="step-title">Shared secret via ECDH</h3>
+            <div class="step-body">Each party independently computes the same shared secret using their own private key and the other person's public key. This is the mathematical property of Diffie-Hellman: Alice's private key + Bob's public key yields the same value as Bob's private key + Alice's public key. The server, which only has both public keys, cannot compute this secret.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3 class="step-title">Key derivation via HKDF-SHA256</h3>
+            <div class="step-body">The raw ECDH shared secret is run through <code>HKDF-SHA256</code> (HMAC-based Key Derivation Function) to produce a well-formatted AES-256 key. This step ensures the key has appropriate entropy distribution regardless of the raw ECDH output.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3 class="step-title">AES-GCM-256 encryption, as above</h3>
+            <div class="step-body">DMs are then encrypted with <code>AES-GCM-256</code> using the derived key, with a fresh random IV per message. The server stores and relays ciphertext. It is a blind relay for DM content — no keys, no plaintext, no visibility into what was said.</div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        ECDH P-256 is the elliptic curve variant of Diffie-Hellman key exchange, using the NIST P-256 curve (also known as secp256r1). It's the same key exchange mechanism used by Signal, iMessage, and most modern TLS connections. The mathematical hardness assumption underlying it — the elliptic curve discrete logarithm problem — has been studied extensively and has no known efficient attack.
+      </p>
+
+      <h2>What the server stores</h2>
+
+      <p>To be specific about what exists in Recline's PostgreSQL database:</p>
+
+      <div class="spec-panel">
+        <div class="spec-panel-head">WHAT'S IN THE DATABASE</div>
+        <div class="spec-row">
+          <span class="spec-key">messages</span>
+          <span class="spec-val">AES-GCM ciphertext + IV<small>The encrypted bytes and initialization vector. Without the channel passphrase, this is unreadable data.</small></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">dm_messages</span>
+          <span class="spec-val">AES-GCM ciphertext + IV + sender public key<small>Same encrypted format. The sender's public key is stored for historical DM decryption after key rotation.</small></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">users</span>
+          <span class="spec-val">Username + Argon2id hash + ECDH public key<small>The Argon2id hash of your password (not the password). Your public key (not the private key). No email, phone, or personal information.</small></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">sessions</span>
+          <span class="spec-val">256-bit random hex token<small>Session authentication token. No JWT, no claims, no embedded user data.</small></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key">servers</span>
+          <span class="spec-val">Server name + KDF salt<small>The salt used for key derivation. Changing the passphrase re-rolls the salt and rotates to a new key.</small></span>
+        </div>
+      </div>
+
+      <p>
+        A complete database dump of Recline contains no readable message content. Law enforcement with a valid court order receives usernames, timestamps, channel membership records, and ciphertext. The ciphertext is useless without the channel passphrase, which the server doesn't hold. For DMs, the shared secret is derived from private keys that live only in users' browsers and are cleared on logout.
+      </p>
+
+      <h2>Why open source matters for verifying this</h2>
+
+      <p>
+        Every claim in this article is verifiable. The encryption logic lives in <a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">the open-source client on GitHub</a>, primarily in <code>client/src/lib/crypto.ts</code>. The key functions are:
+      </p>
+
+      <ul>
+        <li><code>deriveKey(passphrase, salt)</code> — PBKDF2-SHA256 key derivation</li>
+        <li><code>encryptMessage(key, plaintext)</code> — AES-GCM-256 encryption with random IV</li>
+        <li><code>decryptMessage(key, ciphertext, iv)</code> — AES-GCM-256 decryption</li>
+        <li><code>generateDmKeyPair()</code> — ECDH P-256 keypair generation</li>
+        <li><code>deriveDmSharedKey(myPrivateKey, theirPublicKey)</code> — ECDH + HKDF-SHA256</li>
+      </ul>
+
+      <p>
+        All of these use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto" target="_blank" rel="noopener noreferrer">Web Crypto API</a> — the browser's built-in cryptographic primitives, implemented by the browser vendor, not Recline. Recline's code coordinates the encryption operations; the actual cryptographic work is done by code you're already trusting when you use HTTPS.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>The open-source guarantee:</strong> if any of the encryption described here were missing or broken, it would be visible in the source code. No audit required. The code is the audit.</p>
+      </div>
+
+      <h2>What this means in practice</h2>
+
+      <p>
+        The practical implications of this architecture aren't abstract. A breach of Recline's server returns encrypted data with no keys to decrypt it. A subpoena returns metadata — who talked to whom, when, in which channel — but not message content. An insider at Recline cannot read your conversations. A malicious modification of the server cannot expose plaintext, because plaintext never arrives there.
+      </p>
+
+      <p>
+        This is different from a company's security posture or a promise made in a privacy policy. Both of those can change. The architecture can't — not without breaking the client's decryption logic, which is public and would be immediately visible to anyone reading the code.
+      </p>
+
+      <p>
+        For groups where private communication actually matters — not in the abstract, but in practice — the specific mechanism of the encryption is worth understanding. "We take privacy seriously" is a sentence. AES-GCM-256 with PBKDF2-SHA256 key derivation and ECDH P-256 for DMs is a technical constraint. They are not the same thing.
+      </p>
+
+    </div>
+
+    <div class="article-cta">
+      <h3>Read the code, then try the app</h3>
+      <p>The source is on GitHub. The app is live at app.recline.social. No email required to sign up.</p>
+      <a href="https://app.recline.social" class="btn-primary">
+        Open Recline free
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Encrypted group chat. No tracking. Open-source client.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/discord-alternative">Discord alternative</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+</script>
+</body>
+</html>
