@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="recline-release" content="0.2.0-beta.1" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -159,7 +160,7 @@
         "name": "Can Recline read my messages?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Channel messages are encrypted with AES-GCM-256 in your browser before leaving it, using a key derived from your server passphrase via PBKDF2. The server never holds the decryption key and only stores ciphertext. Direct messages use ECDH P-256 key exchange — your private key never leaves your device. This is an architectural constraint, not a policy claim."
+          "text": "Current channel and DM text is encrypted by the client before transmission. Channel text uses AES-GCM-256 with a key derived from the community passphrase; DM text uses ECDH P-256, HKDF-SHA256 and AES-GCM. The service still processes routing metadata, and attachments are not end-to-end encrypted."
         }
       },
       {
@@ -1040,7 +1041,7 @@
     <div class="hero-inner">
       <div class="hero-label">
         <span class="hero-label-dot"></span>
-        Open alpha · Creator-owned communities
+        Open Beta · v0.2.0-beta.1
       </div>
       <h1>Communities where<br/>members earn their place.</h1>
       <p class="hero-sub">
@@ -1145,7 +1146,7 @@
           </svg>
         </div>
         <div class="f-title">Creator-owned spaces</div>
-        <div class="f-body">You create the server, you set the rules. Custom roles with granular permissions, invite controls, and a community structure you actually control. The server belongs to you — not to the platform.</div>
+        <div class="f-body">You create the community and set its rules. Custom roles, granular permissions, invite controls, moderation tools, and community structure give creators practical control over how their space operates.</div>
         <span class="f-tag">roles · permissions · invite links</span>
       </div>
 
@@ -1177,7 +1178,7 @@
           </svg>
         </div>
         <div class="f-title">Encrypted direct messages</div>
-        <div class="f-body">DMs use ECDH P-256 key exchange — your private key never leaves your device. The server is a blind relay: it delivers ciphertext it cannot read, and stores nothing in plain text.</div>
+        <div class="f-body">DM text uses ECDH P-256 key agreement with HKDF-SHA256 and AES-GCM. Private key material stays client-controlled; the service stores encrypted message payloads plus delivery metadata.</div>
         <span class="f-tag">ECDH P-256 · HKDF-SHA256</span>
       </div>
 
@@ -1388,7 +1389,7 @@
           <div class="trust-block">
             <div class="trust-head good">Server cannot see</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Message content — encrypted before sending</div>
-            <div class="trust-item"><span class="trust-dot-good"></span>DM content — ECDH, server is a blind relay</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>DM text content — encrypted client-side</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Your channel passphrase</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Email or phone — never asked</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Call audio or video — WebRTC is P2P</div>
@@ -1396,7 +1397,7 @@
         </div>
 
         <p class="trust-note reveal d4">
-          This is alpha software. Metadata minimization is ongoing.
+          Open Beta is live. Metadata minimization and cryptographic hardening remain ongoing.
           <a href="/privacy.html">Full privacy details, honest limitations, and our data commitments &rarr;</a>
         </p>
       </div>
@@ -1413,7 +1414,7 @@
             </div>
             <div class="spec-row">
               <span class="spec-key">dm_enc</span>
-              <span class="spec-val">ECDH P-256 + HKDF-SHA256<small>Private key lives in localStorage, cleared on logout. Server is a blind relay for DMs.</small></span>
+              <span class="spec-val">ECDH P-256 + HKDF-SHA256<small>Private keys are stored locally in IndexedDB; an encrypted account backup supports cross-device recovery.</small></span>
             </div>
             <div class="spec-row">
               <span class="spec-key">passwords</span>
@@ -1429,11 +1430,11 @@
             </div>
             <div class="spec-row">
               <span class="spec-key">voice_video</span>
-              <span class="spec-val">WebRTC mesh P2P<small>DTLS-SRTP handles media encryption. Recline servers handle signaling only.</small></span>
+              <span class="spec-val">WebRTC mesh<small>DTLS-SRTP protects media. Direct paths are preferred; TURN relay may carry encrypted media when required.</small></span>
             </div>
             <div class="spec-row">
               <span class="spec-key">database</span>
-              <span class="spec-val">Ciphertext only<small>AES-GCM ciphertext stored in PostgreSQL. Database dump reveals no message content.</small></span>
+              <span class="spec-val">Encrypted message text<small>PostgreSQL stores ciphertext for current channel and DM text, alongside routing metadata. Attachments are handled separately.</small></span>
             </div>
             <div class="spec-row">
               <span class="spec-key">source_code</span>
@@ -1504,9 +1505,9 @@
 <!-- Final CTA -->
 <section class="final-cta" aria-label="Get started">
   <div class="wrap">
-    <p class="section-label reveal">Join the alpha</p>
+    <p class="section-label reveal">Join the Open Beta</p>
     <h2 class="section-h2 reveal d1">Start your community free.</h2>
-    <p class="section-body reveal d2">No email. No credit card. Encrypted by default from your first message. The community platform is early — the direction is clear.</p>
+    <p class="section-body reveal d2">No email. No credit card. Encrypted by default from your first message. Open Beta is live — build your community and help shape what comes next.</p>
     <div class="reveal d3">
       <a href="https://app.recline.social" class="btn-primary">
         Open Recline

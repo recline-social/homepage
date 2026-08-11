@@ -805,7 +805,7 @@
       </div>
       <h1>What Recline knows.<br/>What it <span style="color:var(--accent)">doesn't.</span></h1>
       <p class="page-hero-sub">Privacy isn't the whole story — it's the trust layer that makes private communities actually private. This page is the unvarnished version: what we store, how encryption works, where the current gaps are, and what we're doing about them.</p>
-      <span class="page-hero-note">Alpha software — we're honest about current limitations. This page is updated as the model improves.</span>
+      <span class="page-hero-note">Open Beta · v0.2.0-beta.1 — current limitations are documented here and updated as the model improves.</span>
     </div>
   </div>
 </div>
@@ -829,7 +829,7 @@
           </svg>
         </div>
         <div class="summary-col-title">Encrypted by architecture</div>
-        <div class="summary-col-body">Channel messages are encrypted in your browser before they leave your device. The server stores ciphertext it cannot read. Direct messages use ECDH key exchange — Recline is a blind relay. This is a technical constraint, not a policy claim.</div>
+        <div class="summary-col-body">Current channel and DM text is encrypted by the client before transmission. The service stores encrypted message payloads plus the metadata required to route and operate the platform. Attachments are outside the message-text E2EE boundary.</div>
       </div>
       <div class="summary-col">
         <div class="summary-icon accent" aria-hidden="true">
@@ -937,7 +937,7 @@
           <span class="storage-dot-no"></span>
           <div>
             <div>Direct message content</div>
-            <div class="storage-note">E2E encrypted. Server is a blind relay — it cannot read or meaningfully store DM content.</div>
+            <div class="storage-note">Current DM text is encrypted client-side. The service stores ciphertext together with routing and delivery metadata.</div>
           </div>
         </div>
         <div class="storage-item">
@@ -965,14 +965,14 @@
           <span class="storage-dot-no"></span>
           <div>
             <div>Voice and video streams</div>
-            <div class="storage-note">WebRTC calls are peer-to-peer. Recline's servers are never in the media path — only signaling passes through.</div>
+            <div class="storage-note">WebRTC prefers direct peer-to-peer media. When direct connectivity fails, a TURN relay may carry the DTLS-SRTP-encrypted media stream.</div>
           </div>
         </div>
         <div class="storage-item">
           <span class="storage-dot-no"></span>
           <div>
             <div>Your private encryption key</div>
-            <div class="storage-note">ECDH private keys are generated on your device and stored locally. They are cleared on logout.</div>
+            <div class="storage-note">ECDH private keys are generated on your device and stored locally in IndexedDB. An optional password-encrypted backup can be stored with the account for recovery on another device.</div>
           </div>
         </div>
         <div class="storage-item">
@@ -1009,8 +1009,8 @@
         <div class="enc-step-num">2</div>
         <div>
           <div class="enc-step-title">Key derivation from your passphrase</div>
-          <div class="enc-step-body">When you joined the community, you entered a passphrase. That passphrase was fed through PBKDF2 with a per-server salt — 200,000 iterations — to produce a 256-bit AES key. The key is held in memory on your device only. It never leaves your browser and is never sent to the server.</div>
-          <span class="enc-step-tag">PBKDF2-HMAC-SHA256 · 200,000 iterations</span>
+          <div class="enc-step-body">When you joined the community, you entered a passphrase. That passphrase was fed through PBKDF2 with a per-community salt — 300,000 iterations — to produce a 256-bit AES key. The key is held in memory on your device only. It never leaves your browser and is never sent to the server.</div>
+          <span class="enc-step-tag">PBKDF2-HMAC-SHA256 · 300,000 iterations</span>
         </div>
       </div>
       <div class="enc-step">
@@ -1041,7 +1041,7 @@
         <div>
           <div class="enc-step-title">Direct messages use per-recipient key exchange</div>
           <div class="enc-step-body">DMs use ECDH P-256 key exchange so only the two participants can decrypt. Each user generates an EC keypair on their device. The shared secret is derived via HKDF-SHA256. The server routes the encrypted payload but cannot read it — it sees only the ciphertext envelope and delivery metadata.</div>
-          <span class="enc-step-tag">ECDH P-256 · HKDF-SHA256 · server-blind relay</span>
+          <span class="enc-step-tag">ECDH P-256 · HKDF-SHA256 · AES-GCM</span>
         </div>
       </div>
     </div>
@@ -1260,13 +1260,13 @@
 
 <div class="divider" role="separator"></div>
 
-<!-- Alpha limitations -->
+<!-- Open Beta limitations -->
 <section id="limitations" aria-label="Current limitations">
   <div class="wrap">
     <div class="section-head">
       <p class="section-label reveal">Honest limitations</p>
       <h2 class="section-h2 reveal d1">Where we're still improving.</h2>
-      <p class="section-body reveal d2">Recline is in alpha. The core encryption is solid. But there are real gaps — and we'd rather tell you exactly where they are than let you assume everything is finished.</p>
+      <p class="section-body reveal d2">Recline is in Open Beta. Client-side encryption protects current message text, but important limitations remain. We document them here rather than imply properties the system does not provide.</p>
     </div>
     <ul class="alpha-list reveal d3" aria-label="Current limitations">
       <li class="alpha-item">
@@ -1294,21 +1294,21 @@
         <div class="alpha-icon">!</div>
         <div>
           <div class="alpha-title">File uploads are not encrypted at rest</div>
-          <div class="alpha-body">Uploaded images and files use unguessable 128-bit random filenames — a URL that cannot be brute-forced — but the files themselves are stored as-is, not encrypted. A direct database or storage compromise would expose file content. Encrypted file storage is planned. If you need to share sensitive documents, use a channel message (encrypted) rather than a file upload.</div>
+          <div class="alpha-body">Uploaded images and files use unguessable 128-bit random filenames — a URL that cannot be brute-forced — but the files themselves are stored as-is, not encrypted. A direct database or storage compromise would expose file content. Attachments intentionally remain server-readable and are outside the message-text E2EE boundary. Do not treat uploaded files as having the same confidentiality properties as encrypted message text.</div>
         </div>
       </li>
       <li class="alpha-item">
         <div class="alpha-icon">!</div>
         <div>
           <div class="alpha-title">WebRTC call setup exposes IP addresses to call participants</div>
-          <div class="alpha-body">Voice and video calls use WebRTC P2P, which requires STUN negotiation. During STUN, your IP address becomes visible to the other participants in the call. Our TURN relay at 104.248.169.55 can proxy media to avoid this, but it is not the default mode — STUN is attempted first for quality. If IP privacy in voice calls is important to you, this is a current limitation to be aware of.</div>
+          <div class="alpha-body">Voice and video calls use WebRTC P2P, which requires STUN negotiation. During STUN, your IP address becomes visible to the other participants in the call. A TURN relay can carry encrypted media when a direct path is unavailable; direct connectivity is preferred for latency and quality. If IP privacy in voice calls is important to you, this is a current limitation to be aware of.</div>
         </div>
       </li>
       <li class="alpha-item">
         <div class="alpha-icon">!</div>
         <div>
           <div class="alpha-title">Encryption keys are tied to device storage</div>
-          <div class="alpha-body">ECDH private keys for DMs are stored in localStorage and cleared on logout. If you clear your browser data or move to a new device without going through the key rotation flow, your private key changes. Recline includes a key rotation mechanism with sender key snapshots for historical message recovery, but there is no automated cross-device sync or cloud backup of private keys. Treat your encryption keys like a password: don't clear your device data without first using the key rotation flow.</div>
+          <div class="alpha-body">DM private keys are stored locally in IndexedDB. Recline can also store a password-encrypted key backup for cross-device recovery; the service stores the encrypted backup blob, not the plaintext private key. Key rotation and recovery are available, but the current DM protocol is not a Double Ratchet and does not provide full forward secrecy or post-compromise security.</div>
         </div>
       </li>
     </ul>
@@ -1379,7 +1379,7 @@
         </div>
         <div>
           <div class="enc-step-title">Right to rectification</div>
-          <div class="enc-step-body">You can update your display name, avatar, and password at any time from Settings. Username changes are not currently supported in alpha — contact us if you need a correction. Message content is stored as encrypted ciphertext; the server holds no plaintext and cannot modify message content on your behalf.</div>
+          <div class="enc-step-body">You can update your display name, avatar, and password at any time from Settings. Profile details can be updated in Settings; availability of username changes depends on the current Open Beta client. Message content is stored as encrypted ciphertext; the server holds no plaintext and cannot modify message content on your behalf.</div>
           <span class="enc-step-tag">In-app: Settings → Edit Profile</span>
         </div>
       </div>
@@ -1613,7 +1613,7 @@
 
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 Recline</span>
-      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+      <span class="footer-mono">client-encrypted text &middot; WebRTC calls &middot; no ads</span>
       <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
     </div>
   </div>

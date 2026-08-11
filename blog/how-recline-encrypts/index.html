@@ -333,7 +333,7 @@
           <div class="step-num">5</div>
           <div class="step-content">
             <h3 class="step-title">AES-GCM-256 encryption, as above</h3>
-            <div class="step-body">DMs are then encrypted with <code>AES-GCM-256</code> using the derived key, with a fresh random IV per message. The server stores and relays ciphertext. It is a blind relay for DM content — no keys, no plaintext, no visibility into what was said.</div>
+            <div class="step-body">DM text is then encrypted with <code>AES-GCM-256</code> using the derived key, with a fresh random IV per message. The service stores and relays the encrypted payload together with routing metadata; attachments are handled separately and are not covered by message-text E2EE.</div>
           </div>
         </div>
       </div>
@@ -468,7 +468,7 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 Recline</span>
-      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+      <span class="footer-mono">client-encrypted text &middot; WebRTC calls &middot; no ads</span>
     </div>
   </div>
 </footer>

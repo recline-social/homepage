@@ -91,7 +91,7 @@
         "name": "Can Recline read my messages?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Channel messages are encrypted with AES-GCM-256 in your browser before transmission, using a key derived from your channel passphrase. The server only ever receives ciphertext. Direct messages use ECDH P-256 key exchange — the server is a blind relay that never holds the decryption key."
+          "text": "Current channel and DM text is encrypted client-side before transmission. Channel text uses AES-GCM-256 with a passphrase-derived key; DM text uses ECDH P-256, HKDF-SHA256 and AES-GCM. The service still handles routing metadata, and attachments are not end-to-end encrypted."
         }
       },
       {
@@ -488,7 +488,7 @@
             <td>Company can read messages</td>
             <td>
               <span class="c-good"><span class="c-good-mark">✓</span> Impossible</span>
-              <span class="c-note">Server only stores ciphertext, holds no keys</span>
+              <span class="c-note">Message text stored as ciphertext; attachments and metadata are handled separately</span>
             </td>
             <td>
               <span class="c-bad"><span class="c-bad-mark">✗</span> Yes — fully visible</span>
@@ -582,14 +582,14 @@
           <div class="trust-block">
             <div class="trust-head good">Server cannot see</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Message content — encrypted before sending</div>
-            <div class="trust-item"><span class="trust-dot-good"></span>DM content — ECDH, server is a blind relay</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>DM text content — encrypted client-side</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Your channel passphrase</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Email or phone — never collected</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Call audio or video — WebRTC is P2P</div>
           </div>
         </div>
         <p class="trust-note reveal d4">
-          Recline is alpha software. Metadata minimization and forward secrecy are active development areas.
+          Recline is Open Beta software. Metadata minimization, forward secrecy, and post-compromise security remain active development areas.
           <a href="/privacy.html">Full privacy and security details &rarr;</a>
         </p>
       </div>
@@ -798,7 +798,7 @@
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">&copy; 2026 Recline</span>
-      <span class="footer-mono">server-blind &middot; p2p voice &middot; zero tracking</span>
+      <span class="footer-mono">client-encrypted text &middot; WebRTC calls &middot; no ads</span>
       <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
     </div>
   </div>
