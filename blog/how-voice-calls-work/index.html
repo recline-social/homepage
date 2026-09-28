@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>How Voice Calls Work: WebRTC, STUN &amp; TURN Explained | Recline</title>
+  <meta name="description" content="Why some WebRTC voice calls connect directly while others need a TURN relay, what STUN does, and what a relay can and cannot see." />
+  <meta name="keywords" content="WebRTC voice calls, TURN relay explained, STUN vs TURN, private voice chat, WebRTC privacy, voice call relay" />
+  <link rel="canonical" href="https://recline.social/blog/how-voice-calls-work" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <meta property="og:title" content="How Voice Calls Work: WebRTC, STUN &amp; TURN Explained" />
+  <meta property="og:description" content="Direct when possible, relayed when necessary. A practical explanation of WebRTC, STUN, TURN, and what a voice relay actually sees." />
+  <meta property="og:url" content="https://recline.social/blog/how-voice-calls-work" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="How WebRTC voice calls use STUN and TURN relays" />
+  <meta property="article:published_time" content="2026-09-28" />
+  <meta property="article:modified_time" content="2026-09-28" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How Voice Calls Work: WebRTC, STUN &amp; TURN Explained" />
+  <meta name="twitter:description" content="Why some calls connect directly, why others need a relay, and what a TURN server can actually see." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="twitter:site" content="@ReclineApp" />
+  <meta name="twitter:creator" content="@ReclineApp" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="me" href="https://x.com/ReclineApp" />
+  <link rel="me" href="https://www.instagram.com/reclinechat" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How Voice Calls Work: WebRTC, STUN & TURN Explained",
+    "description": "Why some WebRTC voice calls connect directly while others need a TURN relay, what STUN does, and what a relay can and cannot see.",
+    "image": "https://recline.social/og-image.png",
+    "url": "https://recline.social/blog/how-voice-calls-work",
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-09-28",
+    "author": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" },
+    "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/android-chrome-512x512.png" } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-voice-calls-work" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog" },
+      { "@type": "ListItem", "position": 3, "name": "How Voice Calls Work", "item": "https://recline.social/blog/how-voice-calls-work" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115; --bg-3: #16161B;
+      --border: rgba(255,255,255,0.08); --border-h: rgba(255,255,255,0.16); --border-s: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.03);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --green: #4ADE80; --green-d: rgba(74,222,128,0.10);
+      --red: #F87171; --warm: #FBBF24;
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30); --text-4: rgba(244,244,246,0.14);
+      --mono: 'IBM Plex Mono', monospace; --sans: 'DM Sans', sans-serif;
+      --r: 10px; --r-sm: 7px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .meta-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .meta-tag.technical { background: rgba(91,156,246,0.1); color: var(--accent); border: 1px solid rgba(91,156,246,0.2); }
+    .meta-date { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    .meta-read { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    h1.article-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .article-lede { font-size: 1.065rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border-s); }
+
+    .article-body { font-size: 0.975rem; line-height: 1.8; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 3rem 0 1rem; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.75rem; }
+    .article-body p { margin-bottom: 1.4rem; color: var(--text-2); }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body a { color: var(--accent); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4rem 1.5rem; color: var(--text-2); }
+    .article-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .article-body code { font-family: var(--mono); font-size: 0.82em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.4em; border-radius: 4px; color: var(--accent); }
+
+    .callout { margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-2); line-height: 1.7; }
+    .callout strong { color: var(--accent); }
+    .callout-green { border-left-color: var(--green); }
+    .callout-green strong { color: var(--green); }
+
+    /* Step flow */
+    .step-flow { margin: 2rem 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .step { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-s); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--accent-d); border: 1px solid rgba(91,156,246,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body { font-size: 0.815rem; color: var(--text-2); line-height: 1.65; }
+    .step-body code { font-family: var(--mono); font-size: 0.78em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.35em; border-radius: 3px; color: var(--accent); }
+
+    /* Spec panel */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 2rem 0; }
+    .spec-panel-head { padding: 0.85rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.73rem; color: var(--text-3); padding-right: 1rem; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.84rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.76rem; color: var(--text-3); margin-top: 0.15rem; }
+
+    .article-cta { margin-top: 4rem; padding: 2.5rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); text-align: center; }
+    .article-cta h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .article-cta p { font-size: 0.895rem; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.65; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
+  </style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-right">
+      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="article-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/blog">Blog</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>How voice calls work</span>
+    </nav>
+
+    <div class="article-meta">
+      <span class="meta-tag technical">Technical</span>
+      <span class="meta-date">September 28, 2026</span>
+      <span class="meta-read">7 min read</span>
+    </div>
+
+    <h1 class="article-title">How Voice Calls Work: WebRTC, STUN &amp; TURN Explained</h1>
+
+    <p class="article-lede">
+      Voice calls look simple from the outside: press a button, wait a moment, and audio starts moving. Underneath, the browser has to discover whether two people can reach each other directly across routers, carrier networks, VPNs, and firewalls. When they cannot, a TURN relay provides a reliable fallback. Here is what each part does, why a relay is sometimes necessary, and what that relay can actually see.
+    </p>
+
+    <div class="article-body">
+      <h2>WebRTC starts by looking for a working path</h2>
+      <p>
+        Recline voice calls use WebRTC, the browser technology designed for real-time audio and video. A WebRTC connection does not assume there is one fixed route between two people. Instead, the endpoints collect possible network paths, exchange them, and test which one actually works. This process is called <strong>ICE</strong> — Interactive Connectivity Establishment.
+      </p>
+      <p>
+        A direct path is often the best outcome because it avoids an extra network hop. But the internet is full of Network Address Translation, carrier-grade NAT, restrictive corporate networks, VPNs, and firewalls. Two browsers can both have perfectly good internet access and still be unable to accept a direct connection from each other.
+      </p>
+
+      <div class="callout">
+        <p><strong>Important:</strong> not every Recline call needs a relay. WebRTC can use a direct connection when the network allows it, and fall back to a relay when a direct route cannot be established.</p>
+      </div>
+
+      <h2>STUN tells a browser how the outside world sees it</h2>
+      <p>
+        Devices on home and mobile networks usually have private IP addresses that are not directly reachable from the public internet. A <strong>STUN</strong> server helps a browser discover the public-facing address and port created by its router or network provider. That information becomes one of the candidates WebRTC can test.
+      </p>
+      <p>
+        STUN is discovery, not media relay. If the discovered route works, the two endpoints can communicate without sending the call through a TURN relay. If the route does not work, WebRTC needs another option.
+      </p>
+
+      <h2>TURN is the fallback when direct connectivity fails</h2>
+      <p>
+        <strong>TURN</strong> stands for Traversal Using Relays around NAT. A TURN server provides an address that both participants can reach. Instead of requiring the two browsers to reach each other directly, each browser sends its real-time packets to the relay, and the relay forwards those packets to the other participant.
+      </p>
+
+      <div class="step-flow">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3 class="step-title">Collect possible routes</h3>
+            <div class="step-body">WebRTC gathers local, STUN-discovered, and relay candidates that might carry the call.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3 class="step-title">Test connectivity</h3>
+            <div class="step-body">The participants exchange ICE candidates through Recline's signaling layer and test candidate pairs to find a usable path.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3 class="step-title">Use a direct route when available</h3>
+            <div class="step-body">If a direct candidate pair succeeds, media can flow directly between the endpoints.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3 class="step-title">Fall back to TURN when necessary</h3>
+            <div class="step-body">If direct connectivity is blocked, both endpoints use the TURN relay as the reachable middle hop so the call can still connect.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Does a TURN relay decrypt the conversation?</h2>
+      <p>
+        In a normal peer-to-peer WebRTC call, media is protected with WebRTC's encrypted media transport. When TURN is selected, the relay forwards those encrypted real-time packets; it does not become the endpoint that decrypts and re-encodes the conversation. In other words, using a relay changes the network route, not the endpoints of the WebRTC media session.
+      </p>
+      <p>
+        That does <strong>not</strong> make a TURN server invisible. A relay necessarily handles network traffic. It can observe connection-level information such as the IP addresses connecting to it, when an allocation exists, and the amount and timing of traffic being relayed. A TURN server should therefore be treated as infrastructure that can see network metadata, even though the relayed WebRTC media remains encrypted in transit.
+      </p>
+
+      <div class="callout callout-green">
+        <p><strong>Useful distinction:</strong> a TURN relay can be necessary for reliability without being the place where the call's audio is decrypted. It forwards the media path; it is not an anonymity system and it still sees network metadata.</p>
+      </div>
+
+      <h2>Why Recline operates a dedicated relay</h2>
+      <p>
+        Recline now operates dedicated TURN infrastructure for voice and video fallback. The goal is straightforward: when two participants cannot establish a direct route, the application should have a relay path it can depend on instead of leaving the call at the mercy of an unavailable fallback provider.
+      </p>
+      <p>
+        Operating the relay also makes the boundary clearer. Recline controls the TURN configuration and can keep its authentication short-lived, restrict the ports and protocols it exposes, monitor availability, and update the service without changing how users start a call. The relay is there to improve connectivity; users do not need to configure anything themselves.
+      </p>
+
+      <h2>Why direct calls sometimes fail even when both people are online</h2>
+      <p>
+        NAT behavior varies widely. A home router may allow a usable mapping while a mobile carrier's network does not. A company firewall may block UDP. Hotel Wi-Fi may permit ordinary HTTPS traffic while restricting peer-to-peer flows. VPN software can add another translation layer. These conditions are why a call that works directly on one network may require a relay on another.
+      </p>
+      <p>
+        TURN exists because successful internet access is not the same thing as successful inbound peer connectivity. The relay gives WebRTC a path that looks more like ordinary client-to-server networking, which is much more likely to work across restrictive networks.
+      </p>
+
+      <h2>What changes for the person making the call?</h2>
+      <p>
+        Ideally, nothing. ICE negotiation happens in the background. The application supplies the browser with the available connection options, and WebRTC selects a working candidate pair. A user should not need to know whether a particular call used a direct path or a relay just to have a conversation.
+      </p>
+      <p>
+        The practical difference appears when the network is difficult. Without a usable TURN fallback, the call may never establish media. With one, WebRTC has another route to try. That is why TURN is less about adding a new calling feature and more about making the existing calling feature work in more real-world network conditions.
+      </p>
+
+      <h2>Reliability and privacy are separate questions</h2>
+      <p>
+        It is tempting to reduce voice-call privacy to a single label, but there are different layers. WebRTC's media encryption protects the packets in transit. TURN affects where those packets travel when direct connectivity fails. Account permissions decide who is allowed to join a call. Application signaling coordinates the connection. Each layer has a different job and a different set of metadata.
+      </p>
+      <p>
+        Being precise about those boundaries matters more than making a broad claim. A relay is valuable because it improves connectivity. It should be secured because it is internet-facing infrastructure. And it should be described accurately because routing encrypted media through a server is not the same thing as pretending the server does not exist.
+      </p>
+
+      <h2>The short version</h2>
+      <ul>
+        <li><strong>WebRTC</strong> carries real-time browser audio and video.</li>
+        <li><strong>ICE</strong> tests possible network paths between participants.</li>
+        <li><strong>STUN</strong> helps discover a public-facing network candidate.</li>
+        <li><strong>TURN</strong> relays traffic when a direct path cannot be established.</li>
+        <li>A TURN relay can see network metadata associated with the relay connection.</li>
+        <li>In the peer-to-peer WebRTC model, TURN forwards encrypted media rather than terminating the media encryption.</li>
+        <li>Recline's dedicated relay is a fallback path; it is not required for every call.</li>
+      </ul>
+
+      <p>
+        That is the unglamorous but important part of reliable voice calling: a good call system is not only about microphones and buttons. It also needs a route that still works when the network between two people refuses to cooperate.
+      </p>
+    </div>
+
+    <div class="article-cta">
+      <h3>Try Recline voice calls</h3>
+      <p>Open Recline in your browser and start a voice conversation. No email address is required to create an account.</p>
+      <a href="https://app.recline.social" class="btn-primary">
+        Open Recline
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Encrypted group chat. No tracking. Open-source client.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/discord-alternative">Discord alternative</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">@ReclineApp on X</a></li>
+          <li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">@reclinechat on Instagram</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">client-encrypted text &middot; WebRTC calls &middot; no ads</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+</script>
+</body>
+</html>
