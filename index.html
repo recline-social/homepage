@@ -67,13 +67,13 @@
       "WebRTC peer-to-peer voice and video calls",
       "Screen sharing up to 1440p",
       "Server roles and granular permissions",
-      "Creator tips and server broadcasts via Sparks",
+      "Community tips and server broadcasts via Sparks",
       "No email required to sign up",
       "No phone number required",
       "Open-source client (AGPL-3.0)"
     ],
     "author": {
-      "@type": "Organization",
+      "@type": "Brand",
       "name": "Recline",
       "url": "https://recline.social"
     },
@@ -90,7 +90,7 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "Brand",
     "name": "Recline",
     "url": "https://recline.social",
     "logo": "https://recline.social/recline_favicon.svg",
@@ -128,7 +128,7 @@
         "name": "What is Recline?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Recline is a creator-owned community platform — private encrypted spaces for creators and the communities they build. Creators own their server, set their rules, and earn revenue when members engage. Members earn Sparks daily and can contribute, tip, and earn recognition. No email or phone number is required to join."
+          "text": "Recline is an independent beta platform for private online communities. Space owners can configure channels and roles; members can communicate and use Sparks for participation features. Any monetary payouts are eligibility-limited and remain subject to safety review. No email or phone number is required for basic chat registration."
         }
       },
       {
@@ -136,7 +136,7 @@
         "name": "What are Sparks?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sparks are the community economy built into Recline. Members earn Sparks automatically every day they log in. They can spend Sparks to tip creators directly, send animated messages that stand out in channels, or broadcast server-wide announcements. Creators receive Sparks from member tips and can cash them out to real money via Stripe Connect. Core chat, voice, and video are always free."
+          "text": "Sparks are the community economy built into Recline. Members earn Sparks automatically every day they log in. They can spend Sparks to tip creators directly, send animated messages that stand out in channels, or broadcast server-wide announcements. Creators can receive Sparks through eligible tips and other features. Real-money withdrawals, where available, are subject to verified earnings, eligibility and payment-provider checks. Core communication features are available without payment during the beta."
         }
       },
       {
@@ -144,7 +144,7 @@
         "name": "Does Recline require an email address?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Signup requires only a username and password. No email address, phone number, real name, or government ID is collected at any point."
+          "text": "A standard chat account can be created with a username and password, without an email or phone number. Optional payment and payout providers may require additional identity and financial information."
         }
       },
       {
@@ -152,7 +152,7 @@
         "name": "How is Recline different from Discord?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Discord is a communications tool where creators have no economic stake in their community's activity. Recline adds an economic layer: creators own their server and earn when members engage. Members earn Sparks by showing up daily — contribution is visible and rewarded, not just logged into a chat history. All channel messages are end-to-end encrypted, which Discord does not offer."
+          "text": "Discord is a communications tool where creators have no economic stake in their community's activity. Recline adds an economic layer: creators own their server and earn when members engage. Members earn Sparks by showing up daily — contribution is visible and rewarded, not just logged into a chat history. Recline focuses on client-side encryption of message text, alongside participation and creator-support tools. Unlike general-purpose community services, privacy limitations and supported encryption modes are documented on the Trust page."
         }
       },
       {
@@ -1001,6 +1001,31 @@
       section { padding: 4.5rem 0; }
       .wrap { padding: 0 1.25rem; }
     }
+
+    /* Startup readiness integration, using the existing Recline palette. */
+    .nav-links { gap: 1.1rem; }
+    .nav-explore { display: none; position: relative; color: var(--text); }
+    .nav-explore summary { cursor: pointer; list-style: none; font-size: .84rem; padding: .48rem .58rem; border: 1px solid var(--border); border-radius: var(--r-sm); }
+    .nav-explore summary::-webkit-details-marker { display: none; }
+    .nav-popover { display: grid; gap: .25rem; position: absolute; right: 0; top: calc(100% + 10px); width: 168px; padding: 10px; border: 1px solid var(--border-h); border-radius: 10px; background: #1c1c23; box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+    .nav-popover a { padding: 8px; color: var(--text); text-decoration: none; font-size: .87rem; border-radius: 5px; }
+    .nav-popover a:hover { background: var(--accent-d); }
+    .startup-clarity { background: linear-gradient(180deg,rgba(91,156,246,.04),rgba(13,13,16,0) 74%); }
+    .startup-clarity .section-body { max-width: 695px; }
+    .startup-link-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 2.5rem; }
+    .startup-link-card { display: flex; flex-direction: column; min-width: 0; gap: 10px; padding: 25px; border: 1px solid var(--border); border-radius: var(--r); text-decoration: none; color: var(--text); background: var(--card); transition: background .2s, border-color .2s, transform .2s; }
+    .startup-link-card:hover { background: var(--card-h); border-color: var(--border-h); transform: translateY(-2px); }
+    .startup-link-card strong { font-size: 1.25rem; letter-spacing: -.02em; }
+    .startup-link-card > span:not(.startup-kicker):not(.startup-arrow) { font-size: .86rem; line-height: 1.7; color: var(--text-2); flex: 1; }
+    .startup-kicker { font-family: var(--mono); color: var(--accent); font-size: .67rem; letter-spacing: .04em; text-transform: uppercase; }
+    .startup-arrow { color: var(--accent); font-size: .83rem; margin-top: .5rem; }
+    .spark-disclosure { font-size: .84rem; line-height: 1.8; color: var(--text-2); margin: 2rem 0 0; padding: 14px 17px; border-left: 2px solid var(--warm); background: rgba(251,191,36,.04); }
+    .spark-disclosure a { color: var(--text); text-underline-offset: 3px; }
+    @media (max-width: 900px) { .nav-links { display:none; } .nav-explore { display:block; } }
+    @media (max-width: 720px) { .startup-link-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 380px) { .nav-explore summary { font-size: .75rem; padding: .35rem; } .nav-right .btn-nav { padding: .42rem .55rem; } }
+    @media (prefers-reduced-motion: reduce) { .startup-link-card { transition: none; } .startup-link-card:hover { transform: none; } }
+    a:focus-visible,summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   </style>
 </head>
 <body>
@@ -1020,10 +1045,13 @@
     <div class="nav-links" role="list" aria-label="Site sections">
       <a href="#platform" class="nav-link">Platform</a>
       <a href="#sparks" class="nav-link">Sparks</a>
+      <a href="/about/" class="nav-link">About</a>
+      <a href="/roadmap/" class="nav-link">Roadmap</a>
+      <a href="/beta-status/" class="nav-link">Beta status</a>
       <a href="/privacy.html" class="nav-link">Privacy</a>
-      <a href="https://github.com/recline-social/recline-client" class="nav-link" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
     <div class="nav-right">
+      <details class="nav-explore"><summary>Explore</summary><div class="nav-popover"><a href="/about/">About</a><a href="/roadmap/">Roadmap</a><a href="/beta-status/">Beta status</a><a href="/privacy.html">Privacy</a></div></details>
       <a href="https://github.com/recline-social/recline-client" class="btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="https://app.recline.social" class="btn-nav">
         Open app
@@ -1045,7 +1073,7 @@
       </div>
       <h1>Communities where<br/>members earn their place.</h1>
       <p class="hero-sub">
-        Recline is a creator-owned community platform with private encrypted spaces, a Sparks economy that turns daily presence into real status, and no email or phone number required to join.
+        Recline is an independently developed community platform with encrypted message text, configurable Spaces and participation features. Basic chat signup needs no email or phone number. Now in open beta.
       </p>
       <div class="hero-actions">
         <a href="https://app.recline.social" class="btn-primary">
@@ -1068,8 +1096,8 @@
           <span class="stat-label">Member contribution rewarded</span>
         </div>
         <div class="stat-item">
-          <span class="stat-value">E2E encrypted</span>
-          <span class="stat-label">Private by design</span>
+          <span class="stat-value">Encrypted text</span>
+          <span class="stat-label">See scope &amp; limitations</span>
         </div>
         <div class="stat-item">
           <span class="stat-value">No email</span>
@@ -1110,7 +1138,7 @@
           </svg>
         </div>
         <div class="problem-title">Lurking is the default</div>
-        <div class="problem-body">On Discord, 90% of members never send a message. There's no incentive to participate. No recognition for showing up. No difference between a member who's been there since day one and someone who joined yesterday. Passive is indistinguishable from active.</div>
+        <div class="problem-body">In large communities, people can easily become spectators. Recline is exploring daily rewards and member recognition as ways to help participation feel worthwhile.</div>
       </div>
 
       <div class="problem-card reveal d3">
@@ -1120,7 +1148,7 @@
           </svg>
         </div>
         <div class="problem-title">Private conversations aren't private</div>
-        <div class="problem-body">Community spaces that feel intimate aren't actually private. Every message is readable by the platform, accessible to its moderation team, and stored indefinitely. "Private" is a UX label — not a technical reality. Real community trust requires real privacy guarantees.</div>
+        <div class="problem-body">A private-channel label alone does not establish end-to-end encryption. Recline focuses on client-side protection of message text while openly documenting metadata, upload and device-side limitations.</div>
       </div>
 
     </div>
@@ -1155,8 +1183,8 @@
           ✦
         </div>
         <div class="f-title">Sparks economy</div>
-        <div class="f-body">Members earn Sparks automatically every day they log in. Spend them to tip creators, send animated messages, or broadcast announcements. Status is earned by showing up — and creators earn revenue from the engagement they generate.</div>
-        <span class="f-tag">daily rewards · creator tips · cashout</span>
+        <div class="f-body">Members earn Sparks automatically every day they log in. Spend them to tip creators, send animated messages, or broadcast announcements. Status is earned by showing up — and creator-support and potential earnings features are being evaluated during the beta.</div>
+        <span class="f-tag">daily rewards · member tips · beta economy</span>
       </div>
 
       <div class="f-card reveal d3">
@@ -1190,7 +1218,7 @@
           </svg>
         </div>
         <div class="f-title">Voice &amp; video calls</div>
-        <div class="f-body">Peer-to-peer WebRTC calls — Recline is never in the audio or video path. DTLS-SRTP handles media encryption. Screen sharing up to 1440p, deafening, per-peer volume, and spatial call layouts included.</div>
+        <div class="f-body">Recline uses WebRTC with encrypted media transport for voice and video. Connectivity may require relay servers depending on the network. Screen sharing, deafening and per-peer volume are among the beta calling tools.</div>
         <span class="f-tag">WebRTC · DTLS-SRTP · P2P</span>
       </div>
 
@@ -1202,7 +1230,7 @@
           </svg>
         </div>
         <div class="f-title">No email or phone required</div>
-        <div class="f-body">Sign up with a username and a password. Nothing else is asked — at signup, or at any point after. No identity linked. No contact information stored. No way to connect your account to your real-world identity unless you choose to.</div>
+        <div class="f-body">A standard chat account needs a username and password, not an email or phone number. Payment processors may require separate verification if you opt into eligible payment or payout services.</div>
         <span class="f-tag">anonymous signup · Argon2id passwords</span>
       </div>
 
@@ -1250,13 +1278,13 @@
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Creators can cash Spark earnings out to real money via Stripe
+            Creator withdrawals, where offered, depend on verified earnings, eligibility and provider checks
           </li>
           <li class="reveal d3">
             <svg class="sp-check" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M2 7l3.5 3.5L12 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Core chat, voice, and video are always completely free
+            Core chat, voice, and video are offered without payment in the beta
           </li>
         </ul>
       </div>
@@ -1292,12 +1320,29 @@
                 <path d="M8.5 1.5l1.5 4.5h4.5l-3.5 2.5 1.5 4.5-4-3-4 3 1.5-4.5L2 6h4.5z"/>
               </svg>
             </div>
-            <div class="spark-tile-title">Creator cashout</div>
-            <div class="spark-tile-body">Connect Stripe and convert Spark earnings to real money. Contribution has real value.</div>
+            <div class="spark-tile-title">Creator payouts · under review</div>
+            <div class="spark-tile-body">Stripe Connect payout flows are being reviewed. A Sparks balance alone never proves withdrawal eligibility; availability may be restricted.</div>
           </div>
         </div>
       </div>
 
+    </div>
+  </div>
+  <div class="wrap"><p class="spark-disclosure">Beta notice: promotional, purchased and historical Sparks are not automatically cashable. Withdrawal controls and availability are being reviewed. <a href="/beta-status/">See current beta status &rarr;</a></p></div>
+</section>
+
+<div class="divider" role="separator"></div>
+
+<!-- Independent beta + roadmap: additive integration based on the supplied deployed homepage. -->
+<section class="startup-clarity" id="project" aria-labelledby="startup-clarity-heading">
+  <div class="wrap">
+    <p class="section-label reveal">The project behind Recline</p>
+    <h2 class="section-h2 reveal d1" id="startup-clarity-heading">Independently built. Transparently in beta.</h2>
+    <p class="section-body reveal d2">Recline is a self-funded community platform in active development. Explore the people and priorities behind it, what the beta currently supports, and the safeguards still being tested.</p>
+    <div class="startup-link-grid reveal d3">
+      <a href="/about/" class="startup-link-card"><span class="startup-kicker">01 / Who's building it</span><strong>About Recline</strong><span>The mission, operating model, and ways to get in touch.</span><span class="startup-arrow">Read our story &rarr;</span></a>
+      <a href="/roadmap/" class="startup-link-card"><span class="startup-kicker">02 / What's next</span><strong>Public roadmap</strong><span>Current capabilities, work in progress and longer-term ideas.</span><span class="startup-arrow">View the roadmap &rarr;</span></a>
+      <a href="/beta-status/" class="startup-link-card"><span class="startup-kicker">03 / What works today</span><strong>Beta status &amp; limits</strong><span>Clear feature descriptions, payment restrictions and privacy boundaries.</span><span class="startup-arrow">Check beta status &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -1320,7 +1365,7 @@
           <li><span class="cmp-yes">✓</span> Member contribution rewarded</li>
           <li><span class="cmp-yes">✓</span> End-to-end encrypted</li>
           <li><span class="cmp-yes">✓</span> Sparks economy built in</li>
-          <li><span class="cmp-yes">✓</span> Creator revenue from engagement</li>
+          <li><span class="cmp-yes">✓</span> Creator-support tools (beta)</li>
           <li><span class="cmp-yes">✓</span> No email required</li>
           <li><span class="cmp-yes">✓</span> Open-source client</li>
         </ul>
@@ -1330,7 +1375,7 @@
         <ul class="compare-items">
           <li><span class="cmp-no">—</span> Platform owns the relationship</li>
           <li><span class="cmp-no">—</span> Lurking equals participation</li>
-          <li><span class="cmp-no">—</span> No message encryption</li>
+          <li><span class="cmp-no">—</span> Standard text channels are not end-to-end encrypted</li>
           <li><span class="cmp-no">—</span> No native creator economy</li>
           <li><span class="cmp-no">—</span> Discord monetizes your members</li>
           <li><span class="cmp-yes">✓</span> No email required</li>
@@ -1375,7 +1420,7 @@
       <div>
         <p class="section-label reveal">Trust layer</p>
         <h2 class="section-h2 reveal d1">Privacy makes the community real.</h2>
-        <p class="section-body reveal d2" style="margin-bottom: 2.5rem;">Private communities only work if they're actually private. Encryption is the architectural guarantee — not a setting, not a promise, not something a policy update can remove.</p>
+        <p class="section-body reveal d2" style="margin-bottom: 2.5rem;">Privacy is more than a toggle. Recline aims to encrypt message text on the client, while acknowledging important limitations involving metadata, attachments, account devices and the lack of an independent security audit.</p>
 
         <div class="trust-grid reveal d3">
           <div class="trust-block">
@@ -1391,7 +1436,7 @@
             <div class="trust-item"><span class="trust-dot-good"></span>Message content — encrypted before sending</div>
             <div class="trust-item"><span class="trust-dot-good"></span>DM text content — encrypted client-side</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Your channel passphrase</div>
-            <div class="trust-item"><span class="trust-dot-good"></span>Email or phone — never asked</div>
+            <div class="trust-item"><span class="trust-dot-good"></span>Email or phone not required for chat signup</div>
             <div class="trust-item"><span class="trust-dot-good"></span>Call audio or video — WebRTC is P2P</div>
           </div>
         </div>
@@ -1464,7 +1509,7 @@
       <span class="trust-sep" aria-hidden="true"></span>
       <span class="trust-pill">E2E encrypted</span>
       <span class="trust-sep" aria-hidden="true"></span>
-      <span class="trust-pill">Creator revenue built in</span>
+      <span class="trust-pill">Creator-support features in beta</span>
     </div>
   </div>
 </div>
@@ -1507,7 +1552,7 @@
   <div class="wrap">
     <p class="section-label reveal">Join the Open Beta</p>
     <h2 class="section-h2 reveal d1">Start your community free.</h2>
-    <p class="section-body reveal d2">No email. No credit card. Encrypted by default from your first message. Open Beta is live — build your community and help shape what comes next.</p>
+    <p class="section-body reveal d2">Basic chat signup needs no email or credit card. Message-text encryption and its documented limits are part of the open beta. Help us improve Recline with real feedback.</p>
     <div class="reveal d3">
       <a href="https://app.recline.social" class="btn-primary">
         Open Recline
@@ -1543,12 +1588,15 @@
           <li><a href="#platform">Platform</a></li>
           <li><a href="#sparks">Sparks economy</a></li>
           <li><a href="#trust">Privacy</a></li>
+          <li><a href="/beta-status/">Beta status</a></li>
         </ul>
       </div>
 
       <div>
         <div class="footer-col-label">Resources</div>
         <ul class="footer-links">
+          <li><a href="/about/">About Recline</a></li>
+          <li><a href="/roadmap/">Public roadmap</a></li>
           <li><a href="/discord-alternative">vs Discord</a></li>
           <li><a href="/blog/discord-government-id">Discord ID policy</a></li>
           <li><a href="/blog/best-discord-alternatives-2026">Alternatives list</a></li>
