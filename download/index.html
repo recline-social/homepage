@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0D0D10">
+  <!-- Private preview: remove noindex only after the public release is approved. -->
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="Recline Desktop for Windows. Independently verify the installer with Recline's OpenPGP release signature.">
+  <title>Recline Desktop for Windows - Private Release Preview</title>
+  <link rel="canonical" href="https://recline.social/download/">
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="stylesheet" href="/startup.css">
+  <link rel="stylesheet" href="/download/download.css">
+  <script src="/download/download.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/" aria-label="Recline home"><span class="brand-mark">&#10022;</span>recline</a>
+      <nav class="links" aria-label="Main navigation">
+        <a href="/about/">About</a>
+        <a href="/roadmap/">Roadmap</a>
+        <a href="/beta-status/">Beta status</a>
+        <a href="/download/" aria-current="page">Desktop</a>
+        <a class="visit" href="https://app.recline.social/">Open web app &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <section class="download-hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> DESKTOP / WINDOWS</div>
+          <h1 id="hero-title">Your community.<br><span class="hero-highlight">Closer than ever.</span></h1>
+          <p class="lead">Recline Desktop brings your Spaces, messages, calls and shared files to a dedicated Windows app. Sign in with your existing Recline account.</p>
+          <div class="release-meta">
+            <span class="release-chip">Windows 10/11 &middot; x64</span>
+            <span class="release-chip">0.2.0-beta.1 &middot; RC2</span>
+            <span class="release-chip release-chip-preview" id="release-state">Private release preview</span>
+          </div>
+          <div class="download-action" id="download-action">
+            <button type="button" class="button primary download-primary" disabled>Public download not yet available</button>
+            <a class="button" href="https://app.recline.social/">Use Recline on the web</a>
+          </div>
+          <p class="download-caption" id="release-message" role="status" aria-live="polite">The signed Windows release is in final review. No installer is publicly available from this page yet.</p>
+        </div>
+        <div class="desktop-visual" aria-hidden="true">
+          <div class="window-bar"><div class="window-dots"><i></i><i></i><i></i></div><span>RECLINE / DESKTOP</span><span class="window-control">&mdash; &nbsp; &#9633; &nbsp; &times;</span></div>
+          <div class="window-body">
+            <aside class="visual-rail"><div class="rail-logo">R</div><div class="rail-item selected"></div><div class="rail-item"></div><div class="rail-item"></div><div class="rail-spacer"></div><div class="rail-avatar"></div></aside>
+            <div class="visual-sidebar"><div class="visual-space">Your Space <span>&#8964;</span></div><div class="visual-category">CHANNELS</div><div class="visual-channel on"># general</div><div class="visual-channel"># updates</div><div class="visual-channel"># lounge</div><div class="visual-category voice-label">VOICE</div><div class="visual-channel">&#9673; Hangout</div></div>
+            <div class="visual-chat"><div class="visual-chat-head"># general <span>Welcome back.</span></div><div class="visual-lines"><div class="fake-message"><i class="fake-avatar one"></i><div><b>Welcome to Recline</b><span class="fake-line long"></span><span class="fake-line mid"></span></div></div><div class="fake-message"><i class="fake-avatar two"></i><div><b>Your community, your space.</b><span class="fake-line mid"></span><span class="fake-line short"></span></div></div><div class="fake-input">Message #general ...</div></div></div>
+          </div>
+          <div class="window-foot">CONCEPTUAL UI PREVIEW &middot; NOT A LIVE SCREENSHOT</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="subtle-divider"></div>
+    <div class="wrap">
+      <section class="section-block" aria-labelledby="verification-title">
+        <div class="section-eyebrow">RELEASE INTEGRITY</div>
+        <div class="section-heading"><div><h2 id="verification-title">Verify your download.</h2><p>We publish a separate OpenPGP signature for each Windows installer. You can check the exact file before running it.</p></div><span class="verify-mark" aria-hidden="true">&#10003;</span></div>
+        <div class="verify-grid">
+          <div class="verify-card"><span class="verify-step">01 / GET THE FILES</span><h3>Download the installer and signature</h3><p>Save the MSI and its matching <code>.msi.asc</code> file in the same folder. Also obtain the official public key.</p><div id="release-assets" class="release-assets"><span class="asset-pending">Release files become available here after publication.</span></div></div>
+          <div class="verify-card"><span class="verify-step">02 / CHECK THE KEY</span><h3>Confirm the fingerprint</h3><p>Compare the complete fingerprint to Recline's independently trusted announcement. A matching email address alone is not sufficient.</p><div class="fingerprint-card"><span>RECLINE RELEASE-SIGNING KEY / ED25519</span><code id="fingerprint">D7CE B113 4DCE 0311 F248 B631 8BA0 74B4 B137 5AD6</code><button type="button" class="copy-button" data-copy="D7CEB1134DCE0311F248B6318BA074B4B1375AD6">Copy fingerprint</button></div></div>
+          <div class="verify-card"><span class="verify-step">03 / VERIFY WITH GPG</span><h3>Check the detached signature</h3><p>With <a href="https://www.gpg4win.org/" rel="noopener noreferrer" target="_blank">Gpg4win</a> installed, run these PowerShell commands inside your downloads directory:</p><div class="command-block"><pre id="verify-command">gpg --import .\recline-public-key.asc
+gpg --fingerprint releases@recline.social
+gpg --verify .\Recline_0.2.0-beta.1_x64_en-US.msi.asc .\Recline_0.2.0-beta.1_x64_en-US.msi</pre><button type="button" class="copy-button" data-copy-target="verify-command">Copy commands</button></div><p class="detail">Look for <code>Good signature</code>, and verify that GPG reports the fingerprint shown above. GPG's local trust label alone does not prove the key owner's identity.</p></div>
+        </div>
+        <div class="hash-strip"><div><strong>SHA-256 checksums</strong><p>The release also includes a signed checksum manifest for checking downloaded assets.</p></div><code id="release-hash">Published with the signed release</code></div>
+      </section>
+    </div>
+
+    <div class="subtle-divider"></div>
+    <div class="wrap">
+      <section class="section-block" aria-labelledby="before-title">
+        <div class="section-eyebrow">BEFORE YOU INSTALL</div>
+        <h2 id="before-title">What to expect.</h2>
+        <div class="cards three-up">
+          <article class="card"><div class="micro">WINDOWS INSTALLATION</div><h3>Unknown publisher</h3><p>The MSI has an OpenPGP release signature, but not a Windows Authenticode certificate. Windows may show an Unknown publisher warning, and some security settings may block installation. Do not bypass organization-managed security controls.</p></article>
+          <article class="card"><div class="micro">EXISTING ACCOUNTS</div><h3>Your Recline, on desktop</h3><p>Sign in with your existing account. You can choose whether the Windows application remembers your login on this device.</p></article>
+          <article class="card"><div class="micro">BETA SECURITY NOTE</div><h3>Understand the limits</h3><p>Space passphrases are currently transmitted to Recline's server for verification; the server can derive associated Space message keys. Uploaded attachments are not covered by text encryption. Avoid relying on this beta for highly sensitive conversations.</p></article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap foot"><div>&copy; 2026 Recline &middot; Independent, self-funded project.</div><div><a href="/">Home</a><a href="/about/">About</a><a href="/beta-status/">Status</a><a href="/privacy.html">Privacy</a><a href="mailto:hello@recline.social">Contact</a></div></div>
+  </footer>
+</body>
+</html>
