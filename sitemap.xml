@@ -60,5 +60,10 @@
     <priority>0.7</priority>
     <lastmod>2026-06-03</lastmod>
   </url>
+  <url>
+  <loc>https://recline.social/download/</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  </url>
 
 </urlset>
