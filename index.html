@@ -1026,6 +1026,30 @@
     @media (max-width: 380px) { .nav-explore summary { font-size: .75rem; padding: .35rem; } .nav-right .btn-nav { padding: .42rem .55rem; } }
     @media (prefers-reduced-motion: reduce) { .startup-link-card { transition: none; } .startup-link-card:hover { transform: none; } }
     a:focus-visible,summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  
+    /* Recline directory badges */
+    .footer-toolfame-badge {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      margin: 0.65rem 0 1rem;
+    }
+    .footer-toolfame-badge img {
+      display: block;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: left center;
+    }
+    .footer-twelve-badge {
+      display: block;
+      max-width: 100%;
+      margin: 0 0 1rem;
+    }
+    .footer-twelve-badge img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -1617,6 +1641,14 @@
        <a href="https://toolfame.com/item/recline" target="_blank" rel="noopener noreferrer">
        <img src="https://toolfame.com/badge-dark.svg" alt="Featured on toolfame.com" style="height: 54px; width: auto;" />
        </a>
+        <a href="https://twelve.tools"
+           class="footer-twelve-badge"
+           target="_blank" rel="noopener noreferrer">
+          <img src="https://twelve.tools/badge2-dark.svg"
+               alt="Featured on Twelve Tools"
+               width="148" height="40"
+               loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        </a>
         <ul class="footer-links">
           <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           <li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">@reclinesocial on Medium</a></li>

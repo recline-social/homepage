@@ -3,10 +3,10 @@
   "version": "0.2.0-beta.1",
   "tag": "desktop-0.2.0-beta.1-rc2",
   "filename": "Recline_0.2.0-beta.1_x64_en-US.msi",
-  "msiUrl": "",
-  "signatureUrl": "",
-  "publicKeyUrl": "",
-  "checksumsUrl": "",
-  "checksumsSignatureUrl": "",
-  "sha256": ""
+  "msiUrl": "https://github.com/recline-social/recline-client/releases/download/desktop-0.2.0-beta.1-rc2/Recline_0.2.0-beta.1_x64_en-US.msi",
+  "signatureUrl": "https://github.com/recline-social/recline-client/releases/download/desktop-0.2.0-beta.1-rc2/Recline_0.2.0-beta.1_x64_en-US.msi.asc",
+  "publicKeyUrl": "/security/recline-public-key.asc",
+  "checksumsUrl": "https://github.com/recline-social/recline-client/releases/download/desktop-0.2.0-beta.1-rc2/SHA256SUMS.txt",
+  "checksumsSignatureUrl": "https://github.com/recline-social/recline-client/releases/download/desktop-0.2.0-beta.1-rc2/SHA256SUMS.txt.asc",
+  "sha256": "596568bd6a90ccc6abe86ddeeadc6dcf7b2b0079a13d17a20dbef5991cdcbd52"
 }
