@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Recline&#x27;s Open-Source Chat Client Works | Recline Blog</title>
+  <meta name="description" content="A behind-the-scenes look at Recline&#x27;s React, Socket.IO, WebRTC and Tauri architecture, with practical lessons on messaging and encryption." />
+  <link rel="canonical" href="https://recline.social/blog/inside-reclines-open-source-chat-client/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:title" content="Inside Recline&#x27;s Open-Source Chat Client: React, Socket.IO, WebRTC and Tauri" />
+  <meta property="og:description" content="A behind-the-scenes look at Recline&#x27;s React, Socket.IO, WebRTC and Tauri architecture, with practical lessons on messaging and encryption." />
+  <meta property="og:url" content="https://recline.social/blog/inside-reclines-open-source-chat-client/" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="article:published_time" content="2026-10-20" />
+  <meta property="article:modified_time" content="2026-10-20" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Inside Recline&#x27;s Open-Source Chat Client: React, Socket.IO, WebRTC and Tauri" />
+  <meta name="twitter:description" content="A behind-the-scenes look at Recline&#x27;s React, Socket.IO, WebRTC and Tauri architecture, with practical lessons on messaging and encryption." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="twitter:site" content="@ReclineApp" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="me" href="https://x.com/ReclineApp" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Inside Recline's Open-Source Chat Client: React, Socket.IO, WebRTC and Tauri",
+  "description": "A behind-the-scenes look at Recline's React, Socket.IO, WebRTC and Tauri architecture, with practical lessons on messaging and encryption.",
+  "url": "https://recline.social/blog/inside-reclines-open-source-chat-client/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://recline.social/blog/inside-reclines-open-source-chat-client/"
+  },
+  "datePublished": "2026-10-20",
+  "dateModified": "2026-10-20",
+  "author": {
+    "@type": "Organization",
+    "name": "Recline Team",
+    "url": "https://recline.social/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://recline.social/android-chrome-512x512.png"
+    }
+  },
+  "image": [
+    "https://recline.social/og-image.png"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "keywords": [
+    "Engineering",
+    "Recline",
+    "open-source chat"
+  ]
+}</script>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://recline.social/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://recline.social/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Inside Recline's Open-Source Chat Client",
+      "item": "https://recline.social/blog/inside-reclines-open-source-chat-client/"
+    }
+  ]
+}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115; --bg-3: #16161B;
+      --border: rgba(255,255,255,0.08); --border-h: rgba(255,255,255,0.16); --border-s: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.03);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --green: #4ADE80; --green-d: rgba(74,222,128,0.10);
+      --red: #F87171; --warm: #FBBF24;
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30); --text-4: rgba(244,244,246,0.14);
+      --mono: 'IBM Plex Mono', monospace; --sans: 'DM Sans', sans-serif;
+      --r: 10px; --r-sm: 7px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .meta-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .meta-tag.technical { background: rgba(91,156,246,0.1); color: var(--accent); border: 1px solid rgba(91,156,246,0.2); }
+    .meta-date { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    .meta-read { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    h1.article-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .article-lede { font-size: 1.065rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border-s); }
+
+    .article-body { font-size: 0.975rem; line-height: 1.8; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 3rem 0 1rem; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.75rem; }
+    .article-body p { margin-bottom: 1.4rem; color: var(--text-2); }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body a { color: var(--accent); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4rem 1.5rem; color: var(--text-2); }
+    .article-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .article-body code { font-family: var(--mono); font-size: 0.82em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.4em; border-radius: 4px; color: var(--accent); }
+
+    .callout { margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-2); line-height: 1.7; }
+    .callout strong { color: var(--accent); }
+    .callout-green { border-left-color: var(--green); }
+    .callout-green strong { color: var(--green); }
+
+    /* Step flow */
+    .step-flow { margin: 2rem 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .step { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-s); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--accent-d); border: 1px solid rgba(91,156,246,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body { font-size: 0.815rem; color: var(--text-2); line-height: 1.65; }
+    .step-body code { font-family: var(--mono); font-size: 0.78em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.35em; border-radius: 3px; color: var(--accent); }
+
+    /* Spec panel */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 2rem 0; }
+    .spec-panel-head { padding: 0.85rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.73rem; color: var(--text-3); padding-right: 1rem; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.84rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.76rem; color: var(--text-3); margin-top: 0.15rem; }
+
+    .article-cta { margin-top: 4rem; padding: 2.5rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); text-align: center; }
+    .article-cta h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .article-cta p { font-size: 0.895rem; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.65; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
+
+  .article-body blockquote { margin: 1.65rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--accent); background: rgba(91,156,246,.06); color: var(--text-2); }
+  .article-body blockquote p { margin-bottom: 0; }
+  .article-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; display: block; overflow-x: auto; font-size: .88rem; }
+  .article-body th, .article-body td { text-align: left; padding: .7rem .85rem; border-bottom: 1px solid var(--border); vertical-align: top; min-width: 120px; }
+  .article-body th { color: var(--text); background: var(--bg-3); font-weight: 600; }
+  .article-body td { color: var(--text-2); }
+  .article-body pre { padding: 1.1rem 1.25rem; overflow-x: auto; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r); margin: 1.5rem 0; }
+  .article-body pre code { padding: 0; border: 0; color: var(--text); background: transparent; }
+  .article-body a:focus-visible, .related-links a:focus-visible, nav a:focus-visible, footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .article-body h2, .article-body h3 { scroll-margin-top: 6rem; }
+  .article-byline { font-family: var(--mono); font-size: .72rem; color: var(--text-3); }
+  .related-reading { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-s); }
+  .related-reading h2 { font-size: 1.2rem; letter-spacing: -.015em; margin-bottom: 1rem; }
+  .related-links { display: grid; gap: .75rem; }
+  .related-links a { display: block; padding: 1rem 1.2rem; border: 1px solid var(--border-s); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text); text-decoration: none; font-weight: 500; }
+  .related-links a:hover { border-color: var(--border-h); }
+  @media (max-width: 540px) { .article-wrap { padding: 6rem 1.2rem 4rem; } .article-body table { font-size: .82rem; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0s !important; } }
+</style>
+
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-right">
+      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<main id="main">
+  <article class="article-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep">/</span>
+      <a href="/blog/">Blog</a><span class="breadcrumb-sep">/</span>
+      <span aria-current="page">Inside Recline&#x27;s Open-Source Chat Client</span>
+    </nav>
+    <div class="article-meta">
+      <span class="meta-tag technical">Engineering</span>
+      <span class="meta-date">October 20, 2026</span>
+      <span class="meta-read">7 min read</span>
+      <span class="article-byline">Recline Team</span>
+    </div>
+    <h1 class="article-title">Inside Recline&#x27;s Open-Source Chat Client: React, Socket.IO, WebRTC and Tauri</h1>
+    <p class="article-lede">A practical look at the client architecture behind Recline, the boundaries between its communication systems, and the compatibility problems that matter as the project grows.</p>
+    <div class="article-body">
+<p>A chat interface is one of those products that looks straightforward until the connection drops. A user presses Send. The message appears. Then their laptop sleeps, their connection returns, and they discover the same message twice—or a reply that arrived before the message it answered.</p>
+<p>That is where communication software stops being a collection of screens and starts becoming a distributed system.</p>
+<p>At Recline, we're building a community-chat client with real-time channels, direct messages, calls and desktop support. We publish the client code so developers can see what is implemented and, just as importantly, where its current limitations are.</p>
+<p>This article walks through the building blocks of our client, what each one is responsible for, and the engineering questions we're still working through. It is an architecture explanation, not a claim that every feature or security property has been independently audited.</p>
+<h2>One product, several distinct kinds of traffic</h2>
+<p>Not everything should travel through the same connection. In the Recline client, different tasks have different jobs:</p>
+<ul>
+<li><strong>HTTP requests</strong> load account state, conversation history and other resources where a request-and-response model makes sense.</li>
+<li><strong>Socket.IO</strong> supports live updates, including the event-driven behavior needed for messaging and presence.</li>
+<li><strong>WebRTC</strong> handles live media and connection establishment for voice and video.</li>
+<li><strong>Client-side cryptography</strong> transforms supported message text before it is sent and after it is received.</li>
+<li><strong>Tauri</strong> packages the current web interface as a desktop application, with platform integrations around it.</li>
+</ul>
+<p>The frontend is built with <strong>React, TypeScript, Vite and Tailwind CSS</strong>. These choices make it possible to share interface and application logic across the browser and the current desktop build. They do not remove the need for a careful protocol between the client and server.</p>
+<p>You can inspect the <a href="https://github.com/recline-social/recline-client">public Recline client repository</a> rather than relying on this description alone.</p>
+<h2>The difference between loading messages and receiving them</h2>
+<p>Opening a conversation and receiving the next message are related, but separate operations.</p>
+<p>An HTTP request is a natural fit for fetching a page of history. The response has a defined start and end, and the client can handle loading, failure and retry states.</p>
+<p>A realtime connection is a better fit for learning that something has changed while the user is already looking at a conversation. But that introduces questions the UI must answer:</p>
+<ol>
+<li>What happens if the user sends a message while the socket is reconnecting?</li>
+<li>What constitutes a successful send: local display, server acknowledgement, or delivery to another device?</li>
+<li>If the same event arrives twice, how do we avoid displaying two messages?</li>
+<li>After reconnection, how do we detect events missed while offline?</li>
+<li>Can the UI distinguish a failed send from one that is merely taking longer than expected?</li>
+</ol>
+<p>These are general protocol-design questions, not promises that every edge case is already solved in Recline. They are also the questions we'd put into automated tests before trusting a rewritten native client with a user's messages.</p>
+<p>A useful design rule is to treat <strong>server-assigned message identity and authoritative history</strong> as more reliable than an optimistic bubble drawn on one device. The interface can respond immediately, but it must be able to reconcile that immediate display with the server's eventual answer.</p>
+<h2>Where encryption sits in the architecture</h2>
+<p>The fact that a client uses encryption says little on its own. You also need to understand where keys are derived, which data is encrypted, and what the server can still observe.</p>
+<p>Recline's current client code includes <strong>AES-256-GCM</strong> for supported encrypted message text. For Space text, it derives a key using <strong>PBKDF2-SHA256</strong> with 300,000 iterations in the archived implementation. For DMs, it uses <strong>P-256 ECDH</strong> key agreement and <strong>HKDF-SHA256</strong> to derive message-encryption keys.</p>
+<p>Those primitives have different roles: PBKDF2 derives key material from a passphrase, ECDH establishes shared secret material between parties, HKDF derives usable keys from that material, and AES-GCM encrypts and authenticates data. Choosing known primitives is preferable to inventing an encryption scheme, but the total security of a system depends on much more than algorithm names.</p>
+<p><strong>There is an important current limitation:</strong> the existing Space access protocol sends the Space passphrase to the backend during verification. Although supported Space text is encrypted client-side, this is not a server-blind design. Attachments are also handled separately from encrypted text. A database containing ciphertext is only one piece of the threat model.</p>
+<p>DM encryption has a different key lifecycle. In the current web client, key handling also involves browser storage and encrypted key backups. A second client must reproduce the exact message formats and key-recovery behavior; simply implementing the same cryptographic algorithms is not sufficient.</p>
+<p>Developers can review the relevant client files in the repository, including <a href="https://github.com/recline-social/recline-client/blob/main/src/lib/crypto.ts"><code>src/lib/crypto.ts</code></a> and <a href="https://github.com/recline-social/recline-client/blob/main/src/hooks/useDmKeys.ts"><code>src/hooks/useDmKeys.ts</code></a>. The implementation and its tests are a better starting point for evaluating these boundaries than an unqualified encryption slogan.</p>
+<h2>Voice calling is a different protocol problem</h2>
+<p>A message can wait in a queue while a network connection recovers. A live voice call cannot hide a five-second interruption in the same way.</p>
+<p>Recline's client uses WebRTC for live calls. WebRTC negotiates a media connection, searches for viable network paths and may use a TURN relay when direct connectivity isn't possible. Calls also have to manage permissions, device changes, audio processing and reconnection.</p>
+<p>This distinction is useful when debugging. A working Socket.IO connection does not prove that microphone access works. A working camera preview does not prove that the remote peer can receive media. And successful peer-to-peer media on one home network doesn't establish that a call will work behind an enterprise firewall.</p>
+<p>We document the path-selection side in <a href="/blog/how-voice-calls-work/">How Voice Calls Work: WebRTC, STUN &amp; TURN</a>. The implementation is visible in <a href="https://github.com/recline-social/recline-client/blob/main/src/lib/webrtc.ts"><code>src/lib/webrtc.ts</code></a>.</p>
+<h2>Why the desktop shell doesn't make the UI native</h2>
+<p>The distributed Windows desktop beta uses <strong>Tauri 2</strong>. Tauri gives us a desktop shell around the React interface and access to native capabilities through its Rust integration. On Windows, that interface is rendered through WebView2. On macOS, Tauri uses WebKit.</p>
+<p>That is a useful reuse strategy: improvements to the main web interface can often benefit the desktop experience too. But it also means that media APIs, browser storage, permission prompts and authentication flows need platform-specific testing.</p>
+<p>A future WinUI 3 client with no WebView would take a different path. It could use Windows controls directly, but it would also need its own implementation of application state, realtime communication, key handling, and media integration. The backend does not need to be replaced merely because the frontend technology changes—but compatibility becomes a first-class engineering requirement.</p>
+<p>We compare those approaches in <a href="/blog/webview-vs-native-desktop-chat/">WebView vs Native Desktop Apps</a>.</p>
+<h2>Five checks for any open-source chat client</h2>
+<p>If you're evaluating a chat application, including ours, these are more useful questions than a features list:</p>
+<ol>
+<li><strong>How are message sends acknowledged and retried?</strong> Ask what happens after a disconnect, not just on a good network.</li>
+<li><strong>Which data is encrypted, and where are the keys?</strong> Separate message text, uploads, credentials and metadata.</li>
+<li><strong>Can a new device recover old conversations safely?</strong> Inspect backup and migration behavior before changing cryptographic storage.</li>
+<li><strong>How does calling behave on difficult networks?</strong> Test different NATs, denied permissions and relay-only connections.</li>
+<li><strong>Does the public code match the shipped product?</strong> Look for reproducible builds, release provenance and clear limitations.</li>
+</ol>
+<p>Open source makes inspection possible; it doesn't replace a security audit or reliability testing. We believe those are good reasons to publish our client code and explain the trade-offs as we make them.</p>
+<h2>What we're building toward</h2>
+<p>The long-term goal is not to preserve React or Tauri forever. It's to make Recline's communication behavior stable enough that multiple trustworthy clients can implement it: web, current desktop, and potentially future native Windows and Mac applications.</p>
+<p>That means treating message formats, key formats, acknowledgements and recovery as compatibility contracts—not incidental details hidden in a component.</p>
+<p>If you'd like to inspect the implementation or offer technical feedback, start with the <a href="https://github.com/recline-social/recline-client">Recline client source on GitHub</a>. If you're evaluating the product itself, see <a href="/beta-status/">Recline's current beta status</a> and the <a href="https://recline.social/">main website</a>. We also post development updates on <a href="https://x.com/ReclineApp">X</a>.</p>
+
+    </div>
+    <aside class="related-reading" aria-label="Related reading">
+      <h2>Keep reading</h2>
+      <div class="related-links">
+          <a href="/blog/how-to-build-an-online-community-people-return-to/">How to Build a Community People Return To &rarr;</a>
+          <a href="/blog/webview-vs-native-desktop-chat/">WebView vs Native Desktop Apps &rarr;</a>
+          <a href="/beta-status/">Recline Beta Status and Limitations &rarr;</a>
+      </div>
+    </aside>
+    <div class="article-cta">
+      <h3>Explore the code behind Recline</h3>
+      <p>Review the open-source client implementation and follow its ongoing development.</p>
+      <a href="https://github.com/recline-social/recline-client" class="btn-primary">Explore the client on GitHub &rarr;</a>
+    </div>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Community chat, encrypted text and an open-source client.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/discord-alternative">Discord alternative</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">@ReclineApp on X</a></li>
+          <li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">@reclinechat on Instagram</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">open-source client &middot; WebRTC calls &middot; in active beta</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+</script>
+</body>
+</html>

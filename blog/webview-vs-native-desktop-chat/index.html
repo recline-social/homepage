@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebView vs Native Desktop Apps for Chat | Recline Blog</title>
+  <meta name="description" content="How Tauri WebViews compare with native WinUI 3 desktop apps for chat: performance, WebRTC, encryption compatibility and maintenance." />
+  <link rel="canonical" href="https://recline.social/blog/webview-vs-native-desktop-chat/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:title" content="WebView vs Native Desktop Apps: What Actually Changes for Chat Software?" />
+  <meta property="og:description" content="How Tauri WebViews compare with native WinUI 3 desktop apps for chat: performance, WebRTC, encryption compatibility and maintenance." />
+  <meta property="og:url" content="https://recline.social/blog/webview-vs-native-desktop-chat/" />
+  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="article:published_time" content="2026-10-20" />
+  <meta property="article:modified_time" content="2026-10-20" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WebView vs Native Desktop Apps: What Actually Changes for Chat Software?" />
+  <meta name="twitter:description" content="How Tauri WebViews compare with native WinUI 3 desktop apps for chat: performance, WebRTC, encryption compatibility and maintenance." />
+  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="twitter:site" content="@ReclineApp" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="me" href="https://x.com/ReclineApp" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "WebView vs Native Desktop Apps: What Actually Changes for Chat Software?",
+  "description": "How Tauri WebViews compare with native WinUI 3 desktop apps for chat: performance, WebRTC, encryption compatibility and maintenance.",
+  "url": "https://recline.social/blog/webview-vs-native-desktop-chat/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://recline.social/blog/webview-vs-native-desktop-chat/"
+  },
+  "datePublished": "2026-10-20",
+  "dateModified": "2026-10-20",
+  "author": {
+    "@type": "Organization",
+    "name": "Recline Team",
+    "url": "https://recline.social/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://recline.social/android-chrome-512x512.png"
+    }
+  },
+  "image": [
+    "https://recline.social/og-image.png"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "keywords": [
+    "Desktop",
+    "Recline",
+    "open-source chat"
+  ]
+}</script>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://recline.social/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://recline.social/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "WebView vs Native Desktop Apps",
+      "item": "https://recline.social/blog/webview-vs-native-desktop-chat/"
+    }
+  ]
+}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115; --bg-3: #16161B;
+      --border: rgba(255,255,255,0.08); --border-h: rgba(255,255,255,0.16); --border-s: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.03);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --green: #4ADE80; --green-d: rgba(74,222,128,0.10);
+      --red: #F87171; --warm: #FBBF24;
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30); --text-4: rgba(244,244,246,0.14);
+      --mono: 'IBM Plex Mono', monospace; --sans: 'DM Sans', sans-serif;
+      --r: 10px; --r-sm: 7px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .meta-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .meta-tag.technical { background: rgba(91,156,246,0.1); color: var(--accent); border: 1px solid rgba(91,156,246,0.2); }
+    .meta-date { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    .meta-read { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    h1.article-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .article-lede { font-size: 1.065rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border-s); }
+
+    .article-body { font-size: 0.975rem; line-height: 1.8; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 3rem 0 1rem; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.75rem; }
+    .article-body p { margin-bottom: 1.4rem; color: var(--text-2); }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body a { color: var(--accent); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4rem 1.5rem; color: var(--text-2); }
+    .article-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .article-body code { font-family: var(--mono); font-size: 0.82em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.4em; border-radius: 4px; color: var(--accent); }
+
+    .callout { margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-2); line-height: 1.7; }
+    .callout strong { color: var(--accent); }
+    .callout-green { border-left-color: var(--green); }
+    .callout-green strong { color: var(--green); }
+
+    /* Step flow */
+    .step-flow { margin: 2rem 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .step { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-s); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--accent-d); border: 1px solid rgba(91,156,246,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body { font-size: 0.815rem; color: var(--text-2); line-height: 1.65; }
+    .step-body code { font-family: var(--mono); font-size: 0.78em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.35em; border-radius: 3px; color: var(--accent); }
+
+    /* Spec panel */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 2rem 0; }
+    .spec-panel-head { padding: 0.85rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.73rem; color: var(--text-3); padding-right: 1rem; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.84rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.76rem; color: var(--text-3); margin-top: 0.15rem; }
+
+    .article-cta { margin-top: 4rem; padding: 2.5rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); text-align: center; }
+    .article-cta h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .article-cta p { font-size: 0.895rem; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.65; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
+
+  .article-body blockquote { margin: 1.65rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--accent); background: rgba(91,156,246,.06); color: var(--text-2); }
+  .article-body blockquote p { margin-bottom: 0; }
+  .article-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; display: block; overflow-x: auto; font-size: .88rem; }
+  .article-body th, .article-body td { text-align: left; padding: .7rem .85rem; border-bottom: 1px solid var(--border); vertical-align: top; min-width: 120px; }
+  .article-body th { color: var(--text); background: var(--bg-3); font-weight: 600; }
+  .article-body td { color: var(--text-2); }
+  .article-body pre { padding: 1.1rem 1.25rem; overflow-x: auto; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r); margin: 1.5rem 0; }
+  .article-body pre code { padding: 0; border: 0; color: var(--text); background: transparent; }
+  .article-body a:focus-visible, .related-links a:focus-visible, nav a:focus-visible, footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .article-body h2, .article-body h3 { scroll-margin-top: 6rem; }
+  .article-byline { font-family: var(--mono); font-size: .72rem; color: var(--text-3); }
+  .related-reading { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-s); }
+  .related-reading h2 { font-size: 1.2rem; letter-spacing: -.015em; margin-bottom: 1rem; }
+  .related-links { display: grid; gap: .75rem; }
+  .related-links a { display: block; padding: 1rem 1.2rem; border: 1px solid var(--border-s); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text); text-decoration: none; font-weight: 500; }
+  .related-links a:hover { border-color: var(--border-h); }
+  @media (max-width: 540px) { .article-wrap { padding: 6rem 1.2rem 4rem; } .article-body table { font-size: .82rem; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0s !important; } }
+</style>
+
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a href="/" class="nav-logo" aria-label="Recline home">
+      <div class="nav-logo-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="nav-wordmark">Recline</span>
+    </a>
+    <div class="nav-right">
+      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="https://app.recline.social" class="btn-nav">
+        Open app
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<main id="main">
+  <article class="article-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep">/</span>
+      <a href="/blog/">Blog</a><span class="breadcrumb-sep">/</span>
+      <span aria-current="page">WebView vs Native Desktop Apps</span>
+    </nav>
+    <div class="article-meta">
+      <span class="meta-tag technical">Desktop</span>
+      <span class="meta-date">October 20, 2026</span>
+      <span class="meta-read">6 min read</span>
+      <span class="article-byline">Recline Team</span>
+    </div>
+    <h1 class="article-title">WebView vs Native Desktop Apps: What Actually Changes for Chat Software?</h1>
+    <p class="article-lede">Comparing Tauri, WinUI 3 and native macOS development through the lens of messaging, encryption, calls and maintenance—not just startup speed.</p>
+    <div class="article-body">
+<p>“Is it a real desktop app, or just a website in a window?” sounds like a simple question. For communication software, it has a surprisingly complicated answer.</p>
+<p>An app can use native windows, desktop notifications, secure credential storage and an operating-system installer while still rendering its main interface through a WebView. Another app can render every button with native controls but implement its network and cryptography layers poorly.</p>
+<p>Neither label automatically tells you whether an app is fast, private or reliable.</p>
+<p>We're exploring these trade-offs while developing Recline, whose current Windows desktop beta uses Tauri and a React interface. Here's how we'd evaluate a WebView-based client against a genuinely native Windows implementation—and why the answer depends on what you're trying to improve.</p>
+<h2>What a WebView desktop client actually is</h2>
+<p>A <strong>WebView</strong> is an embedded browser engine used to render an application's interface. It is not the same thing as opening a normal browser tab, even though many familiar web APIs remain available.</p>
+<p>For Recline's current Tauri 2 client, the interface is developed with React, TypeScript and CSS. On Windows, Tauri uses Microsoft's WebView2 runtime. On macOS, it uses WebKit. Rust code and Tauri plugins can provide access to desktop capabilities that would otherwise require additional browser permission flows.</p>
+<p>That arrangement has advantages:</p>
+<ul>
+<li><strong>Shared UI code.</strong> The web application and desktop client can reuse components and much of their behavior.</li>
+<li><strong>Faster feature iteration.</strong> A frontend change doesn't require rebuilding a separate native control tree.</li>
+<li><strong>Existing browser APIs.</strong> WebRTC, text editing and parts of the client-side crypto implementation already have mature web interfaces.</li>
+<li><strong>Smaller implementation surface.</strong> A lean team can support multiple platforms without writing each screen independently.</li>
+</ul>
+<p>The drawbacks are also real. Rendering and memory behavior depend partly on the underlying WebView. Web APIs may differ between WebView2 and WebKit. Desktop permissions, media capture and storage can behave differently from the browser a developer used during local testing.</p>
+<p>The important point is that <strong>WebView-based does not mean fake</strong>, and <strong>native does not mean automatically better</strong>. Those are implementation descriptions, not quality ratings.</p>
+<h2>What “no WebView” would mean on Windows</h2>
+<p>A genuinely native Windows interface could be built with <strong>WinUI 3 and XAML</strong>, using C# or another supported .NET language for application logic. Windows controls would replace the HTML and CSS interface.</p>
+<p>This would mean more than redesigning the sidebar. The implementation would need replacements for:</p>
+<table>
+<thead>
+<tr>
+  <th>Current responsibility</th>
+  <th>Web-oriented client</th>
+  <th>Native Windows approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Screens and navigation</td>
+  <td>React components and CSS</td>
+  <td>WinUI controls and XAML</td>
+</tr>
+<tr>
+  <td>HTTP requests</td>
+  <td>Browser <code>fetch</code></td>
+  <td>Native HTTP client</td>
+</tr>
+<tr>
+  <td>Realtime events</td>
+  <td>Socket.IO JavaScript client</td>
+  <td>Compatible native Socket.IO implementation</td>
+</tr>
+<tr>
+  <td>Text encryption</td>
+  <td>Web Crypto APIs</td>
+  <td>Carefully matched native cryptography</td>
+</tr>
+<tr>
+  <td>Local key persistence</td>
+  <td>Browser storage and backups</td>
+  <td>Protected Windows key storage and recovery</td>
+</tr>
+<tr>
+  <td>Voice/video and sharing</td>
+  <td>Browser WebRTC and media APIs</td>
+  <td>Native media/WebRTC and capture integration</td>
+</tr>
+<tr>
+  <td>Notifications</td>
+  <td>Web/desktop bridge</td>
+  <td>Windows notification APIs</td>
+</tr>
+</tbody>
+</table>
+<p>A native rewrite might bring better operating-system integration or different performance characteristics. It would also create a second frontend with its own accessibility, security and release-testing responsibilities.</p>
+<p>It is therefore a <strong>rewrite</strong>, not a switch in Tauri settings.</p>
+<h2>The largest risk is compatibility, not buttons</h2>
+<p>Recline's current client encrypts supported message text before sending it. It includes AES-GCM-based encrypted text, PBKDF2-derived Space keys, and DM key agreement using P-256 ECDH with HKDF.</p>
+<p>A native replacement must reproduce the <strong>exact serialized formats and key lifecycle</strong> used by existing accounts, not merely choose algorithms with the same names. Differences in byte encoding, nonce handling, JSON Web Key serialization, or recovery behavior can leave users unable to decrypt historical conversations.</p>
+<p>That suggests a sensible first prototype milestone: not a complete server-and-channel UI, but a native test that can decrypt a known message produced by the web client and encrypt a message the web client can read.</p>
+<p>There is also an important current security boundary: Recline's Space passphrase is sent to the server during verification in the existing protocol. Replacing WebView with native controls would not change that. Protocol improvements must be designed and reviewed separately from UI technology.</p>
+<h2>Voice and video make the comparison harder</h2>
+<p>In a chat client, the expensive work often happens outside the list of messages: device capture, echo cancellation, screen sharing, network negotiation and rendering live video.</p>
+<p>WebRTC provides mature browser APIs for much of that workflow. Moving to native Windows doesn't eliminate WebRTC; it changes which implementation and bindings you need to integrate and maintain.</p>
+<p>A realistic native prototype should test:</p>
+<ol>
+<li>Microphone and camera permission failures, not just the successful path.</li>
+<li>Audio device switching while a call is active.</li>
+<li>Screen sharing across multiple monitors and different scaling settings.</li>
+<li>Calls that require a TURN relay rather than a direct path.</li>
+<li>Reconnection after sleep, network loss or device changes.</li>
+</ol>
+<p>A blank native window that loads channel names is comparatively easy. A reliable, interoperable calling client is a much more meaningful milestone.</p>
+<p>For the underlying network mechanics, read <a href="/blog/how-voice-calls-work/">our explanation of WebRTC, STUN and TURN</a>.</p>
+<h2>How we'd measure the difference fairly</h2>
+<p>If a project is considering a rewrite, it's worth defining success before writing the second implementation.</p>
+<p>We'd measure both clients on the same Windows machine and the same account using repeatable tasks:</p>
+<ul>
+<li><strong>Cold start:</strong> time from launch to a usable conversation view.</li>
+<li><strong>Responsiveness:</strong> scroll, search and message-composer latency in a large channel.</li>
+<li><strong>Memory and CPU:</strong> idle behavior and sustained activity during a call.</li>
+<li><strong>Reliability:</strong> successful sends and recovery after connectivity failures.</li>
+<li><strong>Media:</strong> call setup time, audio stability and screen-sharing behavior.</li>
+<li><strong>Accessibility:</strong> keyboard navigation, screen-reader announcements and scaling.</li>
+<li><strong>Security:</strong> signed updates, key storage, authentication and cross-client encrypted-message tests.</li>
+</ul>
+<p>A native implementation might win some tests and lose others. A decision should be based on the workload your members actually care about, not a blanket claim that “native is faster.”</p>
+<h2>macOS is a related—but different—decision</h2>
+<p>A Mac build based on the existing Tauri app would reuse much of the React UI, but still need macOS-specific Keychain integration, permission handling and media tests. A fully native SwiftUI/AppKit client would be a separate undertaking.</p>
+<p>That gives Recline two possible development tracks: use Tauri to reach Mac users sooner, and prototype a no-WebView Windows client to see whether the additional engineering delivers a better experience. Both require explicit compatibility testing with the existing backend.</p>
+<p>Neither should be described as released until a working build has passed the relevant platform checks. For the currently distributed client and its limitations, consult <a href="/download/">Recline's download page</a> and <a href="/beta-status/">beta status</a>.</p>
+<h2>The engineering decision we keep coming back to</h2>
+<p>The most valuable asset in a cross-platform communication app isn't its rendering framework. It's a <strong>stable, documented agreement about messages, authentication, encryption, recovery and realtime events</strong>.</p>
+<p>When that agreement is testable, teams can experiment with React, WinUI or SwiftUI without compromising existing conversations. When it isn't, every interface rewrite becomes a risky protocol migration.</p>
+<p>We're making those contracts a priority as Recline develops. The <a href="https://github.com/recline-social/recline-client">client source on GitHub</a> is available for inspection, and we share updates on <a href="https://x.com/ReclineApp">X</a>. If you're building desktop communication software yourself, the most useful advice we can offer is simple: benchmark the entire user journey—not just the UI toolkit.</p>
+
+    </div>
+    <aside class="related-reading" aria-label="Related reading">
+      <h2>Keep reading</h2>
+      <div class="related-links">
+          <a href="/blog/inside-reclines-open-source-chat-client/">Inside Recline&#x27;s Open-Source Chat Client &rarr;</a>
+          <a href="/blog/how-to-build-an-online-community-people-return-to/">How to Build a Community People Return To &rarr;</a>
+          <a href="/blog/how-voice-calls-work/">How Voice Calls Work &rarr;</a>
+      </div>
+    </aside>
+    <div class="article-cta">
+      <h3>Follow the desktop experiments</h3>
+      <p>The Tauri client is open-source. Native Windows and macOS work should be judged by builds and compatibility tests, not announcements.</p>
+      <a href="https://github.com/recline-social/recline-client" class="btn-primary">Inspect the client source &rarr;</a>
+    </div>
+  </article>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
+              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="footer-wordmark">Recline</span>
+        </a>
+        <p class="footer-tagline">Community chat, encrypted text and an open-source client.</p>
+      </div>
+      <div>
+        <div class="footer-col-label">Product</div>
+        <ul class="footer-links">
+          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/discord-alternative">Discord alternative</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Open source</div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">@ReclineApp on X</a></li>
+          <li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">@reclinechat on Instagram</a></li>
+          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-label">Legal</div>
+        <ul class="footer-links">
+          <li><a href="/privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:hello@recline.social">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 Recline</span>
+      <span class="footer-mono">open-source client &middot; WebRTC calls &middot; in active beta</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+</script>
+</body>
+</html>

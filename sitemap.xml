@@ -32,7 +32,7 @@
     <loc>https://recline.social/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-20</lastmod>
   </url>
 
   <!-- Blog posts -->
@@ -64,6 +64,26 @@
   <loc>https://recline.social/download/</loc>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
+  </url>
+
+  <!-- Recline new editorial posts -->
+  <url>
+    <loc>https://recline.social/blog/inside-reclines-open-source-chat-client/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://recline.social/blog/how-to-build-an-online-community-people-return-to/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://recline.social/blog/webview-vs-native-desktop-chat/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-10-20</lastmod>
   </url>
 
 </urlset>
