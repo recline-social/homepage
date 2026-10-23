@@ -995,6 +995,28 @@
       transition: border-color 0.15s;
     }
     .footer-license:hover { border-color: rgba(251,191,36,0.35); }
+    .footer-toolfame-badge {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      margin: 0.65rem 0 1rem;
+    }
+    .footer-toolfame-badge img {
+      display: block;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: left center;
+    }
+    .footer-twelve-badge {
+      display: block;
+      max-width: 100%;
+      margin: 0 0 1rem;
+    }
+    .footer-twelve-badge img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
 
     /* ── Misc ─────────────────────────────────────────── */
     @media (max-width: 500px) {
@@ -1026,63 +1048,7 @@
     @media (max-width: 380px) { .nav-explore summary { font-size: .75rem; padding: .35rem; } .nav-right .btn-nav { padding: .42rem .55rem; } }
     @media (prefers-reduced-motion: reduce) { .startup-link-card { transition: none; } .startup-link-card:hover { transform: none; } }
     a:focus-visible,summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-  
-    /* Recline directory badges */
-    .footer-toolfame-badge {
-      display: block;
-      width: 100%;
-      max-width: 200px;
-      margin: 0.65rem 0 1rem;
-    }
-    .footer-toolfame-badge img {
-      display: block;
-      max-width: 100%;
-      object-fit: contain;
-      object-position: left center;
-    }
-    .footer-twelve-badge {
-      display: block;
-      max-width: 100%;
-      margin: 0 0 1rem;
-    }
-    .footer-twelve-badge img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-/* Recline blog feature v1: scoped, responsive homepage editorial cards. */
-.recline-journal { padding: clamp(4rem, 7vw, 6rem) 0; }
-.recline-journal-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; margin-bottom: 2rem; }
-.recline-journal-eyebrow { margin: 0 0 .85rem; font: 600 .72rem/1.4 var(--sans, system-ui); color: var(--accent); letter-spacing: .13em; text-transform: uppercase; }
-.recline-journal-head h2 { margin: 0 0 .7rem; color: var(--text); font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -.035em; line-height: 1.15; }
-.recline-journal-head p:not(.recline-journal-eyebrow) { max-width: 610px; color: var(--text-2); line-height: 1.65; font-size: .96rem; }
-.recline-journal-all { color: var(--accent); font-size: .88rem; font-weight: 600; white-space: nowrap; text-decoration: none; padding-bottom: .2rem; }
-.recline-journal-all:hover { text-decoration: underline; }
-.recline-journal-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.recline-journal-card { display: flex; flex-direction: column; min-width: 0; gap: .75rem; background: var(--bg-2, #111115); border: 1px solid var(--border-s, rgba(255,255,255,.045)); border-radius: 11px; padding: 1.55rem; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s; }
-.recline-journal-card:hover { border-color: var(--border-h, rgba(255,255,255,.16)); transform: translateY(-2px); }
-.recline-journal-card:focus-visible, .recline-journal-all:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.recline-journal-tag { color: var(--accent); font: 600 .7rem/1.4 var(--sans, system-ui); letter-spacing: .075em; text-transform: uppercase; }
-.recline-journal-card strong { display: block; line-height: 1.3; font-size: 1.13rem; font-weight: 600; letter-spacing: -.02em; }
-.recline-journal-description { display: block; color: var(--text-2); font-size: .88rem; line-height: 1.65; flex: 1; }
-.recline-journal-more { display: block; color: var(--accent); font-weight: 600; font-size: .84rem; margin-top: .25rem; }
-@media(max-width: 860px) { .recline-journal-grid { grid-template-columns: 1fr 1fr; } }
-@media(max-width: 590px) { .recline-journal-head { display: block; } .recline-journal-all { display: inline-block; margin-top: 1.25rem; } .recline-journal-grid { grid-template-columns: 1fr; } .recline-journal-card { padding: 1.3rem; } }
-@media(prefers-reduced-motion: reduce) { .recline-journal-card { transition: none; } .recline-journal-card:hover { transform: none; } }
-    /* Recline DailyPings footer badge v1 */
-    .footer-dailypings-badge {
-      display: block;
-      max-width: 100%;
-      margin: 0 0 1rem;
-    }
-    .footer-dailypings-badge img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-</style>
+  </style>
 </head>
 <body>
 
@@ -1604,42 +1570,6 @@
 
 <div class="divider" role="separator"></div>
 
-<!-- Recline blog feature v1 -->
-<section class="recline-journal" id="journal" aria-labelledby="recline-journal-heading">
-  <div class="wrap">
-    <div class="recline-journal-head">
-      <div>
-        <p class="recline-journal-eyebrow">From the Recline blog</p>
-        <h2 id="recline-journal-heading">Ideas worth sharing.</h2>
-        <p>Engineering notes, practical community advice and transparent development decisions.</p>
-      </div>
-      <a href="/blog/" class="recline-journal-all">Browse all articles &rarr;</a>
-    </div>
-    <div class="recline-journal-grid">
-        <a href="/blog/inside-reclines-open-source-chat-client/" class="recline-journal-card">
-          <span class="recline-journal-tag">Engineering &middot; 7 min read</span>
-          <strong>Inside Recline&#x27;s Open-Source Chat Client</strong>
-          <span class="recline-journal-description">How messages, realtime events, encrypted text and desktop packaging fit together—and what happens when connections fail.</span>
-          <span class="recline-journal-more">Read article &rarr;</span>
-        </a>
-        <a href="/blog/how-to-build-an-online-community-people-return-to/" class="recline-journal-card">
-          <span class="recline-journal-tag">Community &middot; 7 min read</span>
-          <strong>How to Build a Community People Return To</strong>
-          <span class="recline-journal-description">A 30-day launch plan for onboarding, moderation, useful rituals and measuring belonging instead of message volume.</span>
-          <span class="recline-journal-more">Read article &rarr;</span>
-        </a>
-        <a href="/blog/webview-vs-native-desktop-chat/" class="recline-journal-card">
-          <span class="recline-journal-tag">Desktop &middot; 6 min read</span>
-          <strong>WebView vs Native Desktop Apps</strong>
-          <span class="recline-journal-description">A practical comparison of Tauri and native Windows apps, including the parts that are hardest to rewrite safely.</span>
-          <span class="recline-journal-more">Read article &rarr;</span>
-        </a>
-    </div>
-  </div>
-</section>
-<div class="divider" role="separator"></div>
-<!-- End Recline blog feature v1 -->
-
 <!-- Final CTA -->
 <section class="final-cta" aria-label="Get started">
   <div class="wrap">
@@ -1689,7 +1619,6 @@
       <div>
         <div class="footer-col-label">Resources</div>
         <ul class="footer-links">
-          <li><a href="/blog/">Blog</a></li>
           <li><a href="/about/">About Recline</a></li>
           <li><a href="/roadmap/">Public roadmap</a></li>
           <li><a href="/discord-alternative">vs Discord</a></li>
@@ -1707,9 +1636,14 @@
        width="171" height="58"
        style="width: 171px; height: 58px;" />
         </a>
-       <a href="https://toolfame.com/item/recline" target="_blank" rel="noopener noreferrer">
-       <img src="https://toolfame.com/badge-dark.svg" alt="Featured on toolfame.com" style="height: 54px; width: auto;" />
-       </a>
+        <a href="https://toolfame.com/item/recline"
+           class="footer-toolfame-badge"
+           target="_blank" rel="noopener noreferrer">
+          <img src="https://toolfame.com/badge-dark.svg"
+               alt="Featured on toolfame.com"
+               style="height: 54px; width: auto;"
+               loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+        </a>
         <a href="https://twelve.tools"
            class="footer-twelve-badge"
            target="_blank" rel="noopener noreferrer">
@@ -1718,15 +1652,11 @@
                width="148" height="40"
                loading="lazy" decoding="async" referrerpolicy="no-referrer" />
         </a>
-        <a href="https://dailypings.com/p/recline"
-           class="footer-dailypings-badge"
-           target="_blank" rel="noopener noreferrer"
-           title="Featured on DailyPings">
-          <img src="https://dailypings.com/badge.svg"
-               alt="Featured on DailyPings"
-               width="179" height="32"
-               loading="lazy" decoding="async" />
-        </a>
+        <!-- Begin SF Tag -->
+        <div class="sf-root" data-id="4156333" data-badge="dark-default" data-variant-id="sf" style="width:80px">
+          <a href="https://sourceforge.net/software/product/Recline/" target="_blank" rel="noopener noreferrer">Recline Reviews</a>
+        </div>
+        <!-- End SF Tag -->
         <ul class="footer-links">
           <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
           <li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">@reclinesocial on Medium</a></li>
@@ -1777,6 +1707,16 @@
     { threshold: 0.07, rootMargin: '0px 0px -24px 0px' }
   );
   document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+<script>
+  (function () {
+    var sc = document.createElement('script');
+    sc.async = true;
+    sc.src = 'https://b.sf-syn.com/badge_js?sf_id=4156333&variant_id=sf';
+    var p = document.getElementsByTagName('script')[0];
+    p.parentNode.insertBefore(sc, p);
+  })();
 </script>
 
 </body>
