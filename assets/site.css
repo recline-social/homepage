@@ -148,3 +148,24 @@ body.rx-has-nav{background-image:radial-gradient(900px 520px at 85% -5%,rgba(91,
 .breadcrumb{font-family:var(--rx-mono);font-size:.74rem!important}
 .rx-badges{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1rem;margin-top:1.25rem}
 .rx-badges>a,.rx-badges .sf-root{margin:0!important}
+/* Official Recline brand logo */
+.rx-logo-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.rx-logo-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
