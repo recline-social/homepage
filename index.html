@@ -1049,87 +1049,100 @@
     @media (prefers-reduced-motion: reduce) { .startup-link-card { transition: none; } .startup-link-card:hover { transform: none; } }
     a:focus-visible,summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
   </style>
-</head>
-<body>
+<link rel="stylesheet" href="/assets/site.css"><link rel="stylesheet" href="/assets/home.css"></head>
+<body class="rx-has-nav rx-home">
 
 <!-- Nav -->
-<nav id="nav" role="navigation" aria-label="Main navigation">
-  <div class="wrap">
-    <a href="/" class="nav-logo" aria-label="Recline home">
-      <div class="nav-logo-icon">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-          <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="nav-wordmark">Recline</span>
-    </a>
-    <div class="nav-links" role="list" aria-label="Site sections">
-      <a href="#platform" class="nav-link">Platform</a>
-      <a href="#sparks" class="nav-link">Sparks</a>
-      <a href="/about/" class="nav-link">About</a>
-      <a href="/roadmap/" class="nav-link">Roadmap</a>
-      <a href="/download/" class="nav-link">Desktop</a>
-      <a href="/beta-status/" class="nav-link">Beta status</a>
-      <a href="/privacy" class="nav-link">Privacy</a>
-    </div>
-    <div class="nav-right">
-      <details class="nav-explore"><summary>Explore</summary><div class="nav-popover"><a href="/about/">About</a><a href="/roadmap/">Roadmap</a><a href="/download/">Desktop</a><a href="/beta-status/">Beta status</a><a href="/privacy">Privacy</a></div></details>
-      <a href="https://github.com/recline-social/recline-client" class="btn-ghost" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://app.recline.social" class="btn-nav">
-        Open app
-        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-          <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</nav>
+<a class="rx-skip" href="#main">Skip to content</a>
+<nav id="nav" class="rx-nav" aria-label="Primary"><div class="rx-wrap">
+<a href="/" class="rx-logo" aria-label="Recline home"><span class="rx-logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="2"/></svg></span>Recline</a>
+<ul class="rx-links"><li><a href="/#platform">Product</a></li><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Compare</a></li><li><a href="/blog/">Blog</a></li><li><a href="/download/">Download</a></li><li><a href="/about/">About</a></li></ul>
+<div class="rx-nav-cta"><a class="rx-btn rx-btn-ghost rx-btn-sm" href="https://github.com/recline-social/recline-client">GitHub</a><a class="rx-btn rx-btn-primary rx-btn-sm" href="https://app.recline.social/">Join free</a></div>
+<button class="rx-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="rx-drawer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div><div class="rx-drawer" id="rx-drawer"><a href="/#platform">Product</a><a href="/discord-alternative/">Discord alternative</a><a href="/recline-vs-telegram/">Compare</a><a href="/blog/">Blog</a><a href="/download/">Download</a><a href="/about/">About</a><a href="https://app.recline.social/">Join free →</a></div></nav><div id="main"></div>
 
 <!-- Hero -->
-<section class="hero" aria-label="Introduction">
-  <div class="wrap">
-    <div class="hero-inner">
-      <div class="hero-label">
-        <span class="hero-label-dot"></span>
-        Open Beta · v0.2.0-beta.1
+<section class="rx-hero" aria-label="Introduction">
+  <div class="rx-stars" aria-hidden="true"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="rxp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe1ff"/><stop offset=".45" stop-color="#5B9CF6"/><stop offset="1" stop-color="#1d2a55"/></linearGradient>
+    <linearGradient id="rxp2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a5f3c4"/><stop offset=".5" stop-color="#5B9CF6" stop-opacity=".7"/><stop offset="1" stop-color="#2b1f5c"/></linearGradient>
+    <linearGradient id="rxp3" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fde68a" stop-opacity=".85"/><stop offset=".6" stop-color="#8fb8ff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+    <symbol id="rxgem" viewBox="0 0 100 120"><polygon points="50,2 92,38 50,118" fill="url(#rxp1)"/><polygon points="50,2 8,38 50,118" fill="url(#rxp2)"/><polygon points="8,38 50,2 92,38 50,50" fill="url(#rxp3)" opacity=".85"/><polyline points="8,38 50,50 92,38" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/><line x1="50" y1="50" x2="50" y2="118" stroke="#fff" stroke-opacity=".35"/></symbol>
+  </defs></svg>
+  <div class="rx-wrap">
+    <div class="rx-hero-top">
+      <div>
+        <div class="rx-badge"><b></b>Open Beta · v0.2.0-beta.1</div>
+        <h1>Private, encrypted communities<br/>where members earn their place.</h1>
       </div>
-      <h1>Private, encrypted communities<br/>where members earn their place.</h1>
-      <p class="hero-sub">
-        Recline is an independently developed community platform with encrypted message text, configurable Spaces and participation features. Basic chat signup needs no email or phone number. Now in open beta.
-      </p>
-      <div class="hero-actions">
-        <a href="https://app.recline.social" class="btn-primary">
-          Open Recline
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-            <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a href="https://github.com/recline-social/recline-client" class="btn-secondary" target="_blank" rel="noopener noreferrer">
-          Read the code
-        </a>
+      <div>
+        <p class="rx-hero-sub">Recline is an independently developed community platform with encrypted message text, configurable Spaces and participation features. Basic chat signup needs no email or phone number. Now in open beta.</p>
+        <div class="rx-hero-actions">
+          <a href="https://app.recline.social/" class="rx-btn rx-btn-primary">Join free <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a href="/download/" class="rx-btn rx-btn-ghost">Download for Windows</a>
+        </div>
+        <p class="rx-hero-fine"><span>No email</span><span>No phone</span><span><a href="https://github.com/recline-social/recline-client" style="color:inherit">Open-source client</a></span></p>
       </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-value">Creator-owned</span>
-          <span class="stat-label">Community servers</span>
+    </div>
+    <div class="rx-stage">
+      <svg class="rx-crystal float rx-c1" viewBox="0 0 100 120" aria-hidden="true"><use href="#rxgem"/></svg>
+      <svg class="rx-crystal float rx-c2" viewBox="0 0 100 120" aria-hidden="true"><use href="#rxgem"/></svg>
+      <svg class="rx-crystal float rx-c3" viewBox="0 0 100 120" aria-hidden="true"><use href="#rxgem"/></svg>
+      <div class="rx-mock rx-glass" role="img" aria-label="Illustration of the Recline app: an encrypted community channel with messages and a member list">
+        <div class="rx-mock-top"><span class="rx-dot"></span><span class="rx-dot"></span><span class="rx-dot"></span><span class="rx-url">app.recline.social</span></div>
+        <div class="rx-mock-body">
+          <div class="rx-side">
+            <div class="rx-space"><i></i>Night Owls</div>
+            <h4>Channels</h4>
+            <div class="rx-ch on"># general <span class="lk">🔒</span></div>
+            <div class="rx-ch"># design-crit <span class="lk">🔒</span></div>
+            <div class="rx-ch"># late-night-builds <span class="lk">🔒</span></div>
+            <div class="rx-ch">🔊 lounge</div>
+          </div>
+          <div class="rx-main">
+            <div class="rx-chhead"># general <span class="rx-e2e">AES-GCM-256 · encrypted</span></div>
+            <div class="rx-msgs">
+              <div class="rx-msg"><span class="rx-av" style="background:#5B9CF6"></span><div><div class="n">mira</div><div class="t">Shipped the new channel layout. Feedback welcome 👀</div></div></div>
+              <div class="rx-msg"><span class="rx-av" style="background:#4ADE80"></span><div><div class="n">jules</div><div class="t rx-swap"><span class="p">Looks clean. Hopping in voice in 5?</span><span class="c rx-cipher">9f2a·c71e·04bd·e8a3·55f0…</span></div></div></div>
+              <div class="rx-msg"><span class="rx-av" style="background:#FBBF24"></span><div><div class="n">kai</div><div class="t">+1 Spark for the write-up ✨</div></div></div>
+            </div>
+            <div class="rx-compose"><span class="lk">🔒</span> Message #general</div>
+          </div>
+          <div class="rx-members">
+            <h4>Online — 3</h4>
+            <div class="rx-mem"><i style="background:#5B9CF6"></i>mira<small>✦ 128</small></div>
+            <div class="rx-mem"><i style="background:#4ADE80"></i>jules<small>✦ 74</small></div>
+            <div class="rx-mem"><i style="background:#FBBF24"></i>kai<small>✦ 51</small></div>
+          </div>
         </div>
-        <div class="stat-item">
-          <span class="stat-value">Sparks economy</span>
-          <span class="stat-label">Member contribution rewarded</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-value">Encrypted text</span>
-          <span class="stat-label">See scope &amp; limitations</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-value">No email</span>
-          <span class="stat-label">Required to join</span>
-        </div>
+        <div class="rx-float rx-glass"><b>Server sees</b><span>ciphertext only</span></div>
       </div>
     </div>
   </div>
 </section>
+<section class="rx-proof" aria-label="Highlights"><div class="rx-wrap">
+  <div class="i"><b>No email</b><span>needed for basic chat</span></div>
+  <div class="i"><b>AES-GCM-256</b><span>channel text encryption</span></div>
+  <div class="i"><b>Open source</b><span>client code on GitHub</span></div>
+  <div class="i"><b>Listed on</b><span>AlternativeTo · SourceForge · Toolfame</span></div>
+</div></section>
+<section class="rx-enc" aria-label="How encryption works"><div class="rx-wrap">
+  <p class="rx-eyebrow">How it works</p>
+  <h2>Your message is locked before it leaves your device.</h2>
+  <p class="lead">Channel text is encrypted with a key derived from the community passphrase. DMs use ECDH P-256. The server relays and stores ciphertext.</p>
+  <div class="rx-flow">
+    <div class="rx-node rx-glass"><span class="tag">You</span><h3>Type</h3><p>Plaintext stays on your device.</p></div>
+    <div class="rx-arrow" aria-hidden="true"><svg viewBox="0 0 40 12"><path d="M0 6h36m-5-5 5 5-5 5" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+    <div class="rx-node rx-glass"><span class="tag">Client</span><h3>Encrypt</h3><p><code>AES-GCM-256</code> · DMs <code>ECDH P-256</code></p></div>
+    <div class="rx-arrow" aria-hidden="true"><svg viewBox="0 0 40 12"><path d="M0 6h36m-5-5 5 5-5 5" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+    <div class="rx-node rx-glass"><span class="tag">Server</span><h3>Relay</h3><p>Stores ciphertext only.</p></div>
+    <div class="rx-arrow" aria-hidden="true"><svg viewBox="0 0 40 12"><path d="M0 6h36m-5-5 5 5-5 5" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></div>
+    <div class="rx-node rx-glass"><span class="tag">Members</span><h3>Decrypt</h3><p>With the community key.</p></div>
+  </div>
+  <p class="rx-enc-note">Open beta, no independent audit yet. <a href="/blog/how-recline-encrypts/">Read exactly how Recline encrypts →</a></p>
+</div></section>
+
 
 <div class="divider" role="separator"></div>
 
@@ -1556,7 +1569,7 @@
         </ul>
       </div>
       <div class="supporter-cta-col">
-        <a href="https://app.recline.social/?supporter_checkout=1" class="btn-supporter">
+        <a href="https://recline.social/support" class="btn-supporter">
           Become a supporter
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
             <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1571,67 +1584,14 @@
 <div class="divider" role="separator"></div>
 
 <!-- Final CTA -->
-<section class="final-cta" aria-label="Get started">
-  <div class="wrap">
-    <p class="section-label reveal">Join the Open Beta</p>
-    <h2 class="section-h2 reveal d1">Start your community free.</h2>
-    <p class="section-body reveal d2">Basic chat signup needs no email or credit card. Message-text encryption and its documented limits are part of the open beta. Help us improve Recline with real feedback.</p>
-    <div class="reveal d3">
-      <a href="https://app.recline.social" class="btn-primary">
-        Open Recline
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-          <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer role="contentinfo">
-  <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="footer-logo" aria-label="Recline home">
-          <div class="footer-logo-icon">
-            <svg width="13" height="13" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-              <rect x="2" y="6.5" width="11" height="7" rx="1.5" stroke="#5B9CF6" stroke-width="1.5"/>
-              <path d="M5 6.5V4.5a2.5 2.5 0 0 1 5 0v2" stroke="#5B9CF6" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <span class="footer-wordmark">Recline</span>
-        </a>
-        <p class="footer-tagline">Creator-owned communities. Member-earned status. Private by design.</p>
-      </div>
-
-      <div>
-        <div class="footer-col-label">Product</div>
-        <ul class="footer-links">
-          <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
-          <li><a href="/download/">Windows desktop</a></li>
-          <li><a href="#platform">Platform</a></li>
-          <li><a href="#sparks">Sparks economy</a></li>
-          <li><a href="#trust">Privacy</a></li>
-          <li><a href="/beta-status/">Beta status</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-label">Resources</div>
-        <ul class="footer-links">
-          <li><a href="/about/">About Recline</a></li>
-          <li><a href="/roadmap/">Public roadmap</a></li>
-          <li><a href="/discord-alternative/">vs Discord</a></li>
-          <li><a href="/recline-vs-telegram/">vs Telegram</a></li>
-          <li><a href="/blog/discord-government-id/">Discord ID policy</a></li>
-          <li><a href="/blog/best-discord-alternatives-2026/">Alternatives list</a></li>
-          <li><a href="/blog/how-recline-encrypts/">How encryption works</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-label">Open source</div>
-        <a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&utm_medium=referral" target="_blank">
+ <!-- Footer -->
+<section class="rx-cta" aria-label="Get Recline"><div class="rx-cta-inner">
+<div><h2>Start a community that stays private.</h2><p>Join free in the browser, or install the Windows app. No email or phone needed for basic chat.</p></div>
+<div class="rx-cta-actions"><a class="rx-btn rx-btn-primary" href="https://app.recline.social/">Join free</a><a class="rx-btn rx-btn-ghost" href="/download/">Download for Windows</a></div>
+<p class="rx-cta-note">Open beta · Open-source client · Encrypted message text</p></div></section>
+<footer class="rx-footer"><div class="rx-wrap"><div class="rx-foot-grid">
+<div class="rx-foot-brand"><a href="/" class="rx-logo"><span class="rx-logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="2"/></svg></span>Recline</a><p>Private, encrypted communities where members earn their place.</p>
+<div class="rx-badges"><a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&utm_medium=referral" target="_blank">
         <img src="https://alternativeto.net/static/badges/badge-compact-dark.svg"
        alt="Recline.social | AlternativeTo"
        width="171" height="58"
@@ -1657,32 +1617,12 @@
         <div class="sf-root" data-id="4156333" data-badge="dark-default" data-variant-id="sf" style="width:80px">
           <a href="https://sourceforge.net/software/product/Recline/" target="_blank" rel="noopener noreferrer">Recline Reviews</a>
         </div>
-        <!-- End SF Tag -->
-        <ul class="footer-links">
-          <li><a href="https://github.com/recline-social/recline-client" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">@reclinesocial on Medium</a></li>
-          <li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">@ReclineApp on X</a></li>
-          <li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">@reclinechat on Instagram</a></li>
-          <li><a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">AGPL-3.0 License</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-col-label">Legal</div>
-        <ul class="footer-links">
-          <li><a href="/privacy">Privacy policy</a></li>
-          <li><a href="mailto:hello@recline.social">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span class="footer-copy">&copy; 2026 Recline</span>
-      <span class="footer-mono">creator-owned &middot; member-earned &middot; encrypted by default</span>
-      <a href="https://github.com/recline-social/recline-client/blob/main/LICENSE" class="footer-license" target="_blank" rel="noopener noreferrer">Open source</a>
-    </div>
-  </div>
-</footer>
+        <!-- End SF Tag --></div><div class="rx-listed"><a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&amp;utm_medium=referral">AlternativeTo</a><a href="https://sourceforge.net/software/product/Recline/">SourceForge</a><a href="https://toolfame.com/item/recline">Toolfame</a><a href="https://twelve.tools">Twelve Tools</a></div></div>
+<div class="rx-foot-col"><h3>Product</h3><ul><li><a href="https://app.recline.social/">Web app</a></li><li><a href="/download/">Download</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/beta-status/">Beta status</a></li></ul></div>
+<div class="rx-foot-col"><h3>Compare</h3><ul><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Recline vs Telegram</a></li><li><a href="/blog/best-discord-alternatives-2026/">Best Discord alternatives</a></li></ul></div>
+<div class="rx-foot-col"><h3>Learn</h3><ul><li><a href="/blog/">Blog</a></li><li><a href="/blog/how-recline-encrypts/">How encryption works</a></li><li><a href="/blog/how-voice-calls-work/">Voice calls</a></li><li><a href="/blog/how-to-move-a-discord-server/">Move a Discord server</a></li></ul></div>
+<div class="rx-foot-col"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/privacy">Privacy</a></li><li><a href="https://github.com/recline-social/recline-client">GitHub</a></li><li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">Medium</a></li><li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">X</a></li><li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">Instagram</a></li></ul></div>
+</div><div class="rx-foot-bottom"><span>© 2026 Recline</span><span class="rx-mono">Built independently · Open beta</span></div></div></footer>
 
 <script>
   // Nav scroll effect — rAF-batched to avoid forced reflow on every scroll tick
@@ -1720,5 +1660,5 @@
   })();
 </script>
 
-</body>
+<script src="/assets/site.js" defer></script></body>
 </html>
