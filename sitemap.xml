@@ -32,7 +32,7 @@
     <loc>https://recline.social/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-10-20</lastmod>
+    <lastmod>2026-10-24</lastmod>
   </url>
 
   <!-- Blog posts -->
@@ -84,6 +84,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-10-20</lastmod>
+  </url>
+
+  <url>
+    <loc>https://recline.social/blog/how-to-move-a-discord-server/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-10-24</lastmod>
   </url>
 
 </urlset>
