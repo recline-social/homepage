@@ -7,14 +7,14 @@
   <title>How Recline Encrypts Messages — AES-GCM-256 Explained | Recline</title>
   <meta name="description" content="A plain-language walkthrough of AES-GCM-256 channel encryption, ECDH P-256 DM key exchange, and why the Recline server only ever stores ciphertext." />
   <meta name="keywords" content="how recline encrypts messages, AES-GCM-256 chat encryption, end-to-end encrypted chat explained, ECDH P-256 messaging, encrypted group chat how it works" />
-  <link rel="canonical" href="https://recline.social/blog/how-recline-encrypts" />
+  <link rel="canonical" href="https://recline.social/blog/how-recline-encrypts/" />
 
   <meta property="og:title" content="How Recline Encrypts Your Messages — and Why It Matters" />
   <meta property="og:description" content="AES-GCM-256 channels, ECDH P-256 DMs, and the difference between TLS and end-to-end encryption — explained clearly." />
-  <meta property="og:url" content="https://recline.social/blog/how-recline-encrypts" />
+  <meta property="og:url" content="https://recline.social/blog/how-recline-encrypts/" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Recline" />
-  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image" content="https://recline.social/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="How Recline encrypts messages — AES-GCM-256 explained" />
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="How Recline Encrypts Messages — AES-GCM-256 Explained" />
   <meta name="twitter:description" content="AES-GCM-256 channels, ECDH P-256 DMs, PBKDF2 key derivation — how Recline's encryption works and why the server can never read your messages." />
-  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="twitter:image" content="https://recline.social/og-image.jpg" />
   <meta name="twitter:site" content="@ReclineApp" />
   <meta name="twitter:creator" content="@ReclineApp" />
   <meta name="theme-color" content="#0D0D10" />
@@ -43,13 +43,13 @@
     "@type": "Article",
     "headline": "How Recline Encrypts Messages — AES-GCM-256 Explained",
     "description": "A plain-language walkthrough of AES-GCM-256 channel encryption and ECDH P-256 DM key exchange in Recline.",
-    "image": "https://recline.social/og-image.png",
-    "url": "https://recline.social/blog/how-recline-encrypts",
+    "image": "https://recline.social/og-image.jpg",
+    "url": "https://recline.social/blog/how-recline-encrypts/",
     "datePublished": "2026-06-03",
     "dateModified": "2026-06-03",
     "author": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" },
     "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/android-chrome-512x512.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-recline-encrypts" }
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-recline-encrypts/" }
   }
   </script>
   <script type="application/ld+json">
@@ -58,8 +58,8 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog" },
-      { "@type": "ListItem", "position": 3, "name": "How Recline Encrypts Messages", "item": "https://recline.social/blog/how-recline-encrypts" }
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "How Recline Encrypts Messages", "item": "https://recline.social/blog/how-recline-encrypts/" }
     ]
   }
   </script>
@@ -168,7 +168,12 @@
     .footer-copy { font-size: 0.77rem; color: var(--text-3); }
     .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
     @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
-  </style>
+    .related-reading { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-s); }
+  .related-reading h2 { font-size: 1.2rem; letter-spacing: -.015em; margin-bottom: 1rem; }
+  .related-links { display: grid; gap: .75rem; }
+  .related-links a { display: block; padding: 1rem 1.2rem; border: 1px solid var(--border-s); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text); text-decoration: none; font-weight: 500; }
+  .related-links a:hover { border-color: var(--border-h); }
+</style>
 </head>
 <body>
 
@@ -184,7 +189,7 @@
       <span class="nav-wordmark">Recline</span>
     </a>
     <div class="nav-right">
-      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="/blog/" class="btn-ghost">Blog</a>
       <a href="https://app.recline.social" class="btn-nav">
         Open app
         <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
@@ -201,7 +206,7 @@
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
       <span class="breadcrumb-sep">/</span>
-      <a href="/blog">Blog</a>
+      <a href="/blog/">Blog</a>
       <span class="breadcrumb-sep">/</span>
       <span>How Recline encrypts</span>
     </nav>
@@ -412,6 +417,14 @@
 
     </div>
 
+    <aside class="related-reading" aria-label="Related reading">
+      <h2>Keep reading</h2>
+      <div class="related-links">
+          <a href="/blog/how-voice-calls-work/">How Voice Calls Work: WebRTC, STUN &amp; TURN &rarr;</a>
+          <a href="/blog/best-discord-alternatives-2026/">Best Discord Alternatives in 2026 &rarr;</a>
+          <a href="/blog/discord-government-id/">Discord's Government ID Requirement &rarr;</a>
+      </div>
+    </aside>
     <div class="article-cta">
       <h3>Read the code, then try the app</h3>
       <p>The source is on GitHub. The app is live at app.recline.social. No email required to sign up.</p>
@@ -446,7 +459,7 @@
         <ul class="footer-links">
           <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
           <li><a href="/#features">Features</a></li>
-          <li><a href="/discord-alternative">Discord alternative</a></li>
+          <li><a href="/discord-alternative/">Discord alternative</a></li>
         </ul>
       </div>
       <div>

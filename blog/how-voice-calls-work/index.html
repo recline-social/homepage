@@ -7,15 +7,15 @@
   <title>How Voice Calls Work: WebRTC, STUN &amp; TURN Explained | Recline</title>
   <meta name="description" content="Why some WebRTC voice calls connect directly while others need a TURN relay, what STUN does, and what a relay can and cannot see." />
   <meta name="keywords" content="WebRTC voice calls, TURN relay explained, STUN vs TURN, private voice chat, WebRTC privacy, voice call relay" />
-  <link rel="canonical" href="https://recline.social/blog/how-voice-calls-work" />
+  <link rel="canonical" href="https://recline.social/blog/how-voice-calls-work/" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <meta property="og:title" content="How Voice Calls Work: WebRTC, STUN &amp; TURN Explained" />
   <meta property="og:description" content="Direct when possible, relayed when necessary. A practical explanation of WebRTC, STUN, TURN, and what a voice relay actually sees." />
-  <meta property="og:url" content="https://recline.social/blog/how-voice-calls-work" />
+  <meta property="og:url" content="https://recline.social/blog/how-voice-calls-work/" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Recline" />
-  <meta property="og:image" content="https://recline.social/og-image.png" />
+  <meta property="og:image" content="https://recline.social/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="How WebRTC voice calls use STUN and TURN relays" />
@@ -25,7 +25,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="How Voice Calls Work: WebRTC, STUN &amp; TURN Explained" />
   <meta name="twitter:description" content="Why some calls connect directly, why others need a relay, and what a TURN server can actually see." />
-  <meta name="twitter:image" content="https://recline.social/og-image.png" />
+  <meta name="twitter:image" content="https://recline.social/og-image.jpg" />
   <meta name="twitter:site" content="@ReclineApp" />
   <meta name="twitter:creator" content="@ReclineApp" />
   <meta name="theme-color" content="#0D0D10" />
@@ -45,13 +45,13 @@
     "@type": "Article",
     "headline": "How Voice Calls Work: WebRTC, STUN & TURN Explained",
     "description": "Why some WebRTC voice calls connect directly while others need a TURN relay, what STUN does, and what a relay can and cannot see.",
-    "image": "https://recline.social/og-image.png",
-    "url": "https://recline.social/blog/how-voice-calls-work",
+    "image": "https://recline.social/og-image.jpg",
+    "url": "https://recline.social/blog/how-voice-calls-work/",
     "datePublished": "2026-09-28",
     "dateModified": "2026-09-28",
     "author": { "@type": "Organization", "name": "Recline", "url": "https://recline.social" },
     "publisher": { "@type": "Organization", "name": "Recline", "logo": { "@type": "ImageObject", "url": "https://recline.social/android-chrome-512x512.png" } },
-    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-voice-calls-work" }
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://recline.social/blog/how-voice-calls-work/" }
   }
   </script>
 
@@ -61,8 +61,8 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://recline.social/" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog" },
-      { "@type": "ListItem", "position": 3, "name": "How Voice Calls Work", "item": "https://recline.social/blog/how-voice-calls-work" }
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://recline.social/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "How Voice Calls Work", "item": "https://recline.social/blog/how-voice-calls-work/" }
     ]
   }
   </script>
@@ -171,7 +171,12 @@
     .footer-copy { font-size: 0.77rem; color: var(--text-3); }
     .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
     @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
-  </style>
+    .related-reading { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-s); }
+  .related-reading h2 { font-size: 1.2rem; letter-spacing: -.015em; margin-bottom: 1rem; }
+  .related-links { display: grid; gap: .75rem; }
+  .related-links a { display: block; padding: 1rem 1.2rem; border: 1px solid var(--border-s); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text); text-decoration: none; font-weight: 500; }
+  .related-links a:hover { border-color: var(--border-h); }
+</style>
 </head>
 <body>
 <nav id="nav">
@@ -186,7 +191,7 @@
       <span class="nav-wordmark">Recline</span>
     </a>
     <div class="nav-right">
-      <a href="/blog" class="btn-ghost">Blog</a>
+      <a href="/blog/" class="btn-ghost">Blog</a>
       <a href="https://app.recline.social" class="btn-nav">
         Open app
         <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
@@ -202,7 +207,7 @@
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
       <span class="breadcrumb-sep">/</span>
-      <a href="/blog">Blog</a>
+      <a href="/blog/">Blog</a>
       <span class="breadcrumb-sep">/</span>
       <span>How voice calls work</span>
     </nav>
@@ -336,6 +341,13 @@
       </p>
     </div>
 
+    <aside class="related-reading" aria-label="Related reading">
+      <h2>Keep reading</h2>
+      <div class="related-links">
+          <a href="/blog/how-recline-encrypts/">How Recline Encrypts Your Messages &rarr;</a>
+          <a href="/blog/best-discord-alternatives-2026/">Best Discord Alternatives in 2026 &rarr;</a>
+      </div>
+    </aside>
     <div class="article-cta">
       <h3>Try Recline voice calls</h3>
       <p>Open Recline in your browser and start a voice conversation. No email address is required to create an account.</p>
@@ -369,7 +381,7 @@
         <ul class="footer-links">
           <li><a href="https://app.recline.social" target="_blank" rel="noopener noreferrer">Web app</a></li>
           <li><a href="/#features">Features</a></li>
-          <li><a href="/discord-alternative">Discord alternative</a></li>
+          <li><a href="/discord-alternative/">Discord alternative</a></li>
         </ul>
       </div>
       <div>
