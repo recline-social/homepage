@@ -1048,6 +1048,33 @@
     @media (max-width: 380px) { .nav-explore summary { font-size: .75rem; padding: .35rem; } .nav-right .btn-nav { padding: .42rem .55rem; } }
     @media (prefers-reduced-motion: reduce) { .startup-link-card { transition: none; } .startup-link-card:hover { transform: none; } }
     a:focus-visible,summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* Footer layout refresh: scoped to the homepage footer and CTA. */
+    .rx-cta .rx-cta-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem; max-width:1120px; margin-inline:auto; }
+    .rx-cta .rx-cta-copy { flex:1 1 420px; min-width:0; }
+    .rx-cta .rx-cta-copy p { max-width:600px; }
+    .rx-cta .rx-cta-note { margin-top:1rem; font-size:.75rem; color:var(--text-3); }
+    .rx-cta .rx-cta-actions { display:flex; align-items:center; flex-wrap:wrap; gap:.75rem; }
+    .rx-footer .rx-foot-grid { display:grid; grid-template-columns:minmax(210px,1.8fr) repeat(4,minmax(105px,1fr)); gap:2rem; align-items:start; }
+    .rx-footer .rx-foot-brand { min-width:0; }
+    .rx-footer .rx-foot-brand > p { max-width:270px; }
+    .rx-footer .rx-foot-col ul { list-style:none; padding:0; margin:0; }
+    .rx-footer .rx-foot-col li + li { margin-top:.65rem; }
+    .rx-footer .rx-foot-col a, .rx-footer .rx-listed a { text-decoration:none; color:var(--text-2); transition:color .15s ease; }
+    .rx-footer .rx-foot-col a:hover, .rx-footer .rx-listed a:hover { color:var(--text); }
+    .rx-footer .rx-listed { display:flex; flex-wrap:wrap; gap:.4rem .85rem; margin-top:1.5rem; }
+    .rx-footer .rx-listed-label { width:100%; font:500 .67rem var(--mono); letter-spacing:.12em; color:var(--text-3); }
+    .rx-footer .rx-listed a { font-size:.75rem; }
+    .rx-footer .rx-featured { margin-top:2.5rem; padding:1.75rem 0; border-top:1px solid var(--border-s); }
+    .rx-footer .rx-featured-title { margin:0 0 1.25rem; font:500 .68rem var(--mono); letter-spacing:.12em; color:var(--text-3); }
+    .rx-footer .rx-badges { display:flex; flex-wrap:wrap; align-items:center; gap:1rem 1.5rem; }
+    .rx-footer .rx-badges > a, .rx-footer .rx-badges > .sf-root { display:flex; align-items:center; justify-content:flex-start; min-height:58px; width:auto; max-width:100%; margin:0; }
+    .rx-footer .rx-badges img { display:block; width:auto; height:auto; max-width:min(180px,100%); max-height:58px; object-fit:contain; }
+    .rx-footer .rx-badges .footer-toolfame-badge img { height:54px; width:auto; max-height:54px; }
+    .rx-footer .rx-badges .footer-twelve-badge img { max-height:40px; }
+    .rx-footer .rx-foot-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:.75rem; padding-top:1.5rem; border-top:1px solid var(--border-s); }
+    @media (max-width:950px) { .rx-footer .rx-foot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .rx-footer .rx-foot-brand { grid-column:1 / -1; } }
+    @media (max-width:600px) { .rx-footer .rx-foot-grid { gap:2rem 1.25rem; } .rx-cta .rx-cta-actions, .rx-cta .rx-cta-actions .rx-btn { width:100%; } .rx-cta .rx-cta-actions .rx-btn { justify-content:center; } .rx-footer .rx-badges { gap:.75rem; } .rx-footer .rx-badges img { max-width:min(145px,100%); } }
   </style>
 <link rel="stylesheet" href="/assets/site.css"><link rel="stylesheet" href="/assets/home.css"></head>
 <body class="rx-has-nav rx-home">
@@ -1584,46 +1611,52 @@
 <div class="divider" role="separator"></div>
 
 <!-- Final CTA -->
- <!-- Footer -->
-<section class="rx-cta" aria-label="Get Recline"><div class="rx-cta-inner">
-<div><h2>Start a community that stays private.</h2><p>Join free in the browser, or install the Windows app. No email or phone needed for basic chat.</p></div>
-<div class="rx-cta-actions"><a class="rx-btn rx-btn-primary" href="https://app.recline.social/">Join free</a><a class="rx-btn rx-btn-ghost" href="/download/">Download for Windows</a></div>
-<p class="rx-cta-note">Open beta · Open-source client · Encrypted message text</p></div></section>
-<footer class="rx-footer"><div class="rx-wrap"><div class="rx-foot-grid">
-<div class="rx-foot-brand"><a href="/" class="rx-logo"><span class="rx-logo-icon"><img src="/recline-official-logo.png" alt="" width="30" height="30" decoding="async"></span>Recline</a><p>Private, encrypted communities where members earn their place.</p>
-<div class="rx-badges"><a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&utm_medium=referral" target="_blank">
-        <img src="https://alternativeto.net/static/badges/badge-compact-dark.svg"
-       alt="Recline.social | AlternativeTo"
-       width="171" height="58"
-       style="width: 171px; height: 58px;" />
-        </a>
-        <a href="https://toolfame.com/item/recline"
-           class="footer-toolfame-badge"
-           target="_blank" rel="noopener noreferrer">
-          <img src="https://toolfame.com/badge-dark.svg"
-               alt="Featured on toolfame.com"
-               style="height: 54px; width: auto;"
-               loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        </a>
-        <a href="https://twelve.tools"
-           class="footer-twelve-badge"
-           target="_blank" rel="noopener noreferrer">
-          <img src="https://twelve.tools/badge2-dark.svg"
-               alt="Featured on Twelve Tools"
-               width="148" height="40"
-               loading="lazy" decoding="async" referrerpolicy="no-referrer" />
-        </a>
-        <!-- Begin SF Tag -->
-        <div class="sf-root" data-id="4156333" data-badge="dark-default" data-variant-id="sf" style="width:80px">
-          <a href="https://sourceforge.net/software/product/Recline/" target="_blank" rel="noopener noreferrer">Recline Reviews</a>
+<!-- Footer CTA -->
+<section class="rx-cta" aria-label="Get Recline">
+  <div class="rx-cta-inner">
+    <div class="rx-cta-copy">
+      <h2>Start a community that stays private.</h2>
+      <p>Join free in the browser, or install the Windows app. No email or phone needed for basic chat.</p>
+      <p class="rx-cta-note">Open beta · Open-source client · Encrypted message text</p>
+    </div>
+    <div class="rx-cta-actions">
+      <a class="rx-btn rx-btn-primary" href="https://app.recline.social/">Join free</a>
+      <a class="rx-btn rx-btn-ghost" href="/download/">Download for Windows</a>
+    </div>
+  </div>
+</section>
+<footer class="rx-footer">
+  <div class="rx-wrap">
+    <div class="rx-foot-grid">
+      <div class="rx-foot-brand">
+        <a href="/" class="rx-logo"><span class="rx-logo-icon"><img src="/recline-official-logo.png" alt="" width="30" height="30" decoding="async"></span>Recline</a>
+        <p>Private, encrypted communities where members earn their place.</p>
+        <div class="rx-listed" aria-label="Directory listings">
+          <span class="rx-listed-label">FIND US ON</span>
+          <a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&amp;utm_medium=referral">AlternativeTo</a>
+          <a href="https://sourceforge.net/software/product/Recline/">SourceForge</a>
+          <a href="https://toolfame.com/item/recline">Toolfame</a>
+          <a href="https://twelve.tools">Twelve Tools</a>
         </div>
-        <a href="https://startupfa.me/s/recline?utm_source=recline.social" target="_blank"><img src="https://startupfa.me/badge?t=small&theme=dark&r=full" alt="Recline - Featured on Startup Fame" width="240" height="36" /></a>
-        <!-- End SF Tag --></div><div class="rx-listed"><a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&amp;utm_medium=referral">AlternativeTo</a><a href="https://sourceforge.net/software/product/Recline/">SourceForge</a><a href="https://toolfame.com/item/recline">Toolfame</a><a href="https://twelve.tools">Twelve Tools</a></div></div>
-<div class="rx-foot-col"><h3>Product</h3><ul><li><a href="https://app.recline.social/">Web app</a></li><li><a href="/download/">Download</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/beta-status/">Beta status</a></li></ul></div>
-<div class="rx-foot-col"><h3>Compare</h3><ul><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Recline vs Telegram</a></li><li><a href="/blog/best-discord-alternatives-2026/">Best Discord alternatives</a></li></ul></div>
-<div class="rx-foot-col"><h3>Learn</h3><ul><li><a href="/blog/">Blog</a></li><li><a href="/blog/how-recline-encrypts/">How encryption works</a></li><li><a href="/blog/how-voice-calls-work/">Voice calls</a></li><li><a href="/blog/how-to-move-a-discord-server/">Move a Discord server</a></li></ul></div>
-<div class="rx-foot-col"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/privacy">Privacy</a></li><li><a href="https://github.com/recline-social/recline-client">GitHub</a></li><li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">Medium</a></li><li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">X</a></li><li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">Instagram</a></li></ul></div>
-</div><div class="rx-foot-bottom"><span>© 2026 Recline</span><span class="rx-mono">Built independently · Open beta</span></div></div></footer>
+      </div>
+      <div class="rx-foot-col"><h3>Product</h3><ul><li><a href="https://app.recline.social/">Web app</a></li><li><a href="/download/">Download</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/beta-status/">Beta status</a></li></ul></div>
+      <div class="rx-foot-col"><h3>Compare</h3><ul><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Recline vs Telegram</a></li><li><a href="/blog/best-discord-alternatives-2026/">Best Discord alternatives</a></li></ul></div>
+      <div class="rx-foot-col"><h3>Learn</h3><ul><li><a href="/blog/">Blog</a></li><li><a href="/blog/how-recline-encrypts/">How encryption works</a></li><li><a href="/blog/how-voice-calls-work/">Voice calls</a></li><li><a href="/blog/how-to-move-a-discord-server/">Move a Discord server</a></li></ul></div>
+      <div class="rx-foot-col"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/privacy">Privacy</a></li><li><a href="https://github.com/recline-social/recline-client">GitHub</a></li><li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">Medium</a></li><li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">X</a></li><li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">Instagram</a></li></ul></div>
+    </div>
+    <div class="rx-featured" aria-label="Featured listings">
+      <h3 class="rx-featured-title">FEATURED &amp; LISTED ON</h3>
+      <div class="rx-badges">
+        <a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&amp;utm_medium=referral" target="_blank" rel="noopener noreferrer"><img src="https://alternativeto.net/static/badges/badge-compact-dark.svg" alt="Recline on AlternativeTo" width="171" height="58" loading="lazy" decoding="async"></a>
+        <a href="https://toolfame.com/item/recline" class="footer-toolfame-badge" target="_blank" rel="noopener noreferrer"><img src="https://toolfame.com/badge-dark.svg" alt="Featured on Toolfame" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+        <a href="https://twelve.tools" class="footer-twelve-badge" target="_blank" rel="noopener noreferrer"><img src="https://twelve.tools/badge2-dark.svg" alt="Featured on Twelve Tools" width="148" height="40" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a>
+        <div class="sf-root" data-id="4156333" data-badge="dark-default" data-variant-id="sf" style="width:80px"><a href="https://sourceforge.net/software/product/Recline/" target="_blank" rel="noopener noreferrer">Recline Reviews</a></div>
+        <a href="https://startupfa.me/s/recline?utm_source=recline.social" target="_blank" rel="noopener noreferrer"><img src="https://startupfa.me/badge?t=small&amp;theme=dark&amp;r=full" alt="Recline - Featured on Startup Fame" width="240" height="36" loading="lazy" decoding="async"></a>
+      </div>
+    </div>
+    <div class="rx-foot-bottom"><span>© 2026 Recline</span><span class="rx-mono">Built independently · Open beta</span></div>
+  </div>
+</footer>
 
 <script>
   // Nav scroll effect — rAF-batched to avoid forced reflow on every scroll tick
