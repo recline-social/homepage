@@ -32,10 +32,16 @@
     <loc>https://recline.social/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-06</lastmod>
   </url>
 
   <!-- Blog posts -->
+  <url>
+    <loc>https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-11-06</lastmod>
+  </url>
   <url>
     <loc>https://recline.social/blog/how-voice-calls-work/</loc>
     <changefreq>monthly</changefreq>

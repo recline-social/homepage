@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messaging App Encryption: Discord, Slack &amp; Teams Compared | Recline Blog</title>
+  <meta name="description" content="Understand end-to-end encryption, message privacy and metadata across Discord, Slack, Teams, Telegram and WhatsApp in this practical 2026 guide." />
+  <link rel="canonical" href="https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0D0D10" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Recline" />
+  <meta property="og:title" content="End-to-End Encryption vs Encryption in Transit: How Private Are Messaging Apps in 2026?" />
+  <meta property="og:description" content="Understand end-to-end encryption, message privacy and metadata across Discord, Slack, Teams, Telegram and WhatsApp in this practical 2026 guide." />
+  <meta property="og:url" content="https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/" />
+  <meta property="og:image" content="https://recline.social/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="article:published_time" content="2026-11-06" />
+  <meta property="article:modified_time" content="2026-11-06" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="End-to-End Encryption vs Encryption in Transit: How Private Are Messaging Apps in 2026?" />
+  <meta name="twitter:description" content="Understand end-to-end encryption, message privacy and metadata across Discord, Slack, Teams, Telegram and WhatsApp in this practical 2026 guide." />
+  <meta name="twitter:image" content="https://recline.social/og-image.jpg" />
+  <meta name="twitter:site" content="@ReclineApp" />
+  <link rel="icon" type="image/svg+xml" href="/recline_favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="me" href="https://x.com/ReclineApp" />
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "End-to-End Encryption vs Encryption in Transit: How Private Are Messaging Apps in 2026?",
+  "description": "Understand end-to-end encryption, message privacy and metadata across Discord, Slack, Teams, Telegram and WhatsApp in this practical 2026 guide.",
+  "url": "https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/"
+  },
+  "datePublished": "2026-11-06",
+  "dateModified": "2026-11-06",
+  "author": {
+    "@type": "Organization",
+    "name": "Recline Team",
+    "url": "https://recline.social/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Recline",
+    "url": "https://recline.social/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://recline.social/android-chrome-512x512.png"
+    }
+  },
+  "image": [
+    "https://recline.social/og-image.jpg"
+  ],
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "keywords": [
+    "end-to-end encryption",
+    "encryption in transit",
+    "messaging app privacy",
+    "Discord encryption",
+    "Slack encryption",
+    "Telegram Secret Chats",
+    "WhatsApp end-to-end encryption",
+    "Microsoft Teams E2EE"
+  ]
+}</script>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://recline.social/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://recline.social/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "End-to-End Encryption vs Encryption in Transit",
+      "item": "https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/"
+    }
+  ]
+}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" /></noscript>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D10; --bg-2: #111115; --bg-3: #16161B;
+      --border: rgba(255,255,255,0.08); --border-h: rgba(255,255,255,0.16); --border-s: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.03);
+      --accent: #5B9CF6; --accent-d: rgba(91,156,246,0.12);
+      --green: #4ADE80; --green-d: rgba(74,222,128,0.10);
+      --red: #F87171; --warm: #FBBF24;
+      --text: #F4F4F6; --text-2: rgba(244,244,246,0.55); --text-3: rgba(244,244,246,0.30); --text-4: rgba(244,244,246,0.14);
+      --mono: 'IBM Plex Mono', monospace; --sans: 'DM Sans', sans-serif;
+      --r: 10px; --r-sm: 7px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { background: rgba(13,13,16,0.88); backdrop-filter: blur(20px); border-color: var(--border-s); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); }
+    .nav-logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.22); border-radius: 7px; }
+    .nav-wordmark { font-size: 0.975rem; font-weight: 600; letter-spacing: -0.02em; }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-ghost { font-size: 0.845rem; font-weight: 500; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-nav { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--accent); color: #08080D; font-size: 0.845rem; font-weight: 600; padding: 0.42rem 1rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s; }
+    .btn-nav:hover { opacity: 0.85; }
+
+    .article-wrap { max-width: 720px; margin: 0 auto; padding: 7rem 2rem 6rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text-3); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb-sep { opacity: 0.4; }
+    .article-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .meta-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .meta-tag.technical { background: rgba(91,156,246,0.1); color: var(--accent); border: 1px solid rgba(91,156,246,0.2); }
+    .meta-date { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    .meta-read { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); }
+    h1.article-title { font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .article-lede { font-size: 1.065rem; color: var(--text-2); line-height: 1.75; margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border-s); }
+
+    .article-body { font-size: 0.975rem; line-height: 1.8; }
+    .article-body h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; margin: 3rem 0 1rem; }
+    .article-body h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; margin: 2rem 0 0.75rem; }
+    .article-body p { margin-bottom: 1.4rem; color: var(--text-2); }
+    .article-body strong { color: var(--text); font-weight: 600; }
+    .article-body a { color: var(--accent); text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4rem 1.5rem; color: var(--text-2); }
+    .article-body li { margin-bottom: 0.5rem; line-height: 1.7; }
+    .article-body code { font-family: var(--mono); font-size: 0.82em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.4em; border-radius: 4px; color: var(--accent); }
+
+    .callout { margin: 2rem 0; padding: 1.25rem 1.5rem; background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .callout p { margin: 0; font-size: 0.92rem; color: var(--text-2); line-height: 1.7; }
+    .callout strong { color: var(--accent); }
+    .callout-green { border-left-color: var(--green); }
+    .callout-green strong { color: var(--green); }
+
+    /* Step flow */
+    .step-flow { margin: 2rem 0; border: 1px solid var(--border-s); border-radius: var(--r); overflow: hidden; }
+    .step { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border-s); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); background: var(--accent-d); border: 1px solid rgba(91,156,246,0.2); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .step-body { font-size: 0.815rem; color: var(--text-2); line-height: 1.65; }
+    .step-body code { font-family: var(--mono); font-size: 0.78em; background: var(--bg-3); border: 1px solid var(--border-s); padding: 0.1em 0.35em; border-radius: 3px; color: var(--accent); }
+
+    /* Spec panel */
+    .spec-panel { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 2rem 0; }
+    .spec-panel-head { padding: 0.85rem 1.25rem; background: var(--bg-3); border-bottom: 1px solid var(--border-s); font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.05em; }
+    .spec-row { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border-s); padding: 0.8rem 1.25rem; }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { font-family: var(--mono); font-size: 0.73rem; color: var(--text-3); padding-right: 1rem; padding-top: 0.05rem; }
+    .spec-val { font-size: 0.84rem; color: var(--text); line-height: 1.5; }
+    .spec-val small { display: block; font-size: 0.76rem; color: var(--text-3); margin-top: 0.15rem; }
+
+    .article-cta { margin-top: 4rem; padding: 2.5rem; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--r); text-align: center; }
+    .article-cta h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .article-cta p { font-size: 0.895rem; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.65; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent); color: #08080D; font-size: 0.935rem; font-weight: 600; padding: 0.72rem 1.6rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity 0.15s, transform 0.15s; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border-s); padding: 3rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-s); }
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--text); margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--accent-d); border: 1px solid rgba(91,156,246,0.18); border-radius: 6px; }
+    .footer-wordmark { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.015em; }
+    .footer-tagline { font-size: 0.8rem; color: var(--text-3); line-height: 1.6; max-width: 220px; }
+    .footer-col-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { font-size: 0.825rem; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.77rem; color: var(--text-3); }
+    .footer-mono { font-family: var(--mono); font-size: 0.7rem; color: var(--text-4); letter-spacing: 0.04em; }
+    @media (max-width: 500px) { .article-wrap { padding: 6rem 1.25rem 4rem; } }
+
+  .article-body blockquote { margin: 1.65rem 0; padding: 0.5rem 1.25rem; border-left: 3px solid var(--accent); background: rgba(91,156,246,.06); color: var(--text-2); }
+  .article-body blockquote p { margin-bottom: 0; }
+  .article-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; display: block; overflow-x: auto; font-size: .88rem; }
+  .article-body th, .article-body td { text-align: left; padding: .7rem .85rem; border-bottom: 1px solid var(--border); vertical-align: top; min-width: 120px; }
+  .article-body th { color: var(--text); background: var(--bg-3); font-weight: 600; }
+  .article-body td { color: var(--text-2); }
+  .article-body pre { padding: 1.1rem 1.25rem; overflow-x: auto; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r); margin: 1.5rem 0; }
+  .article-body pre code { padding: 0; border: 0; color: var(--text); background: transparent; }
+  .article-body a:focus-visible, .related-links a:focus-visible, nav a:focus-visible, footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .article-body h2, .article-body h3 { scroll-margin-top: 6rem; }
+  .article-byline { font-family: var(--mono); font-size: .72rem; color: var(--text-3); }
+  .related-reading { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-s); }
+  .related-reading h2 { font-size: 1.2rem; letter-spacing: -.015em; margin-bottom: 1rem; }
+  .related-links { display: grid; gap: .75rem; }
+  .related-links a { display: block; padding: 1rem 1.2rem; border: 1px solid var(--border-s); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text); text-decoration: none; font-weight: 500; }
+  .related-links a:hover { border-color: var(--border-h); }
+  @media (max-width: 540px) { .article-wrap { padding: 6rem 1.2rem 4rem; } .article-body table { font-size: .82rem; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0s !important; } }
+
+  /* Article-specific responsive fixes using the existing post styling. */
+  .article-wrap nav.breadcrumb { position: static; inset: auto; padding: 0; background: transparent; border: 0; backdrop-filter: none; transition: none; }
+  .article-body table th:first-child, .article-body table td:first-child { min-width: 128px; }
+  .article-body table th:nth-child(2), .article-body table td:nth-child(2) { min-width: 305px; }
+  .article-body table th:nth-child(3), .article-body table td:nth-child(3) { min-width: 208px; }
+
+  .article-body .spec-panel-head { margin: 0; font-size: .72rem; font-weight: 500; line-height: 1.5; }
+  .article-body .spec-panel a { color: var(--accent); font-weight: 500; }
+  .article-body .spec-panel a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .article-body .spec-panel .spec-val small { font-size: .76rem; color: var(--text-3); }
+  @media (max-width: 540px) { .article-body .spec-panel .spec-row { grid-template-columns: 1fr; gap: .35rem; } }
+</style>
+
+<link rel="stylesheet" href="/assets/site.css"></head>
+<body class="rx-has-nav"><div class="rx-progress" aria-hidden="true"><span></span></div>
+<a class="rx-skip" href="#main">Skip to content</a>
+<nav id="nav" class="rx-nav" aria-label="Primary"><div class="rx-wrap">
+<a href="/" class="rx-logo" aria-label="Recline home"><span class="rx-logo-icon"><img src="/recline-official-logo.png" alt="" width="30" height="30" decoding="async"></span>Recline</a>
+<ul class="rx-links"><li><a href="/#platform">Product</a></li><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Compare</a></li><li><a href="/blog/" aria-current="page">Blog</a></li><li><a href="/download/">Download</a></li><li><a href="/about/">About</a></li></ul>
+<div class="rx-nav-cta"><a class="rx-btn rx-btn-ghost rx-btn-sm" href="https://github.com/recline-social/recline-client">GitHub</a><a class="rx-btn rx-btn-primary rx-btn-sm" href="https://app.recline.social/">Join free</a></div>
+<button class="rx-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="rx-drawer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div><div class="rx-drawer" id="rx-drawer"><a href="/#platform">Product</a><a href="/discord-alternative/">Discord alternative</a><a href="/recline-vs-telegram/">Compare</a><a href="/blog/">Blog</a><a href="/download/">Download</a><a href="/about/">About</a><a href="https://app.recline.social/">Join free →</a></div></nav>
+
+
+<main id="main">
+  <article class="article-wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span class="breadcrumb-sep">/</span>
+      <a href="/blog/">Blog</a><span class="breadcrumb-sep">/</span>
+      <span aria-current="page">End-to-End Encryption vs Encryption in Transit</span>
+    </nav>
+    <div class="article-meta">
+      <span class="meta-tag technical">Privacy</span>
+      <span class="meta-date">November 6, 2026</span>
+      <span class="meta-read">8 min read</span>
+      <span class="article-byline">Recline Team</span>
+    </div>
+    <h1 class="article-title">End-to-End Encryption vs Encryption in Transit: How Private Are Messaging Apps in 2026?</h1>
+    <p class="article-lede"><strong>Not all encrypted messaging apps protect conversations in the same way.</strong> A platform can encrypt a chat while it travels across the internet, encrypt its databases, and still be technically able to read messages on its own servers. Another platform may use end-to-end encryption (E2EE), where only the intended participants hold the keys to read content.</p>
+    <div class="article-body">
+
+
+<p>That difference matters when choosing a <strong>private messaging app</strong>, a <strong>Discord alternative for communities</strong>, or a <strong>team collaboration platform</strong>. Here's what the technologies mean, how leading services apply them, and what questions to ask before trusting any communication service with sensitive conversations.</p>
+<h2>Three kinds of protection that are often confused</h2>
+<h3>1. Encryption in transit</h3>
+<p>Encryption in transit protects data while it passes between your device and a service. HTTPS and TLS help prevent someone on the same Wi-Fi network or an intermediate network from casually reading traffic. But the service may decrypt the content when it reaches its servers.</p>
+<p>This is valuable protection, but <strong>encryption in transit is not the same as end-to-end encryption</strong>.</p>
+<h3>2. Encryption at rest</h3>
+<p>Encryption at rest protects information stored on disks, in databases, and in backups. It can reduce the risk associated with stolen storage devices or some infrastructure incidents. However, if the service controls the decryption keys, authorised systems within that service can still access the data.</p>
+<p>Some enterprise products offer customer-controlled keys. Those improve administrative control but do not necessarily mean that only message participants can decrypt chats.</p>
+<h3>3. End-to-end encryption</h3>
+<p>With E2EE, message or call content is encrypted on a sender's device and decrypted on the recipients' devices. In a correctly implemented system, the service carrying the traffic ordinarily cannot read that content. But E2EE does <strong>not</strong> automatically protect against a compromised device, someone taking a screenshot, unsafe backups or collection of metadata.</p>
+<p>The important question isn't simply "Is this app encrypted?" It's <strong>"Which content is end-to-end encrypted, and when?"</strong></p>
+<h2>Discord vs Slack vs Microsoft Teams vs Telegram vs WhatsApp: the encryption differences</h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Important distinction</th>
+<th>What to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Discord</strong></td>
+<td>Voice and video calls (other than Stage channels) use E2EE by default as of March 2026; Discord says it has no current plan to extend E2EE to text messages.</td>
+<td>Whether a feature is a call, Stage channel, or text chat.</td>
+</tr>
+<tr>
+<td><strong>Slack</strong></td>
+<td>Customer data is encrypted in transit and at rest by default. Enterprise Key Management offers additional customer control over certain encryption keys; this isn't default participant-only E2EE for ordinary messages.</td>
+<td>Workspace administration, retention, exports and key management.</td>
+</tr>
+<tr>
+<td><strong>Microsoft Teams</strong></td>
+<td>Standard communication uses in-transit and at-rest encryption. E2EE is available for supported one-to-one calls when enabled; E2EE meetings require Teams Premium for organisers.</td>
+<td>Organisational policies, eligibility and feature limitations.</td>
+</tr>
+<tr>
+<td><strong>Telegram</strong></td>
+<td>Cloud Chats use client-server/server-client encryption and sync across devices. Secret Chats use E2EE and are device-specific.</td>
+<td>Whether a conversation is a regular cloud chat or a Secret Chat.</td>
+</tr>
+<tr>
+<td><strong>WhatsApp</strong></td>
+<td>Personal messages and calls are E2EE by default.</td>
+<td>Device security, linked devices and backup settings.</td>
+</tr>
+</tbody>
+</table>
+<p>These descriptions apply to the named modes, not every product feature or every third-party integration. Providers can revise their implementations, so review their current technical guidance before a high-stakes deployment.</p>
+<p>Comparing encryption alone tells only part of the story. For wider software features, the following SourceForge pages compare each platform with Recline:</p>
+
+<section class="spec-panel" aria-labelledby="sourceforge-compare-heading">
+  <h3 class="spec-panel-head" id="sourceforge-compare-heading">Compare messaging platforms on SourceForge</h3>
+  <div class="spec-row">
+    <div class="spec-key">Discord</div>
+    <div class="spec-val"><a href="https://sourceforge.net/software/compare/Discord-vs-Recline/">Discord vs Recline on SourceForge</a><small>Community chat and voice-platform capabilities.</small></div>
+  </div>
+  <div class="spec-row">
+    <div class="spec-key">Slack</div>
+    <div class="spec-val"><a href="https://sourceforge.net/software/compare/Recline-vs-Slack/">Slack vs Recline on SourceForge</a><small>Workplace messaging, channels and collaboration.</small></div>
+  </div>
+  <div class="spec-row">
+    <div class="spec-key">Microsoft Teams</div>
+    <div class="spec-val"><a href="https://sourceforge.net/software/compare/Microsoft-Teams-vs-Recline/">Microsoft Teams vs Recline on SourceForge</a><small>Team meetings, calling and organisational features.</small></div>
+  </div>
+  <div class="spec-row">
+    <div class="spec-key">Telegram</div>
+    <div class="spec-val"><a href="https://sourceforge.net/software/compare/Recline-vs-Telegram/">Telegram vs Recline on SourceForge</a><small>Cloud messaging and device-synchronisation features.</small></div>
+  </div>
+  <div class="spec-row">
+    <div class="spec-key">WhatsApp</div>
+    <div class="spec-val"><a href="https://sourceforge.net/software/compare/Recline-vs-WhatsApp/">WhatsApp vs Recline on SourceForge</a><small>Personal messaging, calling and group communication.</small></div>
+  </div>
+</section>
+<p><small>These are external product-comparison listings, not technical verification of their encryption implementations. For encryption claims, use the vendors' security documentation linked in the sources below.</small></p>
+
+<h2>Is Discord end-to-end encrypted?</h2>
+<p><strong>For most voice and video calls, yes.</strong> Discord completed its migration to the DAVE end-to-end encryption protocol in early March 2026. Its May 2026 announcement states that direct calls, group calls, voice channels and Go Live streams are covered by default, while Stage channels are an exception. It also states that text-message E2EE is not currently planned.</p>
+<p>That makes "Discord encryption" a feature-specific question: the privacy model for a voice call is not the same as that for a text channel. If your community shares sensitive written messages, check the exact guarantees for text, not just a general promise of encrypted calls.</p>
+
+<h2>Are Slack messages end-to-end encrypted?</h2>
+<p>Slack's published security information describes encryption in transit and at rest. Its Enterprise Key Management (EKM) option gives eligible organisations control over keys for categories of data such as messages and files. This is different from an E2EE design where only the people in a conversation can decrypt its content.</p>
+<p>For workplaces, the important trade-off is often not merely encryption strength but <strong>who can administer data access</strong>, apply retention rules, investigate incidents and carry out e-discovery. An organisation may deliberately choose centrally managed information governance over participant-only message privacy.</p>
+
+<h2>Does Microsoft Teams offer end-to-end encrypted calls?</h2>
+<p>Teams encrypts communications by default, but <strong>E2EE is a separate capability</strong>. Supported one-to-one calls can use it when the organisation allows it and participants enable it. Teams Premium supports E2EE meetings for eligible organisers.</p>
+<p>Microsoft notes that certain server-side features, including recording, transcription and some meeting capabilities, become unavailable in an E2EE session. This is a useful reminder that privacy controls and productivity features can involve real design trade-offs.</p>
+
+<h2>Telegram Secret Chats versus regular Cloud Chats</h2>
+<p>Telegram is often mentioned in conversations about <strong>secure messaging apps</strong>, but the distinction between its chat modes is essential. Regular Cloud Chats are encrypted between clients and Telegram's service, then stored encrypted on its servers so they can synchronise across devices. They are not the same as end-to-end encrypted Secret Chats.</p>
+<p>Secret Chats use E2EE and stay linked to the devices that created them. That means the privacy and device-recovery experience differs from regular Telegram chats. Check the mode you're using before assuming every Telegram conversation has the same protection.</p>
+
+<h2>What does WhatsApp's default end-to-end encryption protect?</h2>
+<p>WhatsApp states that personal messages and calls are end-to-end encrypted by default. This is an important default for everyday private communication. It doesn't eliminate every privacy risk, though: linked devices, account security, backups, exposed notifications and the recipient's behaviour all matter.</p>
+<p>When comparing messaging platforms, ask not only whether conversations are encrypted but also how groups work, whether users must disclose a phone number, what happens when they switch devices and what data the service retains.</p>
+
+<h2>Encryption does not make metadata disappear</h2>
+<p>Even if message text is inaccessible to the service, a communications platform may still need information such as account identifiers, device details, connection times, group membership or message-delivery data to operate. Different services minimise and retain that information to different degrees.</p>
+<p>For <strong>privacy-focused community chat</strong>, consider metadata handling alongside message content. A server that cannot read a message could still learn when two accounts communicate unless it has specific protections for that information.</p>
+<h2>A practical privacy checklist before picking a messaging platform</h2>
+<ol>
+<li><strong>Separate messages from calls.</strong> Does E2EE cover text, attachments, group calls, voice channels and screen sharing, or only some of these?</li>
+<li><strong>Check the default.</strong> Is E2EE automatic, optional or limited to a special conversation mode?</li>
+<li><strong>Understand keys and recovery.</strong> Who holds the keys? What happens after a password reset or device replacement?</li>
+<li><strong>Inspect backups.</strong> Could an unencrypted backup undo protections offered in the main app?</li>
+<li><strong>Review metadata and retention.</strong> What connection, membership and activity records can the service keep?</li>
+<li><strong>Consider administration.</strong> Do organisation owners or administrators need access to records for compliance or incident response?</li>
+<li><strong>Check device permissions.</strong> Can you deny camera/microphone access and reliably stop capture after a call?</li>
+<li><strong>Verify independent evidence.</strong> Look for accessible documentation, security audits, current changelogs and clear incident handling.</li>
+</ol>
+<h2>Which is best: an encrypted messaging app or a community platform?</h2>
+<p>There is no single winner for everyone. A family chat, a public gaming community, a small engineering team and a regulated enterprise have different needs. Default E2EE may be central for personal communication; enterprise records management may matter more for a company; persistent channels, moderation tools and voice rooms may dominate a community's requirements.</p>
+<p>The useful approach is to define <strong>which conversations need privacy</strong>, which features are essential and what trade-offs users are willing to accept. Compare that list with each product's documented guarantees instead of assuming that a familiar lock icon means the same thing everywhere.</p>
+<h3>Sources and further reading</h3>
+<ul>
+<li>Discord: <a href="https://discord.com/blog/every-voice-and-video-call-on-discord-is-now-end-to-end-encrypted">Every Voice and Video Call on Discord Is Now End-to-End Encrypted</a> (18 May 2026).</li>
+<li>Slack: <a href="https://slack.com/trust/security">Security, Encryption, and Compliance</a> and <a href="https://slack.com/intl/en-gb/help/articles/360019110974-Slack-Enterprise-Key-Management">Enterprise Key Management</a>.</li>
+<li>Microsoft: <a href="https://support.microsoft.com/en-us/teams/calls-devices/use-end-to-end-encryption-for-microsoft-teams-calls">Teams E2EE for calls</a> and <a href="https://learn.microsoft.com/en-us/MicrosoftTeams/teams-end-to-end-encryption">Teams encryption administration</a>.</li>
+<li>Telegram: <a href="https://telegram.org/privacy">Privacy Policy</a> and <a href="https://telegram.org/faq">FAQ</a>.</li>
+<li>WhatsApp: <a href="https://about.fb.com/news/2026/01/whatsapp-strict-account-settings-safeguarding-against-cyber-attacks/">Default E2EE for personal messages and calls</a>.</li>
+</ul>
+<p><em>This article summarises publicly documented features as of 6 November 2026, not independent security testing. Features, privacy controls and product policies may change; confirm the current documentation when choosing a platform.</em></p>
+
+    </div>
+    <aside class="related-reading" aria-label="Related reading">
+      <h2>Keep reading</h2>
+      <div class="related-links">
+        <a href="/blog/how-recline-encrypts/">How Recline Encrypts Messages &rarr;</a>
+        <a href="/blog/how-voice-calls-work/">How Voice Calls Work &rarr;</a>
+        <a href="/blog/best-discord-alternatives-2026/">Best Discord Alternatives 2026 &rarr;</a>
+      </div>
+    </aside>
+    <div class="article-cta">
+      <h3>Explore private communication</h3>
+      <p>Read more technical guides about encrypted messages, real-time voice and community software.</p>
+      <a href="/blog/" class="btn-primary">Browse the blog &rarr;</a>
+    </div>
+  </article>
+</main>
+<section class="rx-cta" aria-label="Get Recline"><div class="rx-cta-inner">
+<div><h2>Start a community that stays private.</h2><p>Join free in the browser, or install the Windows app. No email or phone needed for basic chat.</p></div>
+<div class="rx-cta-actions"><a class="rx-btn rx-btn-primary" href="https://app.recline.social/">Join free</a><a class="rx-btn rx-btn-ghost" href="/download/">Download for Windows</a></div>
+<p class="rx-cta-note">Open beta · Open-source client · Encrypted message text</p></div></section>
+<footer class="rx-footer"><div class="rx-wrap"><div class="rx-foot-grid">
+<div class="rx-foot-brand"><a href="/" class="rx-logo"><span class="rx-logo-icon"><img src="/recline-official-logo.png" alt="" width="30" height="30" decoding="async"></span>Recline</a><p>Private, encrypted communities where members earn their place.</p>
+<div class="rx-listed"><a href="https://alternativeto.net/software/recline-social/about/?utm_source=badge&amp;utm_medium=referral">AlternativeTo</a><a href="https://sourceforge.net/software/product/Recline/">SourceForge</a><a href="https://toolfame.com/item/recline">Toolfame</a><a href="https://twelve.tools">Twelve Tools</a></div></div>
+<div class="rx-foot-col"><h3>Product</h3><ul><li><a href="https://app.recline.social/">Web app</a></li><li><a href="/download/">Download</a></li><li><a href="/roadmap/">Roadmap</a></li><li><a href="/beta-status/">Beta status</a></li></ul></div>
+<div class="rx-foot-col"><h3>Compare</h3><ul><li><a href="/discord-alternative/">Discord alternative</a></li><li><a href="/recline-vs-telegram/">Recline vs Telegram</a></li><li><a href="/blog/best-discord-alternatives-2026/">Best Discord alternatives</a></li></ul></div>
+<div class="rx-foot-col"><h3>Learn</h3><ul><li><a href="/blog/">Blog</a></li><li><a href="/blog/how-recline-encrypts/">How encryption works</a></li><li><a href="/blog/how-voice-calls-work/">Voice calls</a></li><li><a href="/blog/how-to-move-a-discord-server/">Move a Discord server</a></li></ul></div>
+<div class="rx-foot-col"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/privacy">Privacy</a></li><li><a href="https://github.com/recline-social/recline-client">GitHub</a></li><li><a href="https://medium.com/@reclinesocial" rel="me noopener noreferrer" target="_blank">Medium</a></li><li><a href="https://x.com/ReclineApp" rel="me noopener noreferrer" target="_blank">X</a></li><li><a href="https://www.instagram.com/reclinechat" rel="me noopener noreferrer" target="_blank">Instagram</a></li></ul></div>
+</div><div class="rx-foot-bottom"><span>© 2026 Recline</span><span class="rx-mono">Built independently · Open beta</span></div></div></footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+</script>
+<script src="/assets/site.js" defer></script></body>
+</html>
