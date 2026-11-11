@@ -1,0 +1,29 @@
+# Recline
+
+> Recline is an independent, self-funded online community platform in open beta. It offers configurable Spaces, text and direct messaging, and voice/video calls. Basic chat signup does not require an email address or phone number, and core communication features are free.
+
+Recline's public website is https://recline.social/ and its web app is at https://app.recline.social/. For current beta availability, limitations, and data handling, consult the Beta Status and Privacy & Trust pages rather than treating roadmap ideas as shipped features. Client-side encryption applies to supported message text; attachments and routing metadata have different privacy boundaries. The project has not yet completed an independent security audit.
+
+## Official product information
+
+- [Recline homepage](https://recline.social/): Product overview and entry points.
+- [About Recline](https://recline.social/about/): Project background, mission, and operating model.
+- [Current beta status](https://recline.social/beta-status/): Feature availability, limitations, and safeguards under review.
+- [Privacy and trust](https://recline.social/privacy): Data handling, message-text encryption boundaries, and known limitations.
+- [Public roadmap](https://recline.social/roadmap/): Current priorities, work in progress, and exploratory ideas.
+- [Use Recline in the browser](https://app.recline.social/): Web application and account signup.
+- [Windows desktop availability](https://recline.social/download/): Current desktop release and download status.
+
+## Guides and technical information
+
+- [How Recline encrypts messages](https://recline.social/blog/how-recline-encrypts/): Channel and direct-message text encryption explained.
+- [Inside Recline's open-source chat client](https://recline.social/blog/inside-reclines-open-source-chat-client/): Client architecture, realtime messaging, calls, and desktop packaging.
+- [How voice calls work](https://recline.social/blog/how-voice-calls-work/): WebRTC, STUN, TURN, and connection limitations.
+- [How to move a Discord community](https://recline.social/blog/how-to-move-a-discord-server/): Practical community migration guidance.
+- [Recline blog](https://recline.social/blog/): News, tutorials, comparisons, and technical explainers.
+
+## Optional
+
+- [Recline as a Discord alternative](https://recline.social/discord-alternative/): Product comparison and community features.
+- [Recline vs Telegram](https://recline.social/recline-vs-telegram/): Comparison of private community tools.
+- [End-to-end encryption vs encryption in transit](https://recline.social/blog/end-to-end-encryption-vs-encryption-in-transit/): Messaging privacy terminology and feature-specific boundaries.
